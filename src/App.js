@@ -1,19 +1,19 @@
 import React, { Component } from "react"
 import "./App.css"
-
 import Home from "./pages/Home"
-import Content from "./pages/Content"
-import SignIn from "./pages/SignIn"
-
-class App extends Component{
-  render(){
-    return(
-      <React.Fragment>
+import Header from './components/Header'
+import {Container } from 'reactstrap'
+const App = () => {
+  return(
+    <>
+      {/* Show branding and signed in user*/}
+      <Header />
+      {/* show home page*/}
+      <Container>
         <Home />
-        <Content />
-        <SignIn />
-      </React.Fragment>
-    )
-  }
+      {/* Displays Footer */}
+      </Container>
+    </>
+  )
 }
 export default App
