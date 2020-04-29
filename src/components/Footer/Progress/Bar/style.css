@@ -1,0 +1,7 @@
+.bar {
+    position:relative;
+    height:20px;
+    width:350px;
+    border-radius:40px;
+    border: 1px solid #333;
+}

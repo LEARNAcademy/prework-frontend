@@ -1,0 +1,9 @@
+.module-list {
+    list-style: none;
+}
+
+.nav-list:hover {
+    opacity:+.9;
+    cursor:pointer;
+    border: black solid 1px;
+}
