@@ -4,16 +4,27 @@ import LessonNav from '../../../components/LessonNav'
 import MainContent from '../../../components/MainContent'
 
 class Content extends Component{
+    constructor(props){
+        super(props)
+        this.state = {
+            lesson: []
+        }
+    }
+
+    currentLesson = (lesson) => {
+        this.setState({lesson:lesson})
+    }
+
+
   render(){
-    {console.log("props",this.props.modules)}
     return(
       <>
           <Row>
             <Col sm={4}>
-              <LessonNav module={this.props.modules} lesson={this.props.lessons}/>
+              <LessonNav module={this.props.modules} lesson={this.props.lessons} currentLesson = {this.currentLesson}/>
             </Col>
             <Col sm={8}>
-                <MainContent />
+                <MainContent lesson={this.state.lesson} />
             </Col>
           </Row>
       </>
