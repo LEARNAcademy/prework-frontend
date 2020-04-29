@@ -5,3 +5,13 @@
     border-radius:40px;
     border: 1px solid #333;
 }
+.barOverlay {
+    position: absolute;
+    left: 10px;
+    font-size: .8em;
+    color: white;
+    width:100%;
+}
+.moduleNames {
+    width:100%;
+}
