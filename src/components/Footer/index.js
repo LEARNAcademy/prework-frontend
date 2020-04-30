@@ -3,6 +3,13 @@ import Progress from './Progress'
 import {Row, Col, Button} from 'reactstrap'
 
 class Footer extends React.Component {
+    constructor(props){
+        super(props)
+        this.state = {
+            currentLesson:"",
+            continueLesson:""
+        }
+    }
     render(){
         return(
             <>
@@ -13,7 +20,7 @@ class Footer extends React.Component {
                             </Col>
                             {/* continue button on the right*/}
                             <Col sm={6} className="footer-button" style={{textAlign:"right"}}>
-                                <Button>Continue</Button>
+                                <Button >Continue</Button>
                             </Col> 
                         </Row>
             </>
