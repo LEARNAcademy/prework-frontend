@@ -31,11 +31,23 @@ class LessonNav extends Component {
                                         <div className="card-body">
                                             {/* Display lesson list */}
                                             <ul className="module-list">
-                                                {this.props.lesson.map((l,i)=> {
+                                                {this.props.lesson.map((l,i,arr)=> {
+                                                    {console.log("array",arr[i].completed)}
+                                                    let flag = ""
+                                                    
+                                                    if(i !== 0 ){
+                                                        flag = "disabled"
+                                                    }
                                                     if(l.code_module_id === mod.id){
+                                                        if(i == 0 || arr[i].completed){
+                                                            flag = ''
+                                                        }
+                                                        if(i-1 !== -1 && arr[i-1].completed){
+                                                            flag=''
+                                                        }
                                                         return (
-                                                            <li key={i} className="nav-list" style={{opacity: l.completed? '.2':'',color:l.completed? 'green':''}} onClick={ ()=>this.captureLesson(l)}>{l.title}</li>
-                                                        )
+                                                            <li key={i} className={`nav-list ${flag}`}  style={{opacity: l.completed? '.2':'',color:l.completed? 'green':''}} onClick={ ()=>this.captureLesson(l)}>{l.title}</li>
+                                                        ) 
                                                     }
                                                 })}
                                             {/*display lesson list items*/}
