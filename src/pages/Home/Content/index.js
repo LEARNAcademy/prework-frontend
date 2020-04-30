@@ -8,8 +8,7 @@ class Content extends Component{
     constructor(props){
         super(props)
         this.state = {
-            lesson: [],
-            lessonNav:[]
+            lesson: []
         }
     }
 
@@ -19,13 +18,13 @@ class Content extends Component{
 
 
   render(){
-      {console.log("lesson in contente",this.state.lesson)}
-      if(this.state.lesson.length > 0){
-          console.log("true",this.state.lesson.length)
-      } else {
-          console.log("else",this.state.lesson.length)
-      }
-      let checkLesson = this.state.lesson.length > 0
+      let checkLesson = true
+      // if(this.state.lesson.id !== undefined){
+      //   checkLesson = true
+      // } else {
+      //   checkLesson = false
+      // }
+      {console.log("lesson in contentttt",this.state.lesson)}
     return(
       <>
           <Row>
@@ -39,7 +38,7 @@ class Content extends Component{
           {checkLesson &&
             <Row>
                 <Col sm={12}>
-                    <Footer modules = {this.props.modules} lessons={this.props.lessons} lessonNav = {this.state.lessonNav} currentLesson={this.state.lesson}/>   
+                    <Footer modules = {this.props.modules} lessons={this.props.lessons} currentLesson={this.currentLesson} questions={this.props.questions} content={this.state.lesson}/>   
                 </Col> 
             </Row>
             }

@@ -6,14 +6,17 @@ class MainContent extends React.Component {
     
     render(){
         let {lesson, resources, questions} = this.props
+        {console.log("lesson on main",lesson)}
         
         {console.log("questions", questions)}
         {console.log("resources",resources)}
         let val;
-
+        {/* check and see if it's a lesson or question thats passed in */}
+        {/* if object has lesson_id, current object is a question */}
+        
         return(
              <>
-             {lesson.length == 0 &&
+             {lesson === undefined &&
                 <div>
                     <Row>
                         <Col sm={12}>
@@ -22,7 +25,7 @@ class MainContent extends React.Component {
                     </Row>
                 </div>
              }
-             {lesson.length !== 0 &&
+             {lesson &&
                 <div>
                     <Row>
                         <Col>
