@@ -5,12 +5,16 @@ import MainContent from '../../../components/MainContent'
 import Footer from '../../../components/Footer'
 
 class Content extends Component{
-  constructor(props){
-      super(props)
-      this.state = {
-          lesson: []
-      }
-  }
+    constructor(props){
+        super(props)
+        this.state = {
+            content: []
+        }
+    }
+
+    currentContent = (content) => {
+        this.setState({content:lesson})
+    }
 
   currentLesson = (lesson) => {
       this.setState({lesson:lesson},() => {
@@ -19,21 +23,22 @@ class Content extends Component{
   }
 
   render(){
-      let checkLesson = true
+      let checkContent = true
+      let { questions, resources, modules, lessons} = this.props
     return(
       <>
           <Row>
             <Col sm={4}>
-              <LessonNav module={this.props.modules} lesson={this.props.lessons} currentLesson = {this.currentLesson}/>
+              <LessonNav modules={modules} lessons={lessons} currenContent = {this.currentContent}/>
             </Col>
             <Col sm={8}>
-                <MainContent lesson={this.state.lesson} questions={this.props.questions} resources={this.props.resources}/>
+                <MainContent content={this.state.content} questions={questions} resources={resources}/>
             </Col>
           </Row>
-          {checkLesson &&
+          {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer modules = {this.props.modules} lessons={this.props.lessons} currentLesson={this.currentLesson} questions={this.props.questions} content={this.state.lesson}/>   
+                    <Footer modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}/>   
                 </Col> 
             </Row>
             }

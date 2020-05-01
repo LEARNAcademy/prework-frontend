@@ -3,14 +3,7 @@ import Progress from './Progress'
 import {Row, Col, Button} from 'reactstrap'
 
 class Footer extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            currentLesson:"",
-            continueLesson:"",
-        }
-    }
-    
+  
     sendContent(next){
         this.props.currentLesson(next)
     }
@@ -31,8 +24,6 @@ class Footer extends React.Component {
             nextLess = lessons.filter((l,i)=> l.id === content.id+1)
             return nextLess[0];
         }
-            
-
         return(
             <>
                 <Row>
