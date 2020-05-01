@@ -11,13 +11,13 @@ class LessonNav extends Component {
     render() {
         return(
             <>
-                <aside style={{border:"solid black 3px"}}>
+                <aside className="lesson-nav">
                     <div className="accordion" id="accordionExample">
                         {/* map through our modules*/}
                         {/* start map*/}
                         {this.props.module.map((mod, i) => {
                             return (
-                                <div className="card">
+                                <div key={i} className="card">
                                     <div className="card-header" id={`heading${i}`}>
                                     <h2 className="mb-0">
                                         <button className="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${i}`} aria-expanded="true" aria-controls={`collapse${i}`} >
@@ -31,22 +31,21 @@ class LessonNav extends Component {
                                         <div className="card-body">
                                             {/* Display lesson list */}
                                             <ul className="module-list">
-                                                {this.props.lesson.map((l,i,arr)=> {
-                                                    {console.log("array",arr[i].completed)}
+                                                {this.props.lesson.map((l,i,arr) => {
                                                     let flag = ""
                                                     
                                                     if(i !== 0 ){
                                                         flag = "disabled"
                                                     }
                                                     if(l.code_module_id === mod.id){
-                                                        if(i == 0 || arr[i].completed){
+                                                        if(i === 0 || arr[i].completed){
                                                             flag = ''
                                                         }
                                                         if(i-1 !== -1 && arr[i-1].completed){
                                                             flag=''
                                                         }
                                                         return (
-                                                            <li key={i} className={`nav-list ${flag}`}  style={{opacity: l.completed? '.2':'',color:l.completed? 'green':''}} onClick={ ()=>this.captureLesson(l)}>{l.title}</li>
+                                                            <li key={i} className={`nav-list ${flag} ${l.completed ? 'lesson-completed' : ''}`}   onClick={ ()=>this.captureLesson(l)}>{l.title}</li>
                                                         ) 
                                                     }
                                                 })}
