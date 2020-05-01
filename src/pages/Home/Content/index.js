@@ -12,14 +12,14 @@ class Content extends Component{
         }
     }
 
-    currentContent = (content) => {
-        this.setState({content:lesson})
-    }
+  currentContent = (content) => {
+    this.setState({content:content})
+  }
 
-  currentLesson = (lesson) => {
-      this.setState({lesson:lesson},() => {
-        console.log("./pages/Home/Content/: state changed",this.state.lesson);
-      })
+  currentLesson = (content) => {
+    this.setState({content:content},() => {
+      console.log("./pages/Home/Content/: state changed",this.state.content);
+    })
   }
 
   render(){
@@ -29,7 +29,7 @@ class Content extends Component{
       <>
           <Row>
             <Col sm={4}>
-              <LessonNav modules={modules} lessons={lessons} currenContent = {this.currentContent}/>
+              <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent}/>
             </Col>
             <Col sm={8}>
                 <MainContent content={this.state.content} questions={questions} resources={resources}/>

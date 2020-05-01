@@ -32,7 +32,7 @@ class LessonNav extends Component {
                                             {/* Display lesson list */}
                                             <ul className="module-list">
 
-                                                {this.props.lesson.map((l,i,arr) => {
+                                                {lessons.map((l,i,arr) => {
                                                     let flag = ""
                                                     {/* if the current lesson isn't the first lesson, disable it by default*/}
                                                     if(i !== 0 ){
@@ -48,7 +48,7 @@ class LessonNav extends Component {
                                                             flag=''
                                                         }
                                                         return (
-                                                            <li key={i} className={`nav-list ${flag} ${l.completed ? 'lesson-completed' : ''}`}   onClick={ ()=>this.captureLesson(l)}>{l.title}</li>
+                                                            <li key={i} className={`nav-list ${flag} ${l.completed ? 'lesson-completed' : ''}`}   onClick={ ()=>this.captureContent(l)}>{l.title}</li>
 
                                                         ) 
                                                     }
