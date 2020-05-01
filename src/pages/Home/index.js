@@ -3,6 +3,15 @@ import Content from './Content'
 import SignIn from './SignIn'
 
 class Home extends Component{
+  constructor(props){
+    super(props)
+    this.state={
+      modules:[],
+      lessons:[],
+      questions:[],
+      resources:[]
+    }
+  }
   render(){
     let { lessons, modules, questions, resources, loggedIn} = this.props
     

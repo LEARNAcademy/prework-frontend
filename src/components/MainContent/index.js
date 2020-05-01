@@ -17,7 +17,7 @@ class MainContent extends React.Component {
                     </Row>
                 </div>
              }
-             {lesson &&
+             {content &&
                 <div>
                     <Row>
                         <Col>
