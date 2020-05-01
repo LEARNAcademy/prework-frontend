@@ -1,14 +1,10 @@
 import React from 'react'
-import {Container, Row, Col} from 'reactstrap'
+import {Row, Col} from 'reactstrap'
 
 
-class MainContent extends React.Component {
-    
+class MainContent extends React.Component {  
     render(){
-        {/*  */}
         let {content, resources, questions} = this.props
-        {/* check and see if it's a lesson or question thats passed in */}
-        {/* if object has lesson_id, current object is a question */}
         
         return(
              <>

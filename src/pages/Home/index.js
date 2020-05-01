@@ -4,8 +4,8 @@ import SignIn from './SignIn'
 
 class Home extends Component{
   render(){
-    
     let { lessons, modules, questions, resources, loggedIn} = this.props
+    
     return(
       <>
         {/* if user is logged in, show content*/}

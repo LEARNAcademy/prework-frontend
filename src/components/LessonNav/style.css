@@ -11,3 +11,13 @@
     opacity:+.9;
     cursor:pointer;
 }
+.lesson-completed {
+    opacity: .2;
+    color: green;
+}
+.lesson-completed::before {
+    content: "\2713"
+}
+.lesson-nav {
+    border: "solid black 3px"
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Row, Col} from 'reactstrap'
+import {Row, Col} from 'reactstrap'
 import LessonNav from '../../../components/LessonNav'
 import MainContent from '../../../components/MainContent'
 import Footer from '../../../components/Footer'
@@ -16,14 +16,14 @@ class Content extends Component{
         this.setState({content:lesson})
     }
 
+  currentLesson = (lesson) => {
+      this.setState({lesson:lesson},() => {
+        console.log("./pages/Home/Content/: state changed",this.state.lesson);
+      })
+  }
 
   render(){
       let checkContent = true
-      // if(this.state.lesson.id !== undefined){
-      //   checkLesson = true
-      // } else {
-      //   checkLesson = false
-      // }
       let { questions, resources, modules, lessons} = this.props
     return(
       <>
