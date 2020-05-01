@@ -6,8 +6,8 @@ class Footer extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            currentLesson:"",
-            continueLesson:"",
+            lessonQuestions:[],
+            currentQuestion:[],
         }
     }
 
@@ -15,16 +15,20 @@ class Footer extends React.Component {
         this.props.currentLesson(next)
     }
 
-    render(){
-        let question;
-        
-        {/* lessons = all lessons, lessonNav= the */}
-        let {modules, lessons, lessonNav, questions, content} = this.props
-        let lessonQuestions;
-        {console.log("current content",content)}
+    componentDidMount(){
+        let {content, questions} = this.props
         if(content !== undefined){
-        lessonQuestions = questions.filter((q,i)=> q.lesson_id === content.id)
+            let lQuestions = questions.filter((q,i)=> q.lesson_id === content.id)
+            this.setState({lessonQuestions:lQuestions})
         }
+    }
+
+    render(){
+    
+        let question;
+        {console.log("state l questions",this.state.lessonQuestions)}
+        {/* lessons = all lessons, lessonNav= the */}
+        let { lessons, questions, content} = this.props
         {/* get the id of the lesson that were currently on */}
         {/* add 1 to the id */}
         {/* Gets the next lesson  */}
@@ -35,8 +39,7 @@ class Footer extends React.Component {
         let lastQuestion = 
         console.log("nextLesson", nextLesson)
         {console.log("lessons ",lessons)}
-
-        {console.log("lesson questions",lessonQuestions)}
+        let {lessonQuestions} = this.state
         return(
             <>
                         <Row>
