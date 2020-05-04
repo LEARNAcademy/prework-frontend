@@ -5,13 +5,13 @@ import Home from './pages/Home';
 import Header from './components/Header';
 
 const modules = [{
-  id: 1, lesson: 'Module 1', progress: 'Lesson 1', completed: false, user_id: 1,
+  id: 1, lesson: 'HTML/CSS', progress: 'Lesson 1', completed: false, user_id: 1,
 }, {
   id: 2, lesson: 'Module 2', progress: 'Lesson 1', completed: false, user_id: 1,
 }, {
   id: 3, lesson: 'Module 3', progress: 'Lesson 1', completed: false, user_id: 1,
-}, {
-  id: 4, lesson: 'Module 4', progress: 'Lesson 1', completed: false, user_id: 1,
+},{
+  id: 4, lesson: 'Module 7', progress: 'Lesson 1', completed: false, user_id: 1,
 }];
 
 const lessons = [{
@@ -33,7 +33,7 @@ const lessons = [{
 }];
 
 const questions = [{
-  id: 1, content: ['belongs to first question lesson 1', 'Answer 1', 'Answer 2', 'Answer 3'], answer: 'Answer 2', correct: false, completed: true, lesson_id: 1,
+  id: 1, content: ['belongs to first question lesson 1', 'Answer 1', 'Answer 2', 'Answer 3'], answer: 'Answer 2', correct: false, multiple_choice :true, completed: false, lesson_id: 1,
 }, {
   id: 2, content: ['belongs to second question lesson 1', 'I learned about HTML', 'I learned nothing, I want my money back', 'I give up'], answer: 'I learned about HTML', correct: false, completed: false, lesson_id: 1,
 }, {

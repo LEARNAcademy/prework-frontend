@@ -1,12 +1,29 @@
 import React from 'react'
-import {Row, Col} from 'reactstrap'
+import { Row, Col } from 'reactstrap'
+import Question from './Question'
 
 
 class MainContent extends React.Component {  
     render(){
-        let {content, resources, questions} = this.props
-        
-        return(
+        let {content, lessons, questions, resources } = this.props
+        // checks if the content is a lesson or question, renders appropriate content
+        let contentType;
+        let resource;
+        var quest;
+        if (content.lesson_id !== undefined) {
+            contentType = 'question'
+        } else if (content.lesson_id === undefined) {
+            contentType = 'lesson'
+            // find questions that belong to current lesson
+            if(content !== undefined){
+                quest = questions.find(q => q.lesson_id === content.id)
+
+            }
+            //resource = resources.filter(r => r.question_id === quest.id)
+            
+        }
+        console.log("resources",resource)
+        return (
              <>
              {content === undefined &&
                 <div>
@@ -17,7 +34,7 @@ class MainContent extends React.Component {
                     </Row>
                 </div>
              }
-             {content &&
+             {content && contentType === 'lesson' &&
                 <div>
                     <Row>
                         <Col>
@@ -36,10 +53,13 @@ class MainContent extends React.Component {
                     </Row>
                     <Row>
                         <Col sm={6}>
-                            
+                            <p></p>
                         </Col>
                     </Row>
                 </div>
+            }
+            {content && contentType === 'question' &&
+                <Question content = {content} lessons = {lessons}/>
             }
             </>
                 )
