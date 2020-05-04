@@ -32,7 +32,7 @@ class Content extends Component{
               <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent}/>
             </Col>
             <Col sm={8}>
-                <MainContent content={this.state.content} questions={questions} resources={resources}/>
+                <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons}/>
             </Col>
           </Row>
           {checkContent &&
