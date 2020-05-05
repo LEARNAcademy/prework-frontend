@@ -42,7 +42,7 @@ class MultChoice extends React.Component {
                      <Form onSubmit={this.handleSubmit}>
                         {content.content.map((answers,i,arr) => {
                             return(
-                                <FormGroup check>
+                                <FormGroup check key={i}>
                                     <Label check>
                                         <Input 
                                         type='radio' 

@@ -11,7 +11,7 @@ class Content extends Component{
             content: []
         }
     }
-
+  
   currentContent = (content) => {
     this.setState({content:content})
   }
@@ -21,9 +21,16 @@ class Content extends Component{
       console.log("./pages/Home/Content/: state changed",this.state.content);
     })
   }
+  contentExist() {
+    if (this.state.content.id !== undefined) {
+        return true
+    } else {
+        return false
+    }
+  }
 
   render(){
-      let checkContent = true
+      let checkContent = this.contentExist();
       let { questions, resources, modules, lessons} = this.props
     return(
       <>

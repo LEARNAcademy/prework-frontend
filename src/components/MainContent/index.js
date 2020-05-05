@@ -6,44 +6,41 @@ import Question from './Question'
 class MainContent extends React.Component {  
     contentExist(){
         let { content } = this.props
-        if (content.id !== undefined){
+        if (content.id !== undefined) {
             return true
         } else {
             return false
         }
     }
-    checkType(){
+    checkType() {
         let { content } = this.props
-        if(this.contentExist()){
-            if (content.lesson_id === undefined){
+        if (this.contentExist()) {
+            if (content.lesson_id === undefined) {
                 return true
             } else {
                 return false
             }
         }
     }
-    
-    getResource(){
+    getResource() {
         let { content , questions, resources } = this.props 
         // check to see if content has been loaded
-        if(this.contentExist()){
+        if (this.contentExist()) {
             //returns a boolean value of true if it is a lesson, or false if not
             let isLesson = this.checkType();
-            if(isLesson){
+            if (isLesson) {
                 // it is a lesson, find first question that belongs to current lesson
                 const findQuestion = questions.find(q=> q.lesson_id === content.id);
-                // Jehovah > all 
+                // Jehovah > all
                 // gets resources that belong to the question that belongs to the current lesson
                 const getResources = resources.filter(r=> r.question_id === findQuestion.id);
                 return getResources
             } 
 
         }
-    }
-    
-
+    } 
     render(){
-        let {content, lessons,} = this.props
+        const {content, lessons} = this.props
         let contentExist = this.contentExist();
         // checks if the content is a lesson or question, renders appropriate content
         let isLesson = this.checkType();
@@ -75,10 +72,12 @@ class MainContent extends React.Component {
                     </Row>
                     <Row>
                         <Col sm={6}>
+                            <h5>Resources</h5>
                             <ul>
                                 {resourcesL.map((resource,i)=>{
                                     return(
-                                        <li key={i}><a href={resource.link}>{resource.name}</a></li>
+                                        // eslint-disable-next-line react/jsx-no-target-blank
+                                        <li key={i}><a href={resource.link} target="_blank">{resource.name}</a></li>
                                     )
                                 })}
                             </ul>
