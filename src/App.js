@@ -33,7 +33,7 @@ const lessons = [{
 }];
 
 const questions = [{
-  id: 1, content: ['belongs to first question lesson 1', 'Answer 1', 'Answer 2', 'Answer 3'], answer: 'Answer 2', correct: false, multiple_choice :true, completed: false, lesson_id: 1,
+  id: 1, content: ['belongs to first question lesson 1', 'Answer 1', 'Answer 2', 'Answer 3'], answer: 'Answer 2', correct: false, multiple_choice :true, completed: true, lesson_id: 1,
 }, {
   id: 2, content: ['belongs to second question lesson 1', 'I learned about HTML', 'I learned nothing, I want my money back', 'I give up'], answer: 'I learned about HTML', correct: false, completed: false, lesson_id: 1,
 }, {
