@@ -56,13 +56,13 @@ class Content extends Component{
 
   render(){
       let checkContent = this.contentExist();
-      let { questions, resources, modules, lessons} = this.props
+      let { questions, resources, modules, lessons, topics} = this.props
       console.log("userChoice",this.state.userChoice)
     return(
       <>
           <Row>
             <Col sm={4}>
-              <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent}/>
+              <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics}/>
             </Col>
             <Col sm={8}>
                 <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
