@@ -70,6 +70,7 @@ class Footer extends React.Component {
     const { content } = this.props;
     // eslint-disable-next-line no-unused-vars
     let checkType;
+
     // checks to see if content exists'
     // eslint-disable-next-line no-console
     if (content.id !== undefined) {
