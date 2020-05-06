@@ -9,7 +9,7 @@ import './style.css'
 //width of module name equals percent of total lessons / lessons per module
 
 const Bar = (props) => {
-    let modLength = props.modules.length
+    let modLength = props.topics.length
     let width = {
         "width": 100 / modLength + "%",
         "display":"inline-block",
@@ -17,7 +17,7 @@ const Bar = (props) => {
     }
     console.log(modLength)
     return(
-        <div className="bar">
+        <div className="progress bar">
             <div className="barOverlay">
                 {/* 
                     - map modules and list them out
@@ -27,8 +27,8 @@ const Bar = (props) => {
                     - get value for width of each module
                 */}
                 <div className="moduleNames">
-                    {props.modules.map((module,i) => 
-                        <div style={width}>{module.lesson}</div> 
+                    {props.topics.map((topic,i) => 
+                        <div style={width}>{topic.title}</div> 
                     )}
 
                 </div>

@@ -30,11 +30,11 @@ class Progress extends React.Component{
     
     
     render() {
-        let {lessons, modules} = this.props
+        let {lessons, modules, topics} = this.props
         let {percentage} = this.state
         return (
             <>
-                <Bar percentage={percentage} modules={modules} lessons={lessons}/>
+                <Bar percentage={percentage} modules={modules} lessons={lessons} topics={topics}/>
             </>
         )
     }

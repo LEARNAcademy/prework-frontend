@@ -8,10 +8,17 @@
 .barOverlay {
     position: absolute;
     left: 10px;
-    font-size: .8em;
     color: white;
     width:100%;
 }
 .moduleNames {
     width:100%;
+    font-size: 14px;
+    margin-top:9px;
+}
+.progress.bar {
+    height:40px;
+}
+.progress-bar.progress-bar-striped.progress-bar-animated {
+    background-color: green;
 }
