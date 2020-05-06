@@ -8,10 +8,33 @@ class Content extends Component{
     constructor(props){
         super(props)
         this.state = {
-            content: []
+            content: [],
+            userChoice:'',
+            qCount:0,
+            
         }
     }
   
+  handleChange = (event) => {
+    this.setState({userChoice:event.target.value})
+  }
+  handleSubmit = () => {
+      let { content, qCount, userChoice} = this.state
+      if (qCount > 0) {
+        // show resources 
+        console.log("You got multiple wrong you dimwit")
+      }
+      if (userChoice === content.answer) {
+          // send request to backend to change questions completed status to true
+          alert("Answer is correct")
+          this.setState({qCount:0})
+      } else {
+          alert("Answer is incorrect!")
+          let newCount = this.state.qCount
+          newCount++
+          this.setState({qCount:newCount})
+      }
+  }
   currentContent = (content) => {
     this.setState({content:content})
   }
@@ -22,16 +45,19 @@ class Content extends Component{
     })
   }
   contentExist() {
-    if (this.state.content.id !== undefined) {
-        return true
-    } else {
-        return false
+    if(this.state.content){
+      if (this.state.content.id !== undefined) {
+          return true
+      } else {
+          return false
+      }
     }
   }
 
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons} = this.props
+      console.log("userChoice",this.state.userChoice)
     return(
       <>
           <Row>
@@ -39,13 +65,13 @@ class Content extends Component{
               <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent}/>
             </Col>
             <Col sm={8}>
-                <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons}/>
+                <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
             </Col>
           </Row>
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}/>   
+                    <Footer modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
                 </Col> 
             </Row>
             }

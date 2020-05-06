@@ -6,10 +6,12 @@ import Question from './Question'
 class MainContent extends React.Component {  
     contentExist(){
         let { content } = this.props
-        if (content.id !== undefined) {
-            return true
-        } else {
-            return false
+        if(content){
+            if (content.id !== undefined) {
+                return true
+            } else {
+                return false
+            }
         }
     }
     checkType() {
@@ -26,21 +28,24 @@ class MainContent extends React.Component {
         let { content , questions, resources } = this.props 
         // check to see if content has been loaded
         if (this.contentExist()) {
+            if (content.code_module_id !== undefined){
             //returns a boolean value of true if it is a lesson, or false if not
             let isLesson = this.checkType();
             if (isLesson) {
                 // it is a lesson, find first question that belongs to current lesson
                 const findQuestion = questions.find(q=> q.lesson_id === content.id);
                 // Jehovah > all
-                // gets resources that belong to the question that belongs to the current lesson
-                const getResources = resources.filter(r=> r.question_id === findQuestion.id);
-                return getResources
-            } 
-
+                if(findQuestion !== undefined){
+                    // gets resources that belong to the question that belongs to the current lesson
+                    const getResources = resources.filter(r=> r.question_id === findQuestion.id);
+                    return getResources
+                    }
+                } 
+            }
         }
     } 
     render(){
-        const {content, lessons} = this.props
+        const {content, lessons, handleChange , userChoice} = this.props
         let contentExist = this.contentExist();
         // checks if the content is a lesson or question, renders appropriate content
         let isLesson = this.checkType();
@@ -71,6 +76,7 @@ class MainContent extends React.Component {
                         </Col>
                     </Row>
                     <Row>
+                        {resourcesL !== undefined &&
                         <Col sm={6}>
                             <h5>Resources</h5>
                             <ul>
@@ -81,12 +87,14 @@ class MainContent extends React.Component {
                                     )
                                 })}
                             </ul>
+                        
                         </Col>
+                        }
                     </Row>
                 </div>
             }
             {contentExist && !isLesson &&
-                <Question content = {content} lessons = {lessons}/>
+                <Question content = {content} lessons = {lessons} handleChange={handleChange} userChoice={userChoice}/>
             }
             </>
                 )
