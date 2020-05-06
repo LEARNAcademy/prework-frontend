@@ -3,6 +3,14 @@ import { Row, Col, Button } from 'reactstrap';
 import Progress from './Progress';
 /* eslint react/prop-types: 0 */
 class Footer extends React.Component {
+  contentExist() {
+      let { content } = this.props
+      if (content.id !== undefined) {
+          return true
+      } else {
+          return false
+      }
+  }
   getNextLesson() {
     // gets the next lesson and sends it back
     const { lessons, content } = this.props;
@@ -15,12 +23,12 @@ class Footer extends React.Component {
     return undefined;
   }
 
-  getPrevLesson() {
-    const { lessons, content } = this.props;
-    // gets the previous lesson
-    const prevLesson = lessons.filter(lessons => lessons.id === content.id - 1);
-    return prevLesson[0];
-  }
+  // getPrevLesson() {
+  //   const { lessons, content } = this.props;
+  //   // gets the previous lesson
+  //   const prevLesson = lessons.filter(lessons => lessons.id === content.id - 1);
+  //   return prevLesson[0];
+  // }
 
   getNextQuestion() {
     const { content, questions } = this.props;
@@ -40,13 +48,22 @@ class Footer extends React.Component {
         const nextQuestion = questions.filter(questions => questions.lesson_id === content.id).find((q) => !q.completed);
         return nextQuestion;
       }
-    }
+    } 
     return undefined;
   }
 
   sendContent(next) {
     // eslint-disable-next-line react/destructuring-assignment
     this.props.currentContent(next);
+  }
+
+  checkAnswer() {
+    let { userChoice , handleSubmit} = this.props;
+    if (userChoice !== undefined ){
+      handleSubmit();
+    } else {
+      alert("Make a selection homie")
+    }
   }
 
   checkContent() {
@@ -62,15 +79,42 @@ class Footer extends React.Component {
         this.sendContent(this.getNextQuestion());
         // if the next question returns undefined
       } else if (this.getNextQuestion() === undefined) {
-        console.log('You completed this lesson, continue');
+        this.sendContent(this.getNextLesson());
       } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
         console.log('Completed course homie!');
       }
     }
   }
+  isContentQuestion(){
+    let {content} = this.props
+
+    if (this.contentExist()) {
+      if (content.lesson_id !== undefined && !content.completed) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+  buttonType() {
+    if (this.contentExist()) {
+      if (this.isContentQuestion()) {
+        // it is a question, it the current questions completion is set to false, render check answer
+        return 'Check Answer'
+      } else {
+        return 'Continue'
+      }
+    }
+  }
+  
 
   render() {
-    const { lessons, modules } = this.props;
+    const { lessons, modules} = this.props;
+    let buttType = this.buttonType();
+    let isQuestion = this.isContentQuestion();
+     // updates userChoice state to radio selection
+    // this.props.handleChange() < ready to use
+    // this.props.userChoice < ready to use
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <>
@@ -81,7 +125,7 @@ class Footer extends React.Component {
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" style={{ textAlign: 'right' }}>
-            <Button onClick={() => this.checkContent()}>Continue</Button>
+            <Button onClick={() => isQuestion?this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>
         </Row>
       </>

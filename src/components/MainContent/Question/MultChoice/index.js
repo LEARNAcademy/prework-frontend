@@ -2,34 +2,17 @@ import React from 'react';
 import { Row, Col , Form, FormGroup, Input, Label , Button} from 'reactstrap';
 
 class MultChoice extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            userChoice:''
-        }
+    constructor(){
+        super()
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange(event){
-        this.setState({
-            userChoice:event.target.value
-        })
-    }
-    handleSubmit(event){
-        let { content } = this.props
-        event.preventDefault();
-        if(this.state.userChoice === content.answer){
-            // send request to backend to change questions completed status to true
-            alert("Answer is correct")
-        } else {
-            alert("Answer is incorrect!")
-        }
+        this.props.handleChange(event)
     }
     render(){
-        let { content , lessons } = this.props;
+        let { content , lessons, userChoice } = this.props;
         const lesson = lessons.filter(l=> content.lesson_id === l.id)[0]
-        console.log("userchoice",this.state.userChoice)
         return(
             <>
              <Row>
@@ -39,7 +22,7 @@ class MultChoice extends React.Component {
              </Row>
              <Row>
                  <Col sm={12}>
-                     <Form onSubmit={this.handleSubmit}>
+                     <Form>
                         {content.content.map((answers,i,arr) => {
                             return(
                                 <FormGroup check key={i}>
@@ -48,7 +31,7 @@ class MultChoice extends React.Component {
                                         type='radio' 
                                         name='questions'
                                         value={answers} 
-                                        checked = {this.state.userChoice === arr[i] }
+                                        checked = {userChoice === arr[i] }
                                         onChange={this.handleChange}
                                         />
                                         {answers}
@@ -56,7 +39,6 @@ class MultChoice extends React.Component {
                                 </FormGroup>
                             )
                         })}
-                        <Button type="submit">Check Answer</Button>
                     </Form>
                  </Col>
              </Row>
