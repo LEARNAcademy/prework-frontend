@@ -71,7 +71,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
+                    <Footer topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
                 </Col> 
             </Row>
             }

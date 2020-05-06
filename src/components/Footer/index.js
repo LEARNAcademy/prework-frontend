@@ -110,7 +110,7 @@ class Footer extends React.Component {
   
 
   render() {
-    const { lessons, modules} = this.props;
+    const { lessons, modules, topics} = this.props;
     let buttType = this.buttonType();
     let isQuestion = this.isContentQuestion();
      // updates userChoice state to radio selection
@@ -122,7 +122,7 @@ class Footer extends React.Component {
         <Row>
           <Col sm={6}>
             {/* progress meter on the left */}
-            <Progress modules={modules} lessons={lessons} />
+            <Progress modules={modules} lessons={lessons} topics={topics} />
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" style={{ textAlign: 'right' }}>
