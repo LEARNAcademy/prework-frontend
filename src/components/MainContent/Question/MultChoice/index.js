@@ -4,20 +4,36 @@ import { Row, Col , Form, FormGroup, Input, Label , Button} from 'reactstrap';
 class MultChoice extends React.Component {
     constructor(){
         super()
+        this.state = {
+            userMessage:""
+        }
         this.handleChange = this.handleChange.bind(this);
+        this.isCorrect = this.isCorrect.bind(this);
     }
 
+    isCorrect(){
+        const { content } = this.props;
+        if (content.correct !== null) {
+            let userMessage;
+            if(content.correct){
+                userMessage = "Answer is correct"
+                this.setState({userMessage:userMessage})
+            } else if (!content.correct){
+                userMessage = "Answer is incorrect"
+                this.setState({userMessage:userMessage})
+            }
+        }
+    }
     handleChange(event){
         this.props.handleChange(event)
     }
     render(){
-        let { content , lessons, userChoice } = this.props;
-        const lesson = lessons.filter(l=> content.lesson_id === l.id)[0]
+        let { content , userChoice } = this.props;
         return(
             <>
              <Row>
                  <Col sm={12}>
-                     <h4>{lesson.question}</h4>
+                     <h4>{content.title}</h4>
                  </Col>
              </Row>
              <Row>
