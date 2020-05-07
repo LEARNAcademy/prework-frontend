@@ -14,9 +14,41 @@ class LessonNav extends Component {
             this.props.currentContent(cLesson)
         }
     }
+    checkContent(){
+        const { content, modules , topics} = this.props
+        // grab the content thats being displayed
+        // check to see if content is a lesson
+        if(content){
+            if (content.code_module_id !== undefined) {
+                // finds the module that belongs to the current lesson
+                let module = modules.find(m => content.code_module_id === m.id)
+                // finds the topics that belongs to the model
+                let topic = topics.find(t=> t.id === module.topic_id)
+                // looks for the element thats 
 
+                let element = document.getElementById(`collapse${topic.id-1}`)
+
+                // eslint-disable-next-line array-callback-return
+                topics.map((t,i) => {
+                    if(element.id === `collapse${i}`){
+                        element.classList.add('show')
+                    } else {
+                        let element = document.getElementById(`collapse${i}`)
+                        element.classList.remove('show')
+                    }
+                })
+            }
+        } else if (!content){
+            topics.map((t,i)=> {
+                let element = document.getElementById(`collapse${i}`)
+                element.classList.remove('show')
+            })
+        }
+    }
+    
     render() {
-        let {modules, topics} = this.props
+        this.checkContent();
+        let {modules, topics} = this.props;
         return(
             <>
                 <aside className="lesson-nav">
@@ -34,7 +66,7 @@ class LessonNav extends Component {
                                     </h2>
                                     </div>
 
-                                    <div id={`collapse${i}`} className="collapse " aria-labelledby={`heading${i}`} data-parent="#accordionExample">
+                                    <div id={`collapse${i}`} className="collapse something" aria-labelledby={`heading${i}`} data-parent="#accordionExample">
                                         <div className="card-body">
                                             {/* Display lesson list */}
                                             <ul className="module-list">
