@@ -98,8 +98,10 @@ class Footer extends React.Component {
     }
   }
   buttonType() {
+    let {questionCorrect} = this.props;
+
     if (this.contentExist()) {
-      if (this.isContentQuestion()) {
+      if (this.isContentQuestion() && questionCorrect !== true) {
         // it is a question, it the current questions completion is set to false, render check answer
         return 'Check Answer'
       } else {

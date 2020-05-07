@@ -79,15 +79,6 @@ class App extends React.Component {
   }
 
   render(){
-    console.log("topics",this.state.topics)
-    console.log("modules",this.state.modules)
-    console.log("lessons",this.state.lessons)
-    console.log("questions",this.state.questions)
-    console.log("resources",this.state.resources)
-
-
-
-    
   const loggedIn = true;
   const {topics, modules, lessons, questions, resources} = this.state
   return (

@@ -10,8 +10,7 @@ class Content extends Component{
         this.state = {
             content: [],
             userChoice:'',
-            qCount:0,
-            
+            questionCorrect:null,
         }
     }
   
@@ -26,13 +25,21 @@ class Content extends Component{
       }
       if (userChoice === content.answer) {
           // send request to backend to change questions completed status to true
+          fetch(`questions/${content.id}`, {
+            method: 'put',
+            headers: {'Content-type': 'application/json' },
+            body: JSON.stringify({
+              completed:true
+            })
+          })
+          .then(res=> res.json())
+          .then((result)=> {
+            this.setState({questionCorrect:true})
+          })
           alert("Answer is correct")
-          this.setState({qCount:0})
       } else {
           alert("Answer is incorrect!")
-          let newCount = this.state.qCount
-          newCount++
-          this.setState({qCount:newCount})
+          this.setState({questionCorrect:false})
       }
   }
   currentContent = (content) => {
@@ -57,6 +64,7 @@ class Content extends Component{
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics} = this.props
+      let {questionCorrect} = this.state
       console.log("userChoice",this.state.userChoice)
     return(
       <>
@@ -71,7 +79,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
+                    <Footer questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
                 </Col> 
             </Row>
             }
