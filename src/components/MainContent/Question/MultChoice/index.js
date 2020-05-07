@@ -27,8 +27,16 @@ class MultChoice extends React.Component {
     handleChange(event){
         this.props.handleChange(event)
     }
+    splitContent = () =>{
+        let {content} = this.props 
+        let itemArr = content.content.split('ans:&*')
+        if(itemArr !== undefined){
+            return itemArr
+        }
+    }
     render(){
         let { content , userChoice } = this.props;
+        let iterableContent = this.splitContent();
         return(
             <>
              <Row>
@@ -39,7 +47,7 @@ class MultChoice extends React.Component {
              <Row>
                  <Col sm={12}>
                      <Form>
-                        {content.content.map((answers,i,arr) => {
+                        {iterableContent.map((answers,i,arr) => {
                             return(
                                 <FormGroup check key={i}>
                                     <Label check>
