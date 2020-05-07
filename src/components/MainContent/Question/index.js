@@ -2,7 +2,6 @@ import React from 'react';
 import MultChoice from './MultChoice'
 
 class Question extends React.Component{
-
     checkIfMult() {
         const { content } = this.props
         if(content.multiple_choice){
