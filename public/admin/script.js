@@ -236,8 +236,7 @@ var specialCharacters = [
   }
   const savePassword = () => {
     const url = ""
-    const data = JSON.stringify() //put form data here
-    fetch("http://example.com/api/endpoint/", {
+    fetch(url, {
       method: "post",
       headers: {
         'Accept': 'application/json',

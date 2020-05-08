@@ -43,7 +43,8 @@ class MainContent extends React.Component {
                 } 
             }
         }
-    } 
+    }
+    
     render(){
         const {content, lessons, handleChange , userChoice} = this.props
         let contentExist = this.contentExist();
@@ -91,6 +92,7 @@ class MainContent extends React.Component {
                         </Col>
                         }
                     </Row>
+
                 </div>
             }
             {contentExist && !isLesson &&
