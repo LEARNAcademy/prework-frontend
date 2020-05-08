@@ -3,6 +3,7 @@ import './App.css';
 import { Container } from 'reactstrap';
 import Home from './pages/Home';
 import Header from './components/Header';
+import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom'
 class App extends React.Component {
   constructor(props){
     super(props)
@@ -79,7 +80,7 @@ class App extends React.Component {
   }
 
   render(){
-  const loggedIn = true;
+  const loggedIn = false;
   const {topics, modules, lessons, questions, resources} = this.state
   return (
     // eslint-disable-next-line react/jsx-filename-extension

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import {Row, Col,  Button, Input, Form, FormGroup, Label} from 'reactstrap'
 import './style.css'
 
@@ -7,6 +8,7 @@ class SignIn extends Component{
   constructor(props){
     super(props)
       this.state = {
+        success:false,
         login: {
           email:"",
           password:""
@@ -14,7 +16,22 @@ class SignIn extends Component{
       }
   }
   handleSubmit(){
-    alert("Sent login request")
+    let {email, password } = this.state.login
+    fetch('http://localhost:3000/users/sign_in', {
+      // converting an object to a string
+    	body: JSON.stringify({
+    	  user:{
+    	    email: email,
+    	    password: password,
+    	  }}),
+      // specify the info being sent in JSON and the info returning should be JSON
+    	headers: {"Content-Type": "application/json"},
+    	method: "POST"
+    }).then((response) => {
+      if(response.ok){
+        alert("It worked")
+      }
+    })
   }
   handleLoginEmail(email){
     let loginUser = this.state.login
@@ -79,6 +96,11 @@ class SignIn extends Component{
                                 </Col>
                             </Row>
                         </Form>
+                        {this.state.success && 
+                        <Router>
+                            <Redirect to="/"/>
+                        </Router>
+                        }
                     </main>
                 </Col> 
             </Row>
