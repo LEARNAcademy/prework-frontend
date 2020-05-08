@@ -56,7 +56,9 @@ class Footer extends React.Component {
     // eslint-disable-next-line react/destructuring-assignment
     this.props.currentContent(next);
   }
-
+  updateQuestion(event){
+    this.props.handleQuestion(event)
+  }
   checkAnswer() {
     let { userChoice , handleSubmit} = this.props;
     if (userChoice !== undefined ){
@@ -66,70 +68,73 @@ class Footer extends React.Component {
     }
   }
 
-  checkContent() {
-    const { content } = this.props;
-    // eslint-disable-next-line no-unused-vars
-    let checkType;
-
-    // checks to see if content exists'
-    // eslint-disable-next-line no-console
-    if (content.id !== undefined) {
-      // content does exist, checks to see if the content is a lesson
-      // content is a lesson, now checks if theres any questions that belong to it
-      if (this.getNextQuestion() !== undefined) {
-        this.sendContent(this.getNextQuestion());
-        // if the next question returns undefined
-      } else if (this.getNextQuestion() === undefined) {
-        this.sendContent(this.getNextLesson());
-      } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
-        console.log('Completed course homie!');
-      }
-    }
-  }
   isContentQuestion(){
-    let {content, questionCorrect} = this.props
-
-    
+    let {content} = this.props
     if (this.contentExist()) {
-<<<<<<< HEAD
       if (content.lesson_id !== undefined) {
-=======
-      if (content.lesson_id !== undefined && questionCorrect !== true) {
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
         return true
       } else {
         return false
       }
     }
   }
+  checkContent() {
+    const { content } = this.props;
+    // eslint-disable-next-line no-unused-vars
+
+    // checks to see if content exists'
+    // eslint-disable-next-line no-console
+    if (content.id !== undefined) {
+      // content does exist, checks to see if the content is a lesson
+      // content is a lesson, now checks if theres any questions that belong to it
+      if (this.isContentQuestion) {
+        if(this.isQuestionCorrect) {
+          let val = null
+          this.updateQuestion(val)
+        }
+      }
+      if (this.getNextQuestion() !== undefined) {
+        this.sendContent(this.getNextQuestion());
+        // if the next question returns undefined
+      } else if (this.getNextQuestion() === undefined) {
+        this.sendContent(this.getNextLesson())
+        ;
+      } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
+        console.log('Completed course homie!');
+      }
+    }
+  }
   isQuestionCorrect(){
-    let {content} = this.props 
+    let {questionCorrect} = this.props 
     if (this.isContentQuestion()) {
-      // if the questions completed status isn't null, check to see if it's been completed
-      if (content.completed !== null) {
-        if(!content.completed){
+      // if the user has answered, check to see if their answer is true
+      if (questionCorrect !== null) {
+        if(questionCorrect){
           return true
         } else {
           return false
         }
       }
-    } else {
+      // if question hasn't been answered
       return false
     }
   }
   buttonType() {
-    let { content } = this.props 
-
+    let { questionCorrect } = this.props 
+    
     if (this.contentExist()) {
       if (this.isContentQuestion()) {
-        // content is a question, check to see if its been completed
-        if(!content.completed){
-          return 'Check Answer'
-        } else {
-          return 'Continue'
+        // content is a question, check the answer
+        if (questionCorrect !== null) {
+          // if the question is correct, continue 
+          if (questionCorrect) {
+            return 'Continue';
+          }
         }
-      } else {
-        return 'Continue'
+      return 'Check Answer';
+    } else {
+      // if its not a question, its a lesson, continue
+      return 'Continue';
       }
     }
   }
@@ -137,6 +142,7 @@ class Footer extends React.Component {
     const { lessons, modules, topics} = this.props;
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
+    let isQuestion = this.isContentQuestion();
     console.log("question correct",isQuestionCorrect)
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
@@ -151,7 +157,8 @@ class Footer extends React.Component {
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" style={{ textAlign: 'right' }}>
-            <Button onClick={() => isQuestionCorrect?this.checkAnswer():this.checkContent()}>{buttType}</Button>
+            {/* if it is a question, check to see if its correct, if it is correct, load next lesson */}
+            <Button onClick={() => isQuestion?isQuestionCorrect?this.checkContent():this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>
         </Row>
       </>

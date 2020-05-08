@@ -4,7 +4,7 @@ import SignIn from './SignIn'
 
 class Home extends Component{
   render(){
-    let { lessons, modules, questions, resources, loggedIn, topics} = this.props
+    const { lessons, modules, questions, resources, loggedIn, topics} = this.props
     
     return(
       <>

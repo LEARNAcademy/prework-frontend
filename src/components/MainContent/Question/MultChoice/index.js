@@ -1,9 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD
 import { Row, Col , Form, FormGroup, Input, Label } from 'reactstrap';
-=======
-import { Row, Col , Form, FormGroup, Input, Label , Button} from 'reactstrap';
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
 import './style.css'
 
 class MultChoice extends React.Component {
@@ -11,10 +7,6 @@ class MultChoice extends React.Component {
         super()
         this.handleChange = this.handleChange.bind(this);
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
     handleChange(event){
         this.props.handleChange(event)
     }
@@ -25,29 +17,22 @@ class MultChoice extends React.Component {
             return itemArr
         }
     }
-<<<<<<< HEAD
 
     userAnswered(){
         // checks to see that the user has submitted a response to the question
-        let {content} = this.props;
-        if(content.correct !== null){
-=======
-    questionAnswered() {
-        let {questionCorrect} = this.props;
-        if (questionCorrect !== null) {
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
+        let {questionCorrect } = this.props;
+        if(questionCorrect !== null){
             return true
         } else {
             return false
         }
     }
-<<<<<<< HEAD
     answerStatus(){
-        let {content} = this.props;
+        let {questionCorrect} = this.props;
         if (this.userAnswered()){
-            if(content.correct){
+            if(questionCorrect){
                 return "Correct"
-            } else if (!content.correct){
+            } else if (!questionCorrect){
                 return "Incorrect"
             }
         }
@@ -70,31 +55,6 @@ class MultChoice extends React.Component {
         // sets the className for the answer message 
         let defineClass = this.defineClass();
         console.log("content", content)
-=======
-    isCorrect(){
-        let {questionCorrect} = this.props
-        if (this.questionAnswered){
-            if(questionCorrect){
-                return "Correct"
-            } else {
-                return "Incorrect"
-            }
-        }
-     }
-     defineClassName(){
-         if(this.isCorrect() === "Correct"){
-            return true
-         } else if (this.isCorrect() === "Incorrect"){
-             return false
-         }
-     }
-    render(){
-        let { content , userChoice , questionCorrect} = this.props;
-        let iterableContent = this.splitContent();
-        let questionAnswered = this.questionAnswered();
-        let isCorrect = this.isCorrect();
-        let defineClass = this.defineClassName();
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
         return(
             <>
              <Row>
@@ -124,21 +84,12 @@ class MultChoice extends React.Component {
                     </Form>
                  </Col>
              </Row>
-<<<<<<< HEAD
              {answered &&
             <Row>
                 <Col sm={12}>
                     <p className={defineClass?'correctVal':'incorrectVal'}>{ansMessage}</p>
                 </Col>
             </Row>
-=======
-             {questionAnswered && 
-             <Row>
-                 <Col sm={12}>
-                    <p className={isCorrect?'correctVal':'incorrectVal'}>{isCorrect}</p>
-                 </Col>
-             </Row>
->>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
              }
             </>
         )
