@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Button } from 'reactstrap';
 import Progress from './Progress';
+import './style.css'
 /* eslint react/prop-types: 0 */
 class Footer extends React.Component {
   contentExist() {
@@ -81,7 +82,7 @@ class Footer extends React.Component {
   checkContent() {
     const { content } = this.props;
     // eslint-disable-next-line no-unused-vars
-
+    
     // checks to see if content exists'
     // eslint-disable-next-line no-console
     if (content.id !== undefined) {
@@ -97,8 +98,9 @@ class Footer extends React.Component {
         this.sendContent(this.getNextQuestion());
         // if the next question returns undefined
       } else if (this.getNextQuestion() === undefined) {
-        this.sendContent(this.getNextLesson())
-        ;
+        // update the lesson as completed
+        this.props.handleLessonUpdate();
+        this.sendContent(this.getNextLesson());
       } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
         console.log('Completed course homie!');
       }
@@ -143,7 +145,6 @@ class Footer extends React.Component {
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
-    console.log("question correct",isQuestionCorrect)
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
     // this.props.userChoice < ready to use
@@ -156,7 +157,7 @@ class Footer extends React.Component {
             <Progress modules={modules} lessons={lessons} topics={topics} />
           </Col>
           {/* continue button on the right */}
-          <Col sm={6} className="footer-button" style={{ textAlign: 'right' }}>
+          <Col sm={6} className="footer-button" >
             {/* if it is a question, check to see if its correct, if it is correct, load next lesson */}
             <Button onClick={() => isQuestion?isQuestionCorrect?this.checkContent():this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>

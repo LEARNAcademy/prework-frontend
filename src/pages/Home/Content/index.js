@@ -22,6 +22,24 @@ class Content extends Component{
     this.setState({questionCorrect:val})
   }
 
+  handleLessonUpdate = () => {
+    let {content} = this.state;
+    const {lessons} = this.props
+    console.log("content", content)
+    console.log("lessons", lessons)
+    if(content.lesson_id !== undefined) {
+      let lesson = lessons.filter(l => content.lesson_id === l.id)
+      console.log("current lesson", lesson)
+      fetch(`http://localhost:3000/lessons/${lesson[0].id}`, {
+      method: 'PUT', 
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify({
+        completed:true,
+      })
+    }).then(res=> res.json())
+    }
+  }
+
   handleSubmit = () => {
       let { content, userChoice} = this.state
       let val;
@@ -34,11 +52,11 @@ class Content extends Component{
       }
       // send request to backend to change questions completed status to true
       fetch(`http://localhost:3000/questions/${content.id}`, {
-        method: 'put',
+        method: 'PUT',
         headers: {'Content-type': 'application/json' },
         body: JSON.stringify({
-          completed:this.state.questionCorrect,
-          correct:this.state.questionCorrect
+          completed:val,
+          correct:val
         })
       }).then(res=> res.json())
   }
@@ -77,7 +95,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer handleQuestion = {this.handleQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice}/>   
+                    <Footer handleQuestion = {this.handleQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice} handleLessonUpdate = {this.handleLessonUpdate}/>   
                 </Col> 
             </Row>
             }

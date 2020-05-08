@@ -31,7 +31,7 @@ class Landing extends React.Component{
                             <Row>
                                 <Col sm={12}>
                                     <Label for="email">Email Address</Label>
-                                    <Input id="email" />
+                                    <Input id="email"/>
                                 </Col>
                             </Row>
                             <Row>
