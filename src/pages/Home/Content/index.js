@@ -19,6 +19,14 @@ class Content extends Component{
     this.setState({userChoice:event.target.value})
   }
   handleSubmit = () => {
+<<<<<<< HEAD
+      let { content, userChoice} = this.state
+      let val;
+      if(userChoice === content.answer){
+        val = true
+      } else if (userChoice !== content.answer) {
+        val = false
+=======
       let { content, qCount, userChoice} = this.state
       if (userChoice === content.answer) {
           // send request to backend to change questions completed status to true
@@ -37,17 +45,26 @@ class Content extends Component{
       } else {
           alert("Answer is incorrect!")
           this.setState({questionCorrect:false})
+>>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
       }
+      // send request to backend to change questions completed status to true
+      fetch(`http://localhost:3000/questions/${content.id}`, {
+        method: 'put',
+        headers: {'Content-type': 'application/json' },
+        body: JSON.stringify({
+          completed:val,
+          correct:val
+        })
+      }).then(res=> res.json())
   }
   currentContent = (content) => {
     this.setState({content:content})
   }
 
   currentLesson = (content) => {
-    this.setState({content:content},() => {
-      console.log("./pages/Home/Content/: state changed",this.state.content);
-    })
+    this.setState({content:content})
   }
+
   contentExist() {
     if(this.state.content){
       if (this.state.content.id !== undefined) {
@@ -57,7 +74,21 @@ class Content extends Component{
       }
     }
   }
-
+  checkAnswer(){
+    let {content} = this.props;
+    let {userChoice} = this.state;
+    // checks to see if 
+    let val;
+    if (this.contentExist()){
+      if (userChoice === content.answer){
+        val = true
+        this.setState({questionCorrect:val})
+      } else {
+        val = false
+        this.setState({questionCorrect:val})
+      }
+    }
+  }
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics} = this.props

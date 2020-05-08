@@ -91,31 +91,53 @@ class Footer extends React.Component {
 
     
     if (this.contentExist()) {
+<<<<<<< HEAD
+      if (content.lesson_id !== undefined) {
+=======
       if (content.lesson_id !== undefined && questionCorrect !== true) {
+>>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
         return true
       } else {
         return false
       }
     }
   }
+  isQuestionCorrect(){
+    let {content} = this.props 
+    if (this.isContentQuestion()) {
+      // if the questions completed status isn't null, check to see if it's been completed
+      if (content.completed !== null) {
+        if(!content.completed){
+          return true
+        } else {
+          return false
+        }
+      }
+    } else {
+      return false
+    }
+  }
   buttonType() {
-    let {questionCorrect} = this.props;
+    let { content } = this.props 
 
     if (this.contentExist()) {
-      if (this.isContentQuestion() && questionCorrect !== true) {
-        // it is a question, it the current questions completion is set to false, render check answer
-        return 'Check Answer'
+      if (this.isContentQuestion()) {
+        // content is a question, check to see if its been completed
+        if(!content.completed){
+          return 'Check Answer'
+        } else {
+          return 'Continue'
+        }
       } else {
         return 'Continue'
       }
     }
   }
-  
-
   render() {
     const { lessons, modules, topics} = this.props;
     let buttType = this.buttonType();
-    let isQuestion = this.isContentQuestion();
+    let isQuestionCorrect = this.isQuestionCorrect();
+    console.log("question correct",isQuestionCorrect)
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
     // this.props.userChoice < ready to use
@@ -129,7 +151,7 @@ class Footer extends React.Component {
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" style={{ textAlign: 'right' }}>
-            <Button onClick={() => isQuestion?this.checkAnswer():this.checkContent()}>{buttType}</Button>
+            <Button onClick={() => isQuestionCorrect?this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>
         </Row>
       </>
