@@ -14,18 +14,15 @@ class Content extends Component{
         }
     }
   
+  
   handleChange = (event) => {
     this.setState({userChoice:event.target.value})
   }
   handleSubmit = () => {
       let { content, qCount, userChoice} = this.state
-      if (qCount > 0) {
-        // show resources 
-        console.log("You got multiple wrong you dimwit")
-      }
       if (userChoice === content.answer) {
           // send request to backend to change questions completed status to true
-          fetch(`questions/${content.id}`, {
+          fetch(`http://localhost:3000/questions/${content.id}`, {
             method: 'put',
             headers: {'Content-type': 'application/json' },
             body: JSON.stringify({
@@ -65,7 +62,6 @@ class Content extends Component{
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics} = this.props
       let {questionCorrect} = this.state
-      console.log("userChoice",this.state.userChoice)
     return(
       <>
           <Row>
@@ -73,7 +69,7 @@ class Content extends Component{
               <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content}/>
             </Col>
             <Col sm={8}>
-                <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
+                <MainContent questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
             </Col>
           </Row>
           {checkContent &&
