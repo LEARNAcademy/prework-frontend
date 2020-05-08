@@ -1,6 +1,10 @@
 .correctVal{
     color:green;
 }
+<<<<<<< HEAD
 .incorrectVal {
+=======
+.incorrectVal{
+>>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
     color:red;
 }

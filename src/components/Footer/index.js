@@ -87,10 +87,15 @@ class Footer extends React.Component {
     }
   }
   isContentQuestion(){
-    let {content} = this.props
+    let {content, questionCorrect} = this.props
 
+    
     if (this.contentExist()) {
+<<<<<<< HEAD
       if (content.lesson_id !== undefined) {
+=======
+      if (content.lesson_id !== undefined && questionCorrect !== true) {
+>>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
         return true
       } else {
         return false

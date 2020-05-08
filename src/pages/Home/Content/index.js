@@ -14,16 +14,38 @@ class Content extends Component{
         }
     }
   
+  
   handleChange = (event) => {
     this.setState({userChoice:event.target.value})
   }
   handleSubmit = () => {
+<<<<<<< HEAD
       let { content, userChoice} = this.state
       let val;
       if(userChoice === content.answer){
         val = true
       } else if (userChoice !== content.answer) {
         val = false
+=======
+      let { content, qCount, userChoice} = this.state
+      if (userChoice === content.answer) {
+          // send request to backend to change questions completed status to true
+          fetch(`http://localhost:3000/questions/${content.id}`, {
+            method: 'put',
+            headers: {'Content-type': 'application/json' },
+            body: JSON.stringify({
+              completed:true
+            })
+          })
+          .then(res=> res.json())
+          .then((result)=> {
+            this.setState({questionCorrect:true})
+          })
+          alert("Answer is correct")
+      } else {
+          alert("Answer is incorrect!")
+          this.setState({questionCorrect:false})
+>>>>>>> b004260df19e530decfd1d5c36163f334a0eb263
       }
       // send request to backend to change questions completed status to true
       fetch(`http://localhost:3000/questions/${content.id}`, {
@@ -78,7 +100,7 @@ class Content extends Component{
               <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content}/>
             </Col>
             <Col sm={8}>
-                <MainContent content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
+                <MainContent questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
             </Col>
           </Row>
           {checkContent &&
