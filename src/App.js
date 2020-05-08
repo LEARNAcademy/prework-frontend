@@ -3,6 +3,7 @@ import './App.css';
 import { Container } from 'reactstrap';
 import Home from './pages/Home';
 import Header from './components/Header';
+import Admin from './pages/Home/Admin'
 import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom'
 class App extends React.Component {
   constructor(props){
@@ -82,6 +83,7 @@ class App extends React.Component {
   render(){
   const loggedIn = false;
   const {topics, modules, lessons, questions, resources} = this.state
+  let isAdmin = true
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -89,8 +91,13 @@ class App extends React.Component {
       <Header />
       {/* show home page */}
       <Container>
+        {!isAdmin &&
         <Home modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
+        }
         {/* Displays Footer */}
+        {isAdmin && 
+          <Admin/>
+        }
       </Container>
     </>
   );
