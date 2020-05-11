@@ -82,8 +82,8 @@ class App extends React.Component {
 
   render(){
   const loggedIn = false;
-  const {topics, modules, lessons, questions, resources} = this.state
-  let isAdmin = true
+  const {topics, modules, lessons, questions, resources} = this.state;
+  let isAdmin = true;
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -92,7 +92,7 @@ class App extends React.Component {
       {/* show home page */}
       <Container>
         {!isAdmin &&
-        <Home modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
+          <Home modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
         }
         {/* Displays Footer */}
         {isAdmin && 

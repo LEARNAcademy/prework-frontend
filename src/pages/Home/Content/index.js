@@ -18,8 +18,11 @@ class Content extends Component{
     this.setState({userChoice:event.target.value})
   }
   handleQuestion = () => {
+    // 
     let val = null
-    this.setState({questionCorrect:val})
+    this.setState({
+      questionCorrect:val,
+      userChoice:''})
   }
 
   handleLessonUpdate = () => {
