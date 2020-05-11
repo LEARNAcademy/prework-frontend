@@ -81,9 +81,12 @@ class App extends React.Component {
   }
 
   render(){
-  const loggedIn = false;
+  const current_user = {"id":1,"email":"artortega.25@gmail.com","last_q": 7}
+  console.log("lessonsss", this.state.lessons)
+  const loggedIn = true;
   const {topics, modules, lessons, questions, resources} = this.state;
-  let isAdmin = true;
+  let isAdmin = false;
+  console.log("current_user",current_user.id)
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -92,7 +95,7 @@ class App extends React.Component {
       {/* show home page */}
       <Container>
         {!isAdmin &&
-          <Home modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
+          <Home current_user={current_user} modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
         }
         {/* Displays Footer */}
         {isAdmin && 

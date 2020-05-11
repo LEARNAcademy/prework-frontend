@@ -83,22 +83,22 @@ class Content extends Component{
   }
   render(){
       let checkContent = this.contentExist();
-      let { questions, resources, modules, lessons, topics} = this.props
+      let { questions, resources, modules, lessons, topics, current_user} = this.props
       let {questionCorrect} = this.state
     return(
       <>
           <Row>
             <Col sm={4}>
-              <LessonNav modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content}/>
+              <LessonNav current_user = {current_user} modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content} questions={questions}/>
             </Col>
             <Col sm={8}>
-                <MainContent questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
+                <MainContent current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice}/>
             </Col>
           </Row>
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer handleQuestion = {this.handleQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice} handleLessonUpdate = {this.handleLessonUpdate}/>   
+                    <Footer current_user = {current_user} handleQuestion = {this.handleQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content} handleSubmit={this.handleSubmit} userChoice = {this.state.userChoice} handleLessonUpdate = {this.handleLessonUpdate}/>   
                 </Col> 
             </Row>
             }

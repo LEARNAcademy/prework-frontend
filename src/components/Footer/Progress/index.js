@@ -9,17 +9,22 @@ class Progress extends React.Component{
         }
     }
     fillBarLogic() {
-        let {lessons} = this.props
+        let {questions, current_user, lessons} = this.props
         // get percentage of completed amount
         let completionCount = 0
         // divides 100 by lesson count
-        let lessonCount = 100/lessons.length
-        // percent equivalent of each lesson
-        let percentPerLesson = lessonCount/100
-        // number of lessons that have been completed 
-        let cLessons = lessons.filter((l)=> l.completed === true).length
+        console.log("questions",questions)
+        let questionCount = 100/questions.length
+        // let lessonCount = 100/lessons.length
+        // percent equivalent of each question
+        let percentPerQuestion = questionCount/100
+        // let percentPerLesson = lessonCount/100
+        // number of questions that have been completed 
+        let cQuestions = questions.filter((q)=> q.id < current_user.last_q).length
+        // let cLessons = lessons.filter((l)=> l.completed === true).length
         // the completed count as a whole number
-        completionCount = (percentPerLesson * cLessons)*100
+        completionCount = (percentPerQuestion * cQuestions)*100
+        // completionCount = (percentPerLesson * cLessons)*100
         // updates the state to completionCount
         this.setState({percentage:completionCount})
         

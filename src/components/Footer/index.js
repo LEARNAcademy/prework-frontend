@@ -141,7 +141,7 @@ class Footer extends React.Component {
     }
   }
   render() {
-    const { lessons, modules, topics} = this.props;
+    const { lessons, modules, topics, current_user, questions} = this.props;
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
@@ -154,7 +154,7 @@ class Footer extends React.Component {
         <Row>
           <Col sm={6}>
             {/* progress meter on the left */}
-            <Progress modules={modules} lessons={lessons} topics={topics} />
+            <Progress questions = {questions}current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" >
