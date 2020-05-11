@@ -39,16 +39,24 @@ class LessonNav extends Component {
                 })
             }
         } else if (!content){
-            topics.map((t,i)=> {
+            topics.map((t,i) => {
                 let element = document.getElementById(`collapse${i}`)
                 element.classList.remove('show')
             })
         }
     }
+
     
     render() {
         this.checkContent();
-        let {modules, topics} = this.props;
+        let {modules, topics, questions, current_user, lessons} = this.props;
+        let questMod= questions.filter((q)=> current_user.last_q === q.id)
+        console.log("questMod",questMod);
+        let lessonMod = lessons.filter((l)=> questMod[0].lesson_id === l.id)
+        console.log("lessonMod",lessonMod);
+        let finalMod = modules.filter((m)=> lessonMod[0].code_module_id === m.id)
+        console.log("finalMod",finalMod);
+        
         return(
             <>
                 <aside className="lesson-nav">
@@ -71,6 +79,7 @@ class LessonNav extends Component {
                                             {/* Display lesson list */}
                                             <ul className="module-list">
                                                 {modules.map((m,i,arr) => {
+                                                    let completed = false;
                                                     let flag = ""
                                                     // eslint-disable-next-line no-lone-blocks
                                                     {/* if the current lesson isn't the first lesson, disable it by default*/}
@@ -80,16 +89,23 @@ class LessonNav extends Component {
                                                     // eslint-disable-next-line no-lone-blocks
                                                     {/* checks to see if lessons code module id matches the current modules id */}
                                                     if(m.topic_id === topic.id){
-                                                        if(i === 0 || arr[i].completed){
+                                                    {/* the current mod id is equal to or less than the  */}
+                                                        if(i === 0 ){
                                                             flag = ''
                                                         }
                                                         // eslint-disable-next-line no-lone-blocks
                                                         {/* if a previous lesson exists and its completed, override the disabled flag and enable current lesson*/}
-                                                        if(i-1 !== -1 && arr[i-1].completed){
+
+                                                        if(arr[i].id <= finalMod[0].id){
                                                             flag=''
                                                         }
+                                                        if(m.id <= finalMod[0].id){
+                                                            completed = true;
+                                                        }
+                                                    
+                                                        
                                                         return (
-                                                            <li key={i} className={`nav-list ${flag} ${m.completed ? 'lesson-completed' : ''}`}   onClick={ ()=>this.captureContent(m)}>{m.lesson}</li>
+                                                            <li key={i} className={`nav-list ${flag} ${completed ? 'lesson-completed' : ''}`}   onClick={()=>this.captureContent(m)}>{m.lesson}</li>
 
                                                         ) 
                                                     }
