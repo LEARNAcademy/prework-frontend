@@ -35,7 +35,7 @@ class MainContent extends React.Component {
                 // it is a lesson, find first question that belongs to current lesson
                 const findQuestion = questions.find(q=> q.lesson_id === content.id);
                 // Jehovah > all
-                if(findQuestion !== undefined){
+                if (findQuestion !== undefined) {
                     // gets resources that belong to the question that belongs to the current lesson
                     const getResources = resources.filter(r=> r.question_id === findQuestion.id);
                     return getResources

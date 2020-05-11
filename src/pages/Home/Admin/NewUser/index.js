@@ -1,61 +1,42 @@
 import React from 'react';
-import {Row, Col , Button, Form, Input, Label} from 'reactstrap'
+import {Row, Col , Button, Form, Input, Label, FormGroup} from 'reactstrap'
 import './style.css'
 
 class NewUser extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            mod:true,
             user: {
                 email: null,
                 password:null,
             }
         }
     }
-
+      handleToggle(){
+        if (this.state.mod) {
+          this.setState({mod:false})
+        } else {
+          this.setState({mod:true})
+        }
+      }
       getPasswordOptions() {
         // Variable to store length of password from user input
-        let length = parseInt(
-          prompt('How many characters would you like your password to contain?')
-        );
-      
-        // Conditional statement to check if password length is a number. Prompts end if this evaluates false
-        if (isNaN(length) === true) {
-          alert('Password length must be provided as a number');
-          return;
-        }
-      
-        // Conditional statement to check if password length is at least 8 characters long. Prompts end if this evaluates false
-        if (length < 8) {
-          alert('Password length must be at least 8 characters');
-          return;
-        }
+        let length = 10
       
         // Conditional statement to check if password length is less than 128 characters long. Prompts end if this evaluates false
-        if (length > 128) {
-          alert('Password length must less than 129 characters');
-          return;
-        }
       
         // Variable to store boolean regarding the inclusion of special characters
-        let hasSpecialCharacters = window.confirm(
-          'Click OK to confirm including special characters.'
-        );
+        let hasSpecialCharacters = true;
       
         // Variable to store boolean regarding the inclusion of numeric characters
-        let hasNumericCharacters = window.confirm(
-          'Click OK to confirm including numeric characters.'
-        );
+        let hasNumericCharacters = true;
       
         // Variable to store boolean regarding the inclusion of lowercase characters
-        let hasLowerCasedCharacters = window.confirm(
-          'Click OK to confirm including lowercase characters.'
-        );
+        let hasLowerCasedCharacters = true;
       
         // Variable to store boolean regarding the inclusion of uppercase characters
-        let hasUpperCasedCharacters = window.confirm(
-          'Click OK to confirm including uppercase characters.'
-        );
+        let hasUpperCasedCharacters = true;
       
         // Conditional statement to check if user does not include any types of characters. Password generator ends if all four variables evaluate to false
         if (
@@ -169,8 +150,7 @@ class NewUser extends React.Component{
               'Y',
               'Z'
             ];
-        let options = this.getPasswordOptions()
-        console.log("options", options)
+        let options = this.getPasswordOptions();
         // Variable to store password as it's being concatenated
         let result = [];
       
@@ -230,6 +210,7 @@ class NewUser extends React.Component{
         }
       }
       handleSubmit() {
+
         let {user} = this.state 
         fetch('http://localhost:3000/users', {
             body: JSON.stringify({
@@ -245,7 +226,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-                alert("it worked homie")
+                this.handleToggle()
             }
         })
       }
@@ -258,54 +239,59 @@ class NewUser extends React.Component{
         let updatedUser = this.state.user
         updatedUser.password = password 
         this.setState({user:updatedUser})
-    }
+      }
 
     render(){
+        console.log("modal",this.state.mod)
         return(
             <>
                 <Row>
                     <Col sm={12}>
                         <Row>
                             <Col sm={12}>
-                                <h3>LEARN Prework App User Creator</h3>
+                                <h3 style={{textAlign:"right"}}>Hello, Admin</h3>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={12}>
-                                <h2>Create a New User</h2>
+                                <h5 style={{margin:"0 auto", textAlign:"center",marginBottom:"30px"}}>Create a New User</h5>
                             </Col>
                         </Row>
                         <Form>
                             <Row>
                                 <Col>
-                                    <Label for="email">Email</Label>
-                                    <Input type="email" id="email" onChange={e => {
+                                  <FormGroup>
+                                    <Input type="email" name ="email" id="email" placeholder="Email" onChange={e => {
                                         let email = e.target.value 
                                         this.updateEmail(email)
                                     }}/>
+                                  </FormGroup>
                                 </Col>
                             </Row>
                         </Form>
                         <Row>
-                            <Col>
-                                <Button onClick={()=>this.generatePassword()}>Generate Password</Button>
-                            </Col>
-                            <Col>
-                                <Button onClick={()=>this.handleSubmit()}>Create User</Button>
+                            <Col style={{textAlign:"center"}}>
+                                <Button outline color="success" onClick={()=>this.generatePassword()}>Generate Password</Button>
                             </Col>
                         </Row>
+                      
                         {this.state.user.password !== null && 
                         <>
                             <Row>
-                                <Col>
-                                    <p>Users Password:</p>
-                                </Col>
+                              <Col sm={12}>
+                                <p style={{textAlign:"center",marginTop:"30px"}}>Please save the users password:</p>
+                              </Col>
                             </Row>
                             <Row>
-                                <Col>
-                                    <p>{this.state.user.password}</p>
-                                </Col>
+                              <Col sm={12} style={{textAlign:"center",marginTop:"20px",margin:"0 auto"}}>
+                                <Input readOnly type="textarea" name="text" style={{width:"460px",height:"50px",margin:"0 auto"}} value={this.state.user.password}/>
+                              </Col>
                             </Row>
+                            <Row>
+                              <Col style={{textAlign:"center",marginTop:"20px"}}>
+                                  <Button outline color="success" onClick={()=>this.handleSubmit()} >Create User</Button>
+                              </Col>
+                            </Row>  
                         </>
                         }
                     </Col>
