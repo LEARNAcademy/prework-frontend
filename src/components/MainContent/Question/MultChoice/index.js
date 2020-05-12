@@ -12,7 +12,7 @@ class MultChoice extends React.Component {
     }
     splitContent = () =>{
         let {content} = this.props 
-        let itemArr = content.content.split('ans:&*')
+        let itemArr = content.content.split('*/')
         if(itemArr !== undefined){
             return itemArr
         }

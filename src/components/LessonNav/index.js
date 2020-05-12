@@ -50,13 +50,6 @@ class LessonNav extends Component {
     render() {
         this.checkContent();
         let {modules, topics, questions, current_user, lessons} = this.props;
-        let questMod= questions.filter((q)=> current_user.last_q === q.id)
-        console.log("questMod",questMod);
-        let lessonMod = lessons.filter((l)=> questMod[0].lesson_id === l.id)
-        console.log("lessonMod",lessonMod);
-        let finalMod = modules.filter((m)=> lessonMod[0].code_module_id === m.id)
-        console.log("finalMod",finalMod);
-        
         return(
             <>
                 <aside className="lesson-nav">
@@ -88,6 +81,12 @@ class LessonNav extends Component {
                                                     }
                                                     // eslint-disable-next-line no-lone-blocks
                                                     {/* checks to see if lessons code module id matches the current modules id */}
+                                                    let questMod= questions.filter((q)=> current_user.last_q === q.id)[0]
+
+                                                    let lessonMod = lessons.filter((l)=> questMod.lesson_id === l.id)[0]
+
+                                                    let finalMod = modules.filter((m)=> lessonMod.code_module_id === m.id)
+
                                                     if(m.topic_id === topic.id){
                                                     {/* the current mod id is equal to or less than the  */}
                                                         if(i === 0 ){
@@ -99,7 +98,7 @@ class LessonNav extends Component {
                                                         if(arr[i].id <= finalMod[0].id){
                                                             flag=''
                                                         }
-                                                        if(m.id <= finalMod[0].id){
+                                                        if(m.id < finalMod[0].id){
                                                             completed = true;
                                                         }
                                                     
