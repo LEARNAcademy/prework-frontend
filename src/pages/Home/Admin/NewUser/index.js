@@ -226,7 +226,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-                this.handleToggle()
+                console.log("response",response)
             }
         })
       }
@@ -242,7 +242,6 @@ class NewUser extends React.Component{
       }
 
     render(){
-        console.log("modal",this.state.mod)
         return(
             <>
                 <Row>

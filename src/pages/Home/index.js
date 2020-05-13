@@ -4,7 +4,7 @@ import SignIn from './SignIn'
 
 class Home extends Component{
   render(){
-    const { lessons, modules, questions, resources, loggedIn, topics, current_user} = this.props
+    const { lessons, modules, questions, resources, loggedIn, topics, current_user, loadUserData} = this.props
     
     return(
       <>
@@ -14,7 +14,7 @@ class Home extends Component{
         }
         {/* otherwise, show signin component */}
         {!loggedIn &&
-        <SignIn />
+        <SignIn loadUserData = {loadUserData}/>
         }
       </>
     )
