@@ -6,7 +6,7 @@ import {Container, Row, Col, Button} from 'reactstrap'
 class Header extends React.Component{
     checkUser(){
         let {current_user} = this.props
-        if (current_user.id !== undefined){
+        if (current_user !== null){
             return true
         } else {
             return false

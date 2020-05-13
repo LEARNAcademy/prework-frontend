@@ -14,7 +14,6 @@ class App extends React.Component {
       lessons:[],
       questions:[],
       resources:[],
-      current_user:[],
       authToken:"",
     }
     this.getTopics();
@@ -79,22 +78,21 @@ class App extends React.Component {
           },
           method:"POST"
       }).then((response)=> {
-          console.log("res",response)
           if(response.ok){
               localStorage.setItem('authToken', response.headers.get("Authorization"));
-              return response
+              return response.json();
           }
-      }).then((userJson)=> console.log("userJson",userJson))
+      }).then((userJson)=> {
+            localStorage.setItem('user',userJson)
+      })
   }
   componentWillMount(){
-    
     if (localStorage.getItem('authToken') !== null) {
         let token = localStorage.getItem('authToken')
         let splitToken = token.split(' ')
         let realToken = splitToken[1]
         this.setState({authToken:realToken})
     }
-
   }
 
   // setToken = () => {
@@ -159,32 +157,39 @@ class App extends React.Component {
   //     this.setState({resources:resourceArr})
   //   })
   // }
-  // isLogged(){
-  //   let {current_user} = this.state
-  //   console.log("current",current_user)
-  //   if (current_user.length > 0) {
-  //     return true
-  //   } else {
-  //     return false
-  //   }
-  // }
-  // isAdmin(){
-  //   let {current_user } = this.state 
-  //   if (this.isLogged()) {
-  //     if (current_user[0].admin) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   }
-  // }
+  isLogged(){
+    let user = localStorage.getItem('user')
+    if (user !== null) {
+      return true
+    } else {
+      return false
+    }
+  }
+  grabUser(){
+    let user = localStorage.getItem('user')
+    if (user !== null) {
+      return user
+    } else {
+      return null
+    }
+  }
+  isAdmin(){
+    let user = localStorage.getItem('user')
+    if (this.isLogged()) {
+      if (user.admin) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
 
   render(){
   // \6yY\Gu6d#
-  const current_user = {"id":1,"email":"artortega.25@gmail.com","last_q": 5}
-  const loggedIn = false
+  const current_user = this.grabUser();
+  const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources} = this.state;
-  let isAdmin = false
+  let isAdmin = this.isAdmin();
   // console.log("user",this.state.current_user)
   // console.log("topics",this.state.topics)
   // console.log("modules",this.state.modules)
