@@ -9,6 +9,7 @@ class SignIn extends Component{
     super(props)
       this.state = {
         success:false,
+        user:{},
         login: {
           email:"",
           password:""
@@ -16,23 +17,10 @@ class SignIn extends Component{
       }
   }
   handleSubmit(){
-    let {email, password } = this.state.login
-    fetch('http://localhost:3000/users/sign_in', {
-      // converting an object to a string
-    	body: JSON.stringify({
-    	  user:{
-    	    email: email,
-    	    password: password,
-    	  }}),
-      // specify the info being sent in JSON and the info returning should be JSON
-    	headers: {"Content-Type": "application/json"},
-    	method: "POST"
-    }).then((response) => {
-      if(response.ok){
-        alert("It worked")
-      }
-    })
+   let {email, password} = this.state.login
+    this.props.loadUserData(email,password)
   }
+  
   handleLoginEmail(email){
     let loginUser = this.state.login
     loginUser.email = email 
@@ -44,6 +32,9 @@ class SignIn extends Component{
     this.setState({login:loginUser})
   }
   render(){
+    // check to see if I have an auth token in local storage
+    // if i do, get the user 
+    // if both of those things exist, set them in the s
     return(
         <>
             <Row>
@@ -54,6 +45,7 @@ class SignIn extends Component{
                         </Row>
                         <Row>
                             <Col><h3>Log In</h3></Col>
+      
                         </Row>
                         <Form>
                             <Row>
