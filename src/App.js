@@ -16,7 +16,9 @@ class App extends React.Component {
       resources:[],
       authToken:"",
       current_user:[],
-      percentage: 0
+      percentage: 0,
+      code: '// Code here',
+      mode: 'xml'
     }
     this.getTopics();
     this.getModules();
@@ -31,6 +33,7 @@ class App extends React.Component {
     this.getQuestions();
     this.getResources();
     this.fillBarLogic();
+    this.setState({ mode: 'xml'});
   }
   async getTopics(){
     let response = await fetch('http://localhost:3000/topics');
@@ -144,7 +147,8 @@ class App extends React.Component {
   render(){
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user} = this.state;
-  let isAdmin = this.isAdmin();
+  let isAdmin = false
+  // this.isAdmin();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
