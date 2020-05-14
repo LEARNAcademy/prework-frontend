@@ -13,7 +13,6 @@ class Progress extends React.Component{
         // get percentage of completed amount
         let completionCount = 0
         // divides 100 by lesson count
-        console.log("questions",questions)
         let questionCount = 100/questions.length
         // let lessonCount = 100/lessons.length
         // percent equivalent of each question

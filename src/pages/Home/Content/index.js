@@ -18,7 +18,6 @@ class Content extends Component{
     this.setState({userChoice:event.target.value})
   }
   handleQuestion = () => {
-    // 
     let val = null
     this.setState({
       questionCorrect:val,
@@ -28,11 +27,8 @@ class Content extends Component{
   handleLessonUpdate = () => {
     let {content} = this.state;
     const {lessons} = this.props
-    console.log("content", content)
-    console.log("lessons", lessons)
     if(content.lesson_id !== undefined) {
       let lesson = lessons.filter(l => content.lesson_id === l.id)
-      console.log("current lesson", lesson)
       fetch(`http://localhost:3000/lessons/${lesson[0].id}`, {
       method: 'PUT', 
       headers: {'Content-type': 'application/json'},

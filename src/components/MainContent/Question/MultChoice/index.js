@@ -54,7 +54,6 @@ class MultChoice extends React.Component {
         let ansMessage = this.answerStatus();
         // sets the className for the answer message 
         let defineClass = this.defineClass();
-        console.log("content", content)
         return(
             <>
              <Row>

@@ -102,10 +102,8 @@ class App extends React.Component {
   isLogged(){
     let {current_user} = this.state
     if (current_user.length !== 0 || current_user.id ) {
-      console.log("kept",current_user)
       return true
     } else {
-      console.log('false')
       return false
     }
   }
@@ -121,18 +119,9 @@ class App extends React.Component {
   }
 
   render(){
-  // \6yY\Gu6d#
-  console.log("current",this.state.current_user)
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user} = this.state;
   let isAdmin = this.isAdmin();
-  // console.log("user",this.state.current_user)
-  // console.log("topics",this.state.topics)
-  // console.log("modules",this.state.modules)
-  // console.log("lessons",this.state.lessons)
-  // console.log("questions",this.state.questions)
-
-
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>

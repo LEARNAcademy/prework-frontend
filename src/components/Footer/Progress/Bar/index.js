@@ -15,7 +15,6 @@ const Bar = (props) => {
         "display":"inline-block",
         "float":"left"
     }
-    console.log(modLength)
     return(
         <div className="progress bar">
             <div className="barOverlay">
