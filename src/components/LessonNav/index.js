@@ -50,6 +50,10 @@ class LessonNav extends Component {
     render() {
         this.checkContent();
         let {modules, topics, questions, current_user, lessons} = this.props;
+
+        console.log("q at",questions)
+        console.log("modules",modules)
+        console.log("lesson",lessons)
         return(
             <>
                 <aside className="lesson-nav">
@@ -81,11 +85,10 @@ class LessonNav extends Component {
                                                     }
                                                     // eslint-disable-next-line no-lone-blocks
                                                     {/* checks to see if lessons code module id matches the current modules id */}
-                                                    let questMod= questions.filter((q)=> current_user.last_q === q.id)[0]
+                                                    let lesson = lessons.find((l)=> current_user.last_l < l.id)
+                                                    {/* the module the user is currently on */}
+                                                    let mod = modules.find((m) => lesson.code_module_id === m.id)
 
-                                                    let lessonMod = lessons.filter((l)=> questMod.lesson_id === l.id)[0]
-
-                                                    let finalMod = modules.filter((m)=> lessonMod.code_module_id === m.id)
 
                                                     if(m.topic_id === topic.id){
                                                     {/* the current mod id is equal to or less than the  */}
@@ -95,10 +98,10 @@ class LessonNav extends Component {
                                                         // eslint-disable-next-line no-lone-blocks
                                                         {/* if a previous lesson exists and its completed, override the disabled flag and enable current lesson*/}
 
-                                                        if(arr[i].id <= finalMod[0].id){
+                                                        if(m.id <= mod.id){
                                                             flag=''
                                                         }
-                                                        if(m.id < finalMod[0].id){
+                                                        if(m.id < mod.id){
                                                             completed = true;
                                                         }
                                                     

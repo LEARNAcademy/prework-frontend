@@ -99,75 +99,13 @@ class App extends React.Component {
       this.setState({current_user:user})
     }
   }
-
-  // setToken = () => {
-  //     fetch('http://localhost:3000/users/sign_in.json', 
-  //     ).then(response => {
-  
-  //       if (response.status === 200) {
-  //         return response.json();
-  //       }
-  //     }).then(topicArr => {
-  //       this.setState({topics:topicArr});
-  //     });
-  //   };
-
-  // getTopics = () => {
-  //   fetch('http://localhost:3000/topics').then(response => {
-
-  //     if (response.status === 200) {
-  //       return response.json();
-  //     }
-  //   }).then(topicArr => {
-  //     this.setState({topics:topicArr});
-  //   });
-  // };
-
-  // getModules = () => {
-  //   fetch('http://localhost:3000/code_modules').then(response => {
-  //     if (response.status === 200) {
-  //       return response.json();
-  //     }
-  //   }).then(modulesArr => {
-  //     this.setState({modules:modulesArr});
-  //   })
-  // }
-
-  // getLessons = () => {
-  //   fetch('http://localhost:3000/lessons').then(response => {
-  //     if (response.status === 200) {
-  //       return response.json();
-  //     }
-  //   }).then(lessonArr => {
-  //     this.setState({lessons:lessonArr})
-  //   })
-  // }
-
-  // getQuestions = () => {
-  //   fetch('http://localhost:3000/questions').then(response => {
-  //     if (response.status === 200) {
-  //       return response.json();
-  //     }
-  //   }).then(questionsArr => {
-  //     this.setState({questions:questionsArr})
-  //   })
-  // }
-
-  // getResources = () => {
-  //   fetch('http://localhost:3000/resources').then(response => {
-  //     if (response.status === 200) {
-  //       return response.json();
-  //     }
-  //   }).then(resourceArr => {
-  //     this.setState({resources:resourceArr})
-  //   })
-  // }
   isLogged(){
     let {current_user} = this.state
-    if (current_user.id !== null ) {
-      console.log('true')
+    if (current_user.length !== 0 || current_user.id ) {
+      console.log("kept",current_user)
       return true
     } else {
+      console.log('false')
       return false
     }
   }
