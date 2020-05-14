@@ -16,6 +16,7 @@ class App extends React.Component {
       resources:[],
       authToken:"",
       current_user:[],
+      percentage: 0
     }
     this.getTopics();
     this.getModules();
@@ -29,6 +30,7 @@ class App extends React.Component {
     this.getLessons();
     this.getQuestions();
     this.getResources();
+    this.fillBarLogic();
   }
   async getTopics(){
     let response = await fetch('http://localhost:3000/topics');
@@ -117,6 +119,27 @@ class App extends React.Component {
       }
     }
   }
+  fillBarLogic() {
+    let {questions, current_user } = this.state
+    // get percentage of completed amount
+    if (this.isLogged()) {
+      let completionCount = 0
+      // divides 100 by lesson count
+      let questionCount = 100/questions.length
+      // let lessonCount = 100/lessons.length
+      // percent equivalent of each question
+      let percentPerQuestion = questionCount/100
+      // let percentPerLesson = lessonCount/100
+      // number of questions that have been completed 
+      let cQuestions = questions.filter((q)=> q.id < current_user.last_q).length
+      // let cLessons = lessons.filter((l)=> l.completed === true).length
+      // the completed count as a whole number
+      completionCount = (percentPerQuestion * cQuestions)*100
+      // completionCount = (percentPerLesson * cLessons)*100
+      // updates the state to completionCount
+      this.setState({percentage:completionCount})
+    }
+}
 
   render(){
   const loggedIn = this.isLogged();
@@ -130,7 +153,7 @@ class App extends React.Component {
       {/* show home page */}
       <Container>
         {!isAdmin &&
-          <Home loadUserData = {this.loadUserData} current_user={current_user} modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics}/>
+          <Home loadUserData = {this.loadUserData} current_user={current_user} modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics} percentage = {this.state.percentage}/>
         }
         {/* Displays Footer */}
         {isAdmin && 

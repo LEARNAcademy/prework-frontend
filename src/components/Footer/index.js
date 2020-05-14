@@ -32,7 +32,9 @@ class Footer extends React.Component {
   // }
 
   getNextQuestion() {
-    const { content, questions } = this.props;
+    const { content, questions , current_user} = this.props;
+    // finds the question the user is currently on
+    const userQuestion = questions.find((q)=> q.id > current_user.last_q)
     // filters out and finds the questions that belong to current lesson.
     const lQuestions = questions.filter(questions => questions.lesson_id === content.id);
     // how many questions belong to this current lesson
@@ -81,6 +83,13 @@ class Footer extends React.Component {
   }
   checkContent() {
     const { content } = this.props;
+    // hey harrison, this is the logic that runs everytime you press continue
+    // Check the users last_q to see where they are at (last_q is the last question they completed)
+    /*  my this.nextQuestion method would check if there were any questions that haven't 
+    been completed(using the completed column), if so, render that next question, if it returns undefined, get the next 
+    lesson via the this.getNextLesson method. you may be able to utilize the same logic by modifying the
+    getNextQuestion method to utilize the last_q column in users */
+
     // eslint-disable-next-line no-unused-vars
     
     // checks to see if content exists'
@@ -141,7 +150,7 @@ class Footer extends React.Component {
     }
   }
   render() {
-    const { lessons, modules, topics, current_user, questions} = this.props;
+    const { lessons, modules, topics, current_user, questions, percentage} = this.props;
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
@@ -154,7 +163,7 @@ class Footer extends React.Component {
         <Row>
           <Col sm={6}>
             {/* progress meter on the left */}
-            <Progress questions = {questions}current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
+            <Progress percentage = {percentage} questions = {questions}current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" >
