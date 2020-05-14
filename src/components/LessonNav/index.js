@@ -50,10 +50,6 @@ class LessonNav extends Component {
     render() {
         this.checkContent();
         let {modules, topics, questions, current_user, lessons} = this.props;
-
-        console.log("q at",questions)
-        console.log("modules",modules)
-        console.log("lesson",lessons)
         return(
             <>
                 <aside className="lesson-nav">

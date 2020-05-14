@@ -210,7 +210,6 @@ class NewUser extends React.Component{
         }
       }
       handleSubmit() {
-
         let {user} = this.state 
         fetch('http://localhost:3000/users', {
             body: JSON.stringify({
@@ -226,7 +225,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-                console.log("response",response)
+              console.log("should probably store a session key")
             }
         })
       }
