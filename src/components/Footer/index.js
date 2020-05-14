@@ -34,24 +34,11 @@ class Footer extends React.Component {
   getNextQuestion() {
     const { content, questions , current_user} = this.props;
     // finds the question the user is currently on
-    const userQuestion = questions.find((q)=> q.id > current_user.last_q)
-    // filters out and finds the questions that belong to current lesson.
-    const lQuestions = questions.filter(questions => questions.lesson_id === content.id);
-    // how many questions belong to this current lesson
-    const qCount = lQuestions.length;
-    // the count of completed questions that belong to this current lesson
-    const cQuestions = lQuestions.filter(questions => questions.completed).length;
-    // if the question count is less than the completed questions
-    if (qCount > cQuestions) {
-      // eslint-disable-next-line react/prop-types
-      // check if the current content is a question
-      // checks to see if the current question has been completed before allowing user to continue
-      // eslint-disable-next-line no-mixed-operators
-      if (content.completed && content.lesson_id !== undefined || content.lesson_id === undefined) {
-        const nextQuestion = questions.filter(questions => questions.lesson_id === content.id).find((q) => !q.completed);
-        return nextQuestion;
-      }
-    } 
+    const qUser = questions.find((q)=> current_user.last_q < q.id)
+    // gets questions that belong to the same lesson
+    if (content.id === qUser.lesson_id) {
+      return qUser
+    }
     return undefined;
   }
 
