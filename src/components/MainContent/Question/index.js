@@ -1,5 +1,6 @@
 import React from 'react';
 import MultChoice from './MultChoice'
+import IdeChoice from './IdeChoice'
 
 class Question extends React.Component{
     checkIfMult() {
@@ -21,7 +22,7 @@ class Question extends React.Component{
                 <MultChoice questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}/>
             }
             {!isMult && 
-                <p>Renders IDE</p>
+                <IdeChoice />
             }
             </>
         )
