@@ -1,5 +1,11 @@
 # LEARN Prework Application
 
-A platform for future LEARN Students to being studies.
-Prework content repo: https://github.com/LEARNAcademy/learn-pre-work
-Application trello: https://trello.com/b/zzXRCc5S/learn-internship-project
+# Navigating the app as a logged in user
+- Navigate to App.js
+- Set ```const loggedIn === true``` 
+
+# Navigating the app as an admin user 
+- Navigate to App.js 
+- Set ```const loggedIn === false```
+- Set ```const isAdmin === true``` 
+
