@@ -15,6 +15,7 @@ class App extends React.Component {
       questions:[],
       resources:[],
       authToken:"",
+      current_user:[],
     }
     this.getTopics();
     this.getModules();
@@ -83,7 +84,7 @@ class App extends React.Component {
               return response.json();
           }
       }).then((userJson)=> {
-            localStorage.setItem('user',userJson)
+        localStorage.setItem('user',JSON.stringify(userJson))
       })
   }
   componentWillMount(){
@@ -92,6 +93,10 @@ class App extends React.Component {
         let splitToken = token.split(' ')
         let realToken = splitToken[1]
         this.setState({authToken:realToken})
+    }
+    if (localStorage.getItem('user') !== null){
+      let user = JSON.parse(localStorage.getItem('user'))
+      this.setState({current_user:user})
     }
   }
 
@@ -158,25 +163,18 @@ class App extends React.Component {
   //   })
   // }
   isLogged(){
-    let user = localStorage.getItem('user')
-    if (user !== null) {
+    let {current_user} = this.state
+    if (current_user.id !== null ) {
+      console.log('true')
       return true
     } else {
       return false
     }
   }
-  grabUser(){
-    let user = localStorage.getItem('user')
-    if (user !== null) {
-      return user
-    } else {
-      return null
-    }
-  }
   isAdmin(){
-    let user = localStorage.getItem('user')
+    let {current_user} = this.state
     if (this.isLogged()) {
-      if (user.admin) {
+      if (current_user.admin) {
         return true
       } else {
         return false
@@ -186,9 +184,9 @@ class App extends React.Component {
 
   render(){
   // \6yY\Gu6d#
-  const current_user = this.grabUser();
+  console.log("current",this.state.current_user)
   const loggedIn = this.isLogged();
-  const {topics, modules, lessons, questions, resources} = this.state;
+  const {topics, modules, lessons, questions, resources, current_user} = this.state;
   let isAdmin = this.isAdmin();
   // console.log("user",this.state.current_user)
   // console.log("topics",this.state.topics)
