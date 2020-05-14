@@ -41,8 +41,19 @@ class Content extends Component{
 
   handleSubmit = () => {
       let { content, userChoice} = this.state
+      let {current_user} = this.props
       let val;
+      let last_q = current_user.last_q + 1
+      console.log("current",current_user)
       if (userChoice === content.answer) {
+        // if the user gets the right answer, update the users last_q to the current question that's been completed
+        fetch(`http://localhost:3000/users/${current_user.id}`, {
+        method: 'PUT',
+        headers: {'Content-type': 'application/json' },
+        body: JSON.stringify({
+          last_q:last_q
+        })
+      })
         val = true;
         this.setState({questionCorrect:val})
       } else{
@@ -50,14 +61,7 @@ class Content extends Component{
         this.setState({questionCorrect:val})
       }
       // send request to backend to change questions completed status to true
-      fetch(`http://localhost:3000/questions/${content.id}`, {
-        method: 'PUT',
-        headers: {'Content-type': 'application/json' },
-        body: JSON.stringify({
-          completed:val,
-          correct:val
-        })
-      }).then(res=> res.json())
+      
   }
 
   currentContent = (content) => {
