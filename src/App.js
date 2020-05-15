@@ -123,6 +123,18 @@ class App extends React.Component {
     this.setState({ mode: 'xml'});
     this.getAuthToken(this.findModule);
   }
+
+  logOut = () => {
+    const {current_user} = this.state
+    fetch(`http://localhost:3000/users/sign_out?id=${current_user.id}`,{
+      method: "DELETE"
+    })
+    .then((response) => {
+        window.location.reload()
+        localStorage.clear()
+    })
+  }
+
   render(){
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
@@ -132,7 +144,7 @@ class App extends React.Component {
     // eslint-disable-next-line react/jsx-filename-extension
     <>
       {/* Show branding and signed in user */}
-      <Header current_user={current_user}/>
+      <Header current_user={current_user} logOut={this.logOut} />
       {/* show home page */}
       <Container>
         <Router>
