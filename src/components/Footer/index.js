@@ -122,6 +122,7 @@ class Footer extends React.Component {
     if (this.contentExist()) {
       if (this.isContentQuestion()) {
         // content is a question, check the answer
+        console.log("its a question")
         if (questionCorrect !== null) {
           // if the question is correct, continue 
           if (questionCorrect) {
