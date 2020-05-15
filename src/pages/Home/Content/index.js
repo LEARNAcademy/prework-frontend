@@ -11,6 +11,7 @@ class Content extends Component{
             content: [],
             userChoice:'',
             questionCorrect:null,
+            userMessage:null,
         }
     }
 
@@ -22,16 +23,26 @@ class Content extends Component{
     let val = null
     this.setState({
       questionCorrect:val,
-      userChoice:''})
+      userChoice:'',
+      userMessage:null})
   }
   checkUserAnswer = () => {
     const {content, userChoice} = this.state
     let value = false
+    let message;
     if (content.answer === userChoice) {
       value = true
-      this.setState({questionCorrect:value})
+      message = 'Correct'
+      this.setState({
+        questionCorrect:value,
+        userMessage:message
+      })
     } else {
-      this.setState({questionCorrect:value})
+      message = 'Incorrect'
+      this.setState({
+        questionCorrect:value,
+        userMessage:message
+      })
     }
   }
   handleUserUpdate = () => {
@@ -50,9 +61,9 @@ class Content extends Component{
         last_q:last_q
       })
     }).then((res)=> {
-      return res.json()
-    }).then((res)=> console.log("userUpdateResponse",res))
-  }
+      localStorage.setItem('user',JSON.stringify(res.json()))
+    })
+    }
   }
 
 
@@ -76,7 +87,10 @@ class Content extends Component{
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod} = this.props
-      let {questionCorrect} = this.state
+      let {questionCorrect, userMessage} = this.state
+      localStorage.clear();
+      localStorage.getItem('authToken')
+      localStorage.getItem('user')
     return(
       <>
           <Row>
@@ -84,7 +98,7 @@ class Content extends Component{
               <LessonNav currentMod = {currentMod} current_user = {current_user} modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content} questions={questions}/>
             </Col>
             <Col sm={8}>
-                <MainContent current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} />
+                <MainContent userMessage = {userMessage} current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} />
             </Col>
           </Row>
           {checkContent &&

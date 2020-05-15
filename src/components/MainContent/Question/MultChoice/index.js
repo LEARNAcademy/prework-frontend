@@ -27,19 +27,6 @@ class MultChoice extends React.Component {
             return false
         }
     }
-    answerStatus(){
-        let {questionCorrect} = this.props;
-        console.log("questionCorrect",questionCorrect)
-        if (this.userAnswered()){
-            if(questionCorrect){
-                return "Correct"
-            } else if (!questionCorrect){
-                return "Incorrect"
-            }
-        } else if (questionCorrect === null) {
-            return ''
-        }
-    }
     defineClass(){
         if(this.answerStatus() === "Correct"){
             return true
@@ -48,13 +35,10 @@ class MultChoice extends React.Component {
         }
     }
     render(){
-        let { content , userChoice } = this.props;
+        let { content , userChoice , userMessage} = this.props;
         // an array of the multiple choice answers users can select
         let iterableContent = this.splitContent();
         // gives a boolean value to check if user has selected an answer
-        let answered = this.userAnswered();
-        // message will show either correct or incorrect depending on their answer
-        let ansMessage = this.answerStatus();
         // sets the className for the answer message 
         let defineClass = this.defineClass();
         return(
@@ -86,10 +70,10 @@ class MultChoice extends React.Component {
                     </Form>
                  </Col>
              </Row>
-             {answered &&
+             {userMessage !== null &&
             <Row>
                 <Col sm={12}>
-                    <p className={defineClass?'correctVal':'incorrectVal'}>{ansMessage}</p>
+                    <p className={defineClass?'correctVal':'incorrectVal'}>{userMessage}</p>
                 </Col>
             </Row>
              }
