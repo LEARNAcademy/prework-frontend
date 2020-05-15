@@ -26,7 +26,7 @@ class Header extends React.Component{
                         <div id="top-bar-content" className="float-right mt-3">
                             <span className="mr-3"><span className="material-icons mr-1">call</span> (619) 940-7848</span>
                             <span className="mr-3"><span className="material-icons mr-1">email</span> hello@learnacademy.org</span>
-          {current_user.length !== 0 && <span className=""><span className="material-icons">person</span> <button color="link" onClick={logOut} class="login">Sign Out</a></span>}
+          {current_user.length !== 0 && <span className=""><span className="material-icons">person</span> <span className="strong">{current_user.email}</span> | <Button className="login" color="link" onClick={logOut}>Sign Out</Button></span>}
                         </div>
                     </div>
                 </Col>
@@ -39,23 +39,7 @@ class Header extends React.Component{
                 
             }
 
-            {current_user.length !== 0 &&
-                    <div className="user-email text-right">
-                        <p>You're logged in as: <span className="strong">{current_user.email}</span></p>
-                    </div>
-          }
-            {userExist && 
-           
-                
-                <Col >
-                    {/*Logged in user on the right */}
-                    <div className="text-right">
-                        <p>{current_user.email}</p>
-                    </div>
-                </Col>
-           
-
-            }
+            
                 </Col>
             </Row>
         </Container>
