@@ -19,7 +19,6 @@ class Content extends Component{
     this.setState({userChoice:event.target.value})
   }
   resetQuestion = () => {
-    console.log("got here")
     let val = null
     this.setState({
       questionCorrect:val,

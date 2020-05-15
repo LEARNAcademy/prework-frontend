@@ -23,7 +23,6 @@ class IdeChoice extends React.Component {
 
     changeMode(e){
         var codeType = e.target.value;
-        console.log("CODE TYPEEEE", codeType)
         this.setState({ mode: codeType })
     }
     render(){

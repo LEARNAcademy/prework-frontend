@@ -5,6 +5,7 @@ import './style.css'
 
 class Admin extends React.Component {
     render(){
+        let {current_user, adminPage} = this.props;
         let hide = true;
         return(
             <>
@@ -28,7 +29,7 @@ class Admin extends React.Component {
                     </Col>
                 </Row>
             }  
-                <NewUser />
+                <NewUser current_user = {current_user}/>
             </>
         )
     }
