@@ -27,7 +27,7 @@ const Bar = (props) => {
                 */}
                 <div className="moduleNames">
                     {props.topics.map((topic,i) => 
-                        <div style={width}>{topic.title}</div> 
+                        <div key ={i} style={width}>{topic.title}</div> 
                     )}
 
                 </div>

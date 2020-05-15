@@ -46,10 +46,9 @@ class LessonNav extends Component {
         }
     }
 
-    
     render() {
         this.checkContent();
-        let {modules, topics, questions, current_user, lessons} = this.props;
+        let {modules, topics, currentMod} = this.props;
         return(
             <>
                 <aside className="lesson-nav">
@@ -81,10 +80,13 @@ class LessonNav extends Component {
                                                     }
                                                     // eslint-disable-next-line no-lone-blocks
                                                     {/* checks to see if lessons code module id matches the current modules id */}
-                                                    let lesson = lessons.find((l)=> current_user.last_l < l.id)
+                                                    {/*finds the question the user is currently on */}
+                                                    //let question = questions.find((q)=> current_user.last_q < q.id)
+                                                    {/* finds the lesson the user is currently on*/}
+                                                    //let lesson = lessons.find((l)=> question.lesson_id === l.id)
                                                     {/* the module the user is currently on */}
-                                                    let mod = modules.find((m) => lesson.code_module_id === m.id)
-
+                                                    //let mod = modules.find((m) => lesson.code_module_id === m.id)
+                                                    
 
                                                     if(m.topic_id === topic.id){
                                                     {/* the current mod id is equal to or less than the  */}
@@ -94,10 +96,10 @@ class LessonNav extends Component {
                                                         // eslint-disable-next-line no-lone-blocks
                                                         {/* if a previous lesson exists and its completed, override the disabled flag and enable current lesson*/}
 
-                                                        if(m.id <= mod.id){
+                                                        if(m.id <= currentMod.id){
                                                             flag=''
                                                         }
-                                                        if(m.id < mod.id){
+                                                        if(m.id < currentMod.id){
                                                             completed = true;
                                                         }
                                                     

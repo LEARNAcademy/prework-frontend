@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import {Row, Col,  Button, Input, Form, FormGroup, Label} from 'reactstrap'
 import './style.css'
 
@@ -8,28 +7,41 @@ class SignIn extends Component{
   constructor(props){
     super(props)
       this.state = {
-        success:false,
-        user:{},
-        login: {
+        user: {
           email:"",
           password:""
         }
       }
   }
-  handleSubmit(){
-   let {email, password} = this.state.login
-    this.props.loadUserData(email,password)
-  }
+  
+  handleSubmit() {
+      let {user} = this.state
+        fetch('http://localhost:3000/users/sign_in.json', {
+        body: JSON.stringify({user}),
+        headers: {
+            "Content-type":"application/json"
+        },
+        method:"POST"
+    }).then((response)=> {
+        if(response.ok){
+            localStorage.setItem('authToken', response.headers.get("Authorization"));
+            return response.json();
+        }
+    }).then((userJson)=> {
+      localStorage.setItem('user',JSON.stringify(userJson))
+    })
+}
+
   
   handleLoginEmail(email){
-    let loginUser = this.state.login
+    let loginUser = this.state.user
     loginUser.email = email 
-    this.setState({login:loginUser})
+    this.setState({user:loginUser})
   }
   handleLoginPass(passw){
-    let loginUser = this.state.login
+    let loginUser = this.state.user
     loginUser.password = passw 
-    this.setState({login:loginUser})
+    this.setState({user:loginUser})
   }
   render(){
     // check to see if I have an auth token in local storage
@@ -88,11 +100,6 @@ class SignIn extends Component{
                                 </Col>
                             </Row>
                         </Form>
-                        {this.state.success && 
-                        <Router>
-                            <Redirect to="/"/>
-                        </Router>
-                        }
                     </main>
                 </Col> 
             </Row>

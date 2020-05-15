@@ -1,14 +1,17 @@
 import React from 'react';
 import './App.css';
 import { Container } from 'reactstrap';
-import Home from './pages/Home';
 import Header from './components/Header';
 import Admin from './pages/Home/Admin'
-import {BrowserRouter as Router, Switch, Route, Link, Redirect} from 'react-router-dom'
+import SignIn from './pages/Home/SignIn'
+import Content from './pages/Home/Content'
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
 class App extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(){
+    super()
     this.state={
+      currentMod:[],
+      loginSuccess:false,
       topics:[],
       modules:[],
       lessons:[],
@@ -16,25 +19,17 @@ class App extends React.Component {
       resources:[],
       authToken:"",
       current_user:[],
-      percentage: 0,
       code: '// Code here',
       mode: 'xml'
     }
-    this.getTopics();
-    this.getModules();
-    this.getLessons();
-    this.getQuestions();
-    this.getResources();
+    this.getAuthToken = this.getAuthToken.bind(this);
+    this.getTopics = this.getTopics.bind(this);
+    this.getModules = this.getModules.bind(this);
+    this.getLessons = this.getLessons.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
+    this.getResources = this.getResources.bind(this);
   }
-  componentDidMount(){
-    this.getTopics();
-    this.getModules();
-    this.getLessons();
-    this.getQuestions();
-    this.getResources();
-    this.fillBarLogic();
-    this.setState({ mode: 'xml'});
-  }
+  
   async getTopics(){
     let response = await fetch('http://localhost:3000/topics');
     if(response.status === 200){
@@ -70,29 +65,7 @@ class App extends React.Component {
       this.setState({resources:data})
     }
   }
-
-  loadUserData = (email,passw) => {
-      fetch('http://localhost:3000/users/sign_in.json', {
-          body: JSON.stringify({
-              user:{
-                  email:email,
-                  password:passw
-              }
-          }),
-          headers: {
-              "Content-type":"application/json"
-          },
-          method:"POST"
-      }).then((response)=> {
-          if(response.ok){
-              localStorage.setItem('authToken', response.headers.get("Authorization"));
-              return response.json();
-          }
-      }).then((userJson)=> {
-        localStorage.setItem('user',JSON.stringify(userJson))
-      })
-  }
-  componentWillMount(){
+  getAuthToken = () => {
     if (localStorage.getItem('authToken') !== null) {
         let token = localStorage.getItem('authToken')
         let splitToken = token.split(' ')
@@ -104,9 +77,10 @@ class App extends React.Component {
       this.setState({current_user:user})
     }
   }
+  
   isLogged(){
     let {current_user} = this.state
-    if (current_user.length !== 0 || current_user.id ) {
+    if (current_user.length === undefined|| typeof current_user.id === 'number' ) {
       return true
     } else {
       return false
@@ -122,32 +96,36 @@ class App extends React.Component {
       }
     }
   }
-  fillBarLogic() {
-    let {questions, current_user } = this.state
-    // get percentage of completed amount
-    if (this.isLogged()) {
-      let completionCount = 0
-      // divides 100 by lesson count
-      let questionCount = 100/questions.length
-      // let lessonCount = 100/lessons.length
-      // percent equivalent of each question
-      let percentPerQuestion = questionCount/100
-      // let percentPerLesson = lessonCount/100
-      // number of questions that have been completed 
-      let cQuestions = questions.filter((q)=> q.id < current_user.last_q).length
-      // let cLessons = lessons.filter((l)=> l.completed === true).length
-      // the completed count as a whole number
-      completionCount = (percentPerQuestion * cQuestions)*100
-      // completionCount = (percentPerLesson * cLessons)*100
-      // updates the state to completionCount
-      this.setState({percentage:completionCount})
+  findModule() {
+    let {modules, lessons, questions, current_user} = this.state 
+    // id of the question the user is currently on
+    if (current_user.length === undefined) {
+      let userQ = current_user.last_q
+      // find the question the user is currently on 
+      let currentQ = questions.find((q)=> q.id > userQ)
+      if (currentQ !== undefined) {
+          // find the lesson the user is currently on
+          let currentL = lessons.find((q)=> currentQ.lesson_id === q.id)
+          // find the module the user is currently on
+          let currentM = modules.find((m)=> currentL.code_module_id === m.id)
+          this.setState({currentMod:currentM})
+      }  
     }
 }
-
+  componentDidMount(){
+    this.getTopics();
+    this.getModules();
+    this.getLessons();
+    this.getQuestions();
+    this.getResources();
+    this.setState({ mode: 'xml'});
+    this.getAuthToken(this.findModule);
+  }
   render(){
   const loggedIn = this.isLogged();
-  const {topics, modules, lessons, questions, resources, current_user} = this.state;
+  const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
   let isAdmin = false
+  console.log("currentMod",currentMod)
   // this.isAdmin();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -156,13 +134,16 @@ class App extends React.Component {
       <Header current_user={current_user}/>
       {/* show home page */}
       <Container>
-        {!isAdmin &&
-          <Home loadUserData = {this.loadUserData} current_user={current_user} modules={modules} lessons={lessons} loggedIn={loggedIn} questions={questions} resources={resources} topics = {topics} percentage = {this.state.percentage}/>
-        }
-        {/* Displays Footer */}
-        {isAdmin && 
-          <Admin/>
-        }
+        <Router>
+          {/* if the user is logged in and an admin, redirect to admin page */}
+          {loggedIn?isAdmin? <Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
+          <Switch>
+            <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics}/>}/>
+            <Route exact path='/admin' render= {props => <Admin />}/>
+            <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
+
+          </Switch>
+        </Router>
       </Container>
     </>
   );
