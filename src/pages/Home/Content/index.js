@@ -88,9 +88,6 @@ class Content extends Component{
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod} = this.props
       let {questionCorrect, userMessage} = this.state
-      localStorage.clear();
-      localStorage.getItem('authToken')
-      localStorage.getItem('user')
     return(
       <>
           <Row>
