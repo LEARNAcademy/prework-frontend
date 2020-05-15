@@ -4,6 +4,8 @@
 }
 .header-logo {
     padding:15px 0;
+    width:30%;
+    float: left;
 }
 .header-top-bar {
     border-bottom:1px solid lightgray;
