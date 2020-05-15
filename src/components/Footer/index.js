@@ -35,9 +35,12 @@ class Footer extends React.Component {
     const { content, questions , current_user} = this.props;
     // finds the question the user is currently on
     const qUser = questions.find((q)=> current_user.last_q < q.id)
-    // gets questions that belong to the same lesson
+    // finds the next question belonging to the same lesson
+    const nextQuestion = questions.filter((q)=> q.lesson_id === qUser.lesson_id).find((q)=> q.id > qUser.id)
     if (content.id === qUser.lesson_id) {
       return qUser
+    } else if( content.lesson_id !== undefined && nextQuestion !== undefined ) {
+      return nextQuestion
     }
     return undefined;
   }
@@ -46,13 +49,10 @@ class Footer extends React.Component {
     // eslint-disable-next-line react/destructuring-assignment
     this.props.currentContent(next);
   }
-  updateQuestion(event){
-    this.props.handleQuestion(event)
-  }
   checkAnswer() {
-    let { userChoice , handleSubmit} = this.props;
+    let { userChoice , checkUserAnswer} = this.props;
     if (userChoice !== undefined ){
-      handleSubmit();
+      checkUserAnswer();
     } else {
       alert("Make a selection homie")
     }
@@ -86,16 +86,15 @@ class Footer extends React.Component {
       // content is a lesson, now checks if theres any questions that belong to it
       if (this.isContentQuestion) {
         if(this.isQuestionCorrect) {
-          let val = null
-          this.updateQuestion(val)
+          this.props.resetQuestion();
         }
       }
       if (this.getNextQuestion() !== undefined) {
         this.sendContent(this.getNextQuestion());
+        this.props.handleUserUpdate();
         // if the next question returns undefined
       } else if (this.getNextQuestion() === undefined) {
         // update the lesson as completed
-        this.props.handleLessonUpdate();
         this.sendContent(this.getNextLesson());
       } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
         console.log('Completed course homie!');
@@ -137,7 +136,7 @@ class Footer extends React.Component {
     }
   }
   render() {
-    const { lessons, modules, topics, current_user, questions, percentage} = this.props;
+    const { lessons, modules, topics, current_user, questions} = this.props;
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
@@ -150,7 +149,7 @@ class Footer extends React.Component {
         <Row>
           <Col sm={6}>
             {/* progress meter on the left */}
-            <Progress percentage = {percentage} questions = {questions}current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
+            <Progress questions = {questions} current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" >

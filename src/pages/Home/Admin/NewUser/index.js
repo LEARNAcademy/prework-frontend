@@ -1,5 +1,5 @@
 import React from 'react';
-import {Row, Col , Button, Form, Input, Label, FormGroup} from 'reactstrap'
+import {Row, Col , Button, Form, Input, FormGroup} from 'reactstrap'
 import './style.css'
 
 class NewUser extends React.Component{
