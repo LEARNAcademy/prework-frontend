@@ -13,9 +13,12 @@ const Bar = (props) => {
     let width = {
         "width": 100 / modLength + "%",
         "display":"inline-block",
-        "float":"left"
+        "margin":"10px 0"
     }
+    console.log(props.percentage);
+    
     return(
+        
         <div className="progress bar">
             <div className="barOverlay">
                 {/* 

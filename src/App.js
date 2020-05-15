@@ -55,10 +55,12 @@ class App extends React.Component {
     let response = await fetch('http://localhost:3000/questions')
     let data = await response.json();
     if(response.status === 200) {
-      this.setState({questions:data})
+      this.setState({questions:data}
+      )
     }
   }
   async getResources(){
+    
     let response = await fetch('http://localhost:3000/resources')
     let data = await response.json();
     if (response.status === 200) {
