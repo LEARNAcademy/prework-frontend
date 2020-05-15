@@ -127,11 +127,8 @@ class App extends React.Component {
       method: "DELETE"
     })
     .then(() => {
-      console.log("Hi Jerry!");
-      
       localStorage.clear()
         window.location.reload()
-        
     })
   }
   render(){
