@@ -14,12 +14,17 @@ class Footer extends React.Component {
   }
   getNextLesson() {
     // gets the next lesson and sends it back
-    const { lessons, content } = this.props;
+    console.log("trying to get next lesson")
+    const { lessons, current_user,questions } = this.props;
     // total lessons available
+    // get question user is currently on
+    const currentQ = questions.find((q)=> current_user.last_q === q.id)
+    // lesson the user is currently on
+    const currentL = lessons.find((l)=> currentQ.lesson_id === l.id)
     const lCount = lessons.length;
-    if (lCount > content.id) {
-      const nextLesson = lessons.filter(lessons => lessons.id === content.id + 1);
-      return nextLesson[0];
+    if (lCount > currentL.id+1) {
+      const nextLesson = lessons.find(lessons => lessons.id === currentL.id + 1);
+      return nextLesson;
     }
     return undefined;
   }
@@ -37,6 +42,7 @@ class Footer extends React.Component {
     const qUser = questions.find((q)=> current_user.last_q < q.id)
     // finds the next question belonging to the same lesson
     const nextQuestion = questions.filter((q)=> q.lesson_id === qUser.lesson_id).find((q)=> q.id > qUser.id)
+    // if the content
     if (content.id === qUser.lesson_id) {
       return qUser
     } else if( content.lesson_id !== undefined && nextQuestion !== undefined ) {
@@ -70,25 +76,19 @@ class Footer extends React.Component {
   }
   checkContent() {
     const { content } = this.props;
-    // hey harrison, this is the logic that runs everytime you press continue
-    // Check the users last_q to see where they are at (last_q is the last question they completed)
-    /*  my this.nextQuestion method would check if there were any questions that haven't 
-    been completed(using the completed column), if so, render that next question, if it returns undefined, get the next 
-    lesson via the this.getNextLesson method. you may be able to utilize the same logic by modifying the
-    getNextQuestion method to utilize the last_q column in users */
-
     // eslint-disable-next-line no-unused-vars
-    
     // checks to see if content exists'
     // eslint-disable-next-line no-console
     if (content.id !== undefined) {
       // content does exist, checks to see if the content is a lesson
       // content is a lesson, now checks if theres any questions that belong to it
+      // resets the state of userChoice in content component
       if (this.isContentQuestion) {
         if(this.isQuestionCorrect) {
           this.props.resetQuestion();
         }
       }
+
       if (this.getNextQuestion() !== undefined) {
         this.sendContent(this.getNextQuestion());
         this.props.handleUserUpdate();
@@ -122,7 +122,6 @@ class Footer extends React.Component {
     if (this.contentExist()) {
       if (this.isContentQuestion()) {
         // content is a question, check the answer
-        console.log("its a question")
         if (questionCorrect !== null) {
           // if the question is correct, continue 
           if (questionCorrect) {

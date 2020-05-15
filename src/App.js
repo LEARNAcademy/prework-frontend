@@ -10,6 +10,7 @@ class App extends React.Component {
   constructor(){
     super()
     this.state={
+      adminPage:false,
       currentMod:[],
       loginSuccess:false,
       topics:[],
@@ -129,33 +130,38 @@ class App extends React.Component {
     fetch(`http://localhost:3000/users/sign_out?id=${current_user.id}`,{
       method: "DELETE"
     })
-    .then((response) => {
+    .then(() => {
         window.location.reload()
         localStorage.clear()
     })
   }
+  toggleAdmin=()=> {
+    let value = this.state.adminPage
+    let final = !value
+    this.setState({adminPage:final})
+  }
 
   render(){
   const loggedIn = this.isLogged();
-  const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
-  let isAdmin = this.isAdmin();
+  const isAdmin = this.isAdmin();
+  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
 
+  
   // this.isAdmin();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
       {/* Show branding and signed in user */}
-      <Header current_user={current_user} logOut={this.logOut} />
+      <Header current_user={current_user} logOut={this.logOut} isAdmin = {isAdmin} toggleAdmin = {this.toggleAdmin} adminPage={adminPage}/>
       {/* show home page */}
       <Container>
         <Router>
           {/* if the user is logged in and an admin, redirect to admin page */}
-          {loggedIn?isAdmin? <Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
+          {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics}/>}/>
-            <Route exact path='/admin' render= {props => <Admin />}/>
+            <Route exact path='/admin' render= {props => <Admin current_user = {current_user}/>}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
-
           </Switch>
         </Router>
       </Container>

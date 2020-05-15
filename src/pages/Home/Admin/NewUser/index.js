@@ -225,7 +225,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-              console.log("should probably store a session key")
+              console.log("")
             }
         })
       }
@@ -245,11 +245,6 @@ class NewUser extends React.Component{
             <>
                 <Row>
                     <Col sm={12}>
-                        <Row>
-                            <Col sm={12}>
-                                <h3 style={{textAlign:"right"}}>Hello, Admin</h3>
-                            </Col>
-                        </Row>
                         <Row>
                             <Col sm={12}>
                                 <h5 style={{margin:"0 auto", textAlign:"center",marginBottom:"30px"}}>Create a New User</h5>

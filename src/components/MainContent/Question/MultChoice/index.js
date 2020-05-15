@@ -28,10 +28,14 @@ class MultChoice extends React.Component {
         }
     }
     defineClass(){
-        if(this.answerStatus() === "Correct"){
-            return true
-        } else if (this.answerStatus() === "Incorrect"){
-            return false
+        let {questionCorrect} = this.props;
+        
+        if (this.userAnswered()) {
+            if (questionCorrect) {
+                return true
+            } else if(!questionCorrect) {
+                return false
+            }
         }
     }
     render(){

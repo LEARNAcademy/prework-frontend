@@ -15,7 +15,6 @@ const Bar = (props) => {
         "display":"inline-block",
         "margin":"10px 0"
     }
-    console.log(props.percentage);
     
     return(
         
