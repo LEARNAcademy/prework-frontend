@@ -124,6 +124,7 @@ class App extends React.Component {
   render(){
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
+  console.log("lesson",lessons)
   let isAdmin = this.isAdmin();
   // this.isAdmin();
   return (

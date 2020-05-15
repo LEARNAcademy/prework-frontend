@@ -19,7 +19,7 @@ class Question extends React.Component{
         return(
             <>
             {isMult &&
-                <MultChoice userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}/>
+                <MultChoice userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice} />
             }
             {!isMult && 
                 <IdeChoice />
