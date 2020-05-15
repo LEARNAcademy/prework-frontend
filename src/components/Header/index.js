@@ -20,7 +20,7 @@ class Header extends React.Component{
         return(
             <Container>
             <Row>
-                <Col sm={6}>
+                <Col sm={12}>
                     {/*Brand on the left */}
                     <Brand />
                 </Col>

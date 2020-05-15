@@ -126,7 +126,7 @@ class App extends React.Component {
   render(){
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
-  let isAdmin = this.isAdmin();
+  let isAdmin = false;
   // this.isAdmin();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
