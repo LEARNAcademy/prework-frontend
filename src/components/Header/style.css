@@ -7,3 +7,6 @@
 .strong {
     font-weight:bold;
 }
+Button.login {
+    font-size:12px;
+}
