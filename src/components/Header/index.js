@@ -6,7 +6,7 @@ import {Container, Row, Col, Button} from 'reactstrap'
 class Header extends React.Component{
     checkUser(){
         let {current_user} = this.props
-        if (current_user !== null){
+        if (current_user.length !== 0){
             return true
         } else {
             return false
@@ -15,12 +15,12 @@ class Header extends React.Component{
 
     render(){
         let isAdmin = false;
-        let {current_user} = this.props;
+        let {current_user, logOut} = this.props;
         let userExist = this.checkUser();
         return(
             <Container>
             <Row>
-                <Col sm={6}>
+                <Col sm={12}>
                     {/*Brand on the left */}
                     <Brand />
                 </Col>
@@ -30,12 +30,17 @@ class Header extends React.Component{
                 </Col>
             }
             {userExist && 
+            <>
+                <Col>
+                    <Button onClick={logOut}>Sign Out</Button>
+                </Col>
                 <Col >
                     {/*Logged in user on the right */}
                     <div className="text-right">
                         <p>{current_user.email}</p>
                     </div>
                 </Col>
+            </>
             }
             </Row>
         </Container>

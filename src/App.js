@@ -55,10 +55,12 @@ class App extends React.Component {
     let response = await fetch('http://localhost:3000/questions')
     let data = await response.json();
     if(response.status === 200) {
-      this.setState({questions:data})
+      this.setState({questions:data}
+      )
     }
   }
   async getResources(){
+    
     let response = await fetch('http://localhost:3000/resources')
     let data = await response.json();
     if (response.status === 200) {
@@ -121,17 +123,29 @@ class App extends React.Component {
     this.setState({ mode: 'xml'});
     this.getAuthToken(this.findModule);
   }
+
+  logOut = () => {
+    const {current_user} = this.state
+    fetch(`http://localhost:3000/users/sign_out?id=${current_user.id}`,{
+      method: "DELETE"
+    })
+    .then((response) => {
+        window.location.reload()
+        localStorage.clear()
+    })
+  }
+
   render(){
   const loggedIn = this.isLogged();
   const {topics, modules, lessons, questions, resources, current_user, currentMod} = this.state;
-  console.log("lesson",lessons)
   let isAdmin = this.isAdmin();
+
   // this.isAdmin();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
       {/* Show branding and signed in user */}
-      <Header current_user={current_user}/>
+      <Header current_user={current_user} logOut={this.logOut} />
       {/* show home page */}
       <Container>
         <Router>

@@ -16,12 +16,15 @@ class Progress extends React.Component{
           let questionCount = 100/questions.length
           // let lessonCount = 100/lessons.length
           // percent equivalent of each question
+          
           let percentPerQuestion = questionCount/100
+          
           // let percentPerLesson = lessonCount/100
           // number of questions that have been completed 
           let cQuestions = questions.filter((q)=> q.id < current_user.last_q).length
           // let cLessons = lessons.filter((l)=> l.completed === true).length
           // the completed count as a whole number
+          
           completionCount = (percentPerQuestion * cQuestions)*100
           // completionCount = (percentPerLesson * cLessons)*100
           // updates the state to completionCount

@@ -2,3 +2,12 @@
     width:70%;
     float:left;
 }
+.header-logo {
+    padding:15px 0;
+}
+.header-top-bar {
+    border-bottom:1px solid lightgray;
+}
+#top-bar-content, #top-bar-content span {
+    font-size:12px;
+}
