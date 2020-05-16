@@ -148,6 +148,7 @@ class App extends React.Component {
 
   
   // this.isAdmin();
+  // }5tZ6KXe:r (password)
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>

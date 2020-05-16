@@ -43,6 +43,7 @@ class MainContent extends React.Component {
                 } 
             }
         }
+        return []
     }
     
     render(){
@@ -76,8 +77,15 @@ class MainContent extends React.Component {
                             <p>{content.content}</p>
                         </Col>
                     </Row>
+                    {content.img_src !== null &&
                     <Row>
-                        {resourcesL !== undefined &&
+                        <Col>
+                            <img src={content.img_src}/>
+                        </Col>
+                    </Row>
+                    }
+                    <Row>
+                        {resourcesL.length > 0 &&
                         <Col sm={6}>
                             <h5>Resources</h5>
                             <ul>

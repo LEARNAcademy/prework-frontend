@@ -206,7 +206,6 @@ class NewUser extends React.Component{
             let updatePass = this.state.user 
             updatePass.password = passw
             this.setState({user:updatePass})
-            alert("Password saved")
         }
       }
       handleSubmit() {
@@ -225,7 +224,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-              console.log("")
+              window.location.reload();
             }
         })
       }
