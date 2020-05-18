@@ -27,12 +27,18 @@ class SignIn extends Component{
             console.log("This is the response log", response)
             localStorage.setItem('authToken', response.headers.get("Authorization"));
             return response.json();
+        } else {
+            throw new Error('Something went wrong');
         }
+        
     }).then((userJson)=> {
       localStorage.setItem('user',JSON.stringify(userJson))
       window.location.reload();
     }).catch((error) => {
         console.log(error)
+        alert("Email and Password are incorrect.")
+        window.location.reload()
+            localStorage.clear()
       });
 }
 
