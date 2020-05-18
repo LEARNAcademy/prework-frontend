@@ -34,7 +34,6 @@ class Header extends React.Component{
     render(){
         let {current_user, logOut, isAdmin} = this.props;
         let adminControl = this.panelName()
-        console.log(current_user)
         return(
             <Container>
             <Row>
