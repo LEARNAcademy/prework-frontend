@@ -16,7 +16,7 @@ class SignIn extends Component{
   
   handleSubmit() {
       let {user} = this.state
-        fetch('http://localhost:3000/users/sign_in.json', {
+        fetch('https://learn-prework-backend.herokuapp.com/users/sign_in.json', {
         body: JSON.stringify({user}),
         headers: {
             "Content-type":"application/json"
@@ -24,13 +24,22 @@ class SignIn extends Component{
         method:"POST"
     }).then((response)=> {
         if(response.ok){
+            console.log("This is the response log", response)
             localStorage.setItem('authToken', response.headers.get("Authorization"));
             return response.json();
+        } else {
+            throw new Error('Something went wrong');
         }
+        
     }).then((userJson)=> {
       localStorage.setItem('user',JSON.stringify(userJson))
       window.location.reload();
-    })
+    }).catch((error) => {
+        console.log(error)
+        alert("Email and Password are incorrect.")
+        window.location.reload()
+            localStorage.clear()
+      });
 }
 
   
@@ -60,7 +69,7 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-                        <Form>
+                        <Form onSubmit={() => this.handleSubmit()}>
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -97,7 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                                    <Button onClick={() => this.handleSubmit()}>Login</Button>
+                                    <Button type="submit">Login</Button>
                                 </Col>
                             </Row>
                         </Form>
