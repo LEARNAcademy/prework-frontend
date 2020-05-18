@@ -22,58 +22,6 @@ class Footer extends React.Component {
       }
     }
   }
-  
-  // getNextLesson() {
-  //   // gets the next lesson and sends it back
-  //   const { lessons, current_user,questions } = this.props;
-  //   // total lessons available
-  //   // get question user is currently on
-  //   const currentQ = questions.find((q)=> current_user.last_q < q.id)
-  //   // lesson the user is currently on
-  //   const currentL = lessons.find((l)=> currentQ.lesson_id === l.id)
-  //   // get all questions that belong to the lesson the user is on
-  //   const lessonQ = questions.filter((q)=> currentL.id === q.lesson_id)
-  //   // checks to see if theres another question in the same lesson 
-  //   const nextQ = lessonQ.find((q) => currentQ.id < q.id)
-  //   // if content is not a question, return the next lesson
-  //   if (nextQ === undefined) {
-  //     const nextLesson = lessons.find((l)=> currentL.id < l.id)
-  //     console.log("nextLesson", nextLesson)
-  //     return nextLesson
-  //   } else if (nextQ !== undefined) {
-  //     console.log("not undefined", nextQ)
-  //     return undefined
-  //   }
-  // }
-  // getNextLesson() {
-  //     // gets the next lesson and sends it back
-  //     const { lessons, content } = this.props;
-  //     // total lessons available
-  //     const lCount = lessons.length;
-  //     if (lCount > content.id) {
-  //       const nextLesson = lessons.filter(lessons => lessons.id === content.id + 1);
-  //       return nextLesson[0];
-  //     }
-  //     return undefined;
-  // }
-
-  // getNextQuestion() {
-  //   const { content, questions , current_user} = this.props;
-  //  // questions that belong to the current lesson
-  //  const lQuestions = questions.filter(questions => questions.lesson_id === content.id);
-  //  // amount of questions that belong to the current lesson
-  //  const qCount = lQuestions.length;
-  //  // the amount of completed questions 
-  //  const cQuestions = lQuestions.filter(q=> q.id <= current_user.last_q).length
-  //   // current question the user is on
-  //  const currentQ = questions.find((q)=> current_user.last_q < q.id)
-  //   if(qCount > cQuestions) {
-  //     const nextQuestion = questions.filter(q=> q.lesson_id === content.id).find(q=> currentQ.id +1 === q.id)
-  //     return nextQuestion
-  //   }
-  //   return undefined
-  // }
-
   sendContent(next) {
     // eslint-disable-next-line react/destructuring-assignment
     this.props.currentContent(next);
