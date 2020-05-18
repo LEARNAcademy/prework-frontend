@@ -224,7 +224,7 @@ class NewUser extends React.Component{
             method:"POST"
         }).then((response)=> {
             if(response.ok){
-              window.location.reload();
+              alert('User Created')
             }
         })
       }

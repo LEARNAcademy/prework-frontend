@@ -45,39 +45,34 @@ class Footer extends React.Component {
   //     return undefined
   //   }
   // }
-  getNextLesson() {
-      // gets the next lesson and sends it back
-      const { lessons, content } = this.props;
-      // total lessons available
-      const lCount = lessons.length;
-      if (lCount > content.id) {
-        const nextLesson = lessons.filter(lessons => lessons.id === content.id + 1);
-        return nextLesson[0];
-      }
-      return undefined;
-  }
-
-  // getPrevLesson() {
-  //   const { lessons, content } = this.props;
-  //   // gets the previous lesson
-  //   const prevLesson = lessons.filter(lessons => lessons.id === content.id - 1);
-  //   return prevLesson[0];
+  // getNextLesson() {
+  //     // gets the next lesson and sends it back
+  //     const { lessons, content } = this.props;
+  //     // total lessons available
+  //     const lCount = lessons.length;
+  //     if (lCount > content.id) {
+  //       const nextLesson = lessons.filter(lessons => lessons.id === content.id + 1);
+  //       return nextLesson[0];
+  //     }
+  //     return undefined;
   // }
-  getNextQuestion() {
-    const { content, questions , current_user, lessons} = this.props;
-   // questions that belong to the current lesson
-   const lQuestions = questions.filter(questions => questions.lesson_id === content.id);
-   const qCount = lQuestions.length;
-   // the count of completed questions that belong to this current lesson
-   const cQuestions = lQuestions.filter(q=> q.id <= current_user.last_q).length
-   const currentQ = questions.find((q)=> current_user.last_q < q.id)
-   
-    if(qCount > cQuestions) {
-      const nextQuestion = questions.filter(q=> q.lesson_id === content.id).find(q=> currentQ.id +1 === q.id)
-      return nextQuestion
-    }
-    return undefined
-  }
+
+  // getNextQuestion() {
+  //   const { content, questions , current_user} = this.props;
+  //  // questions that belong to the current lesson
+  //  const lQuestions = questions.filter(questions => questions.lesson_id === content.id);
+  //  // amount of questions that belong to the current lesson
+  //  const qCount = lQuestions.length;
+  //  // the amount of completed questions 
+  //  const cQuestions = lQuestions.filter(q=> q.id <= current_user.last_q).length
+  //   // current question the user is on
+  //  const currentQ = questions.find((q)=> current_user.last_q < q.id)
+  //   if(qCount > cQuestions) {
+  //     const nextQuestion = questions.filter(q=> q.lesson_id === content.id).find(q=> currentQ.id +1 === q.id)
+  //     return nextQuestion
+  //   }
+  //   return undefined
+  // }
 
   sendContent(next) {
     // eslint-disable-next-line react/destructuring-assignment
@@ -85,36 +80,55 @@ class Footer extends React.Component {
   }
   checkAnswer() {
     let { userChoice , checkUserAnswer} = this.props;
-    if (userChoice !== undefined ){
+    if (userChoice.length > 0){
       checkUserAnswer();
     } else {
-      alert("Make a selection homie")
+      alert("Make a selection")
     }
   }
   checkContent() {
-    const { content } = this.props;
-    // eslint-disable-next-line no-unused-vars
-    // checks to see if content exists'
-    // eslint-disable-next-line no-console
+    const { content, questions , current_user, lessons, userChoice} = this.props;
+    let nextQuestion;
+    let nextLesson;
     if (content.id !== undefined) {
-      // content does exist, checks to see if the content is a lesson
-      // content is a lesson, now checks if theres any questions that belong to it
-      // resets the state of userChoice in content component
-      if (this.isContentQuestion) {
-        if(this.isQuestionCorrect) {
-          this.props.resetQuestion();
+      // question the user is currently on
+      const currentQuestion = questions.find((q)=> current_user.last_q < q.id)
+      // checks to see if the current content is a lesson
+      if (content.lesson_id === undefined) {
+        // get all the questions that belong to this lesson
+        const allQuestions = questions.filter((q)=> q.lesson_id === content.id)
+        // get the next question to render 
+        nextQuestion = allQuestions.find((q)=> currentQuestion.id === q.id)
+        // assign the next lesson 
+        nextLesson = lessons.find((l)=> content.id < l.id)
+        // if there is another question to display, render that question
+        if (nextQuestion !== undefined) {
+          this.sendContent(nextQuestion)
+        } else if (nextQuestion === undefined) {
+          this.sendContent(nextLesson)
         }
-      }
+        // checks to see if the current content is a question
+      } else if (content.lesson_id !== undefined) {
+        // get the lesson the question belongs to 
+        const currentLesson = lessons.find((l)=> content.lesson_id === l.id)
+        // if the usersChoice is correct, render the next question or lesson
+        if (userChoice === content.answer) {
+          // get all the questions that belong to the same lesson as the current question
+          const allQuestions = questions.filter((q)=> content.lesson_id === q.lesson_id)
+          // finds the next question
+          nextQuestion = allQuestions.find((q)=> q.id > currentQuestion.id)
+          // if there is another question that belongs to the same lesson, render it
+          if (nextQuestion !== undefined) {
+            this.sendContent(nextQuestion)
+            this.props.resetQuestion();
 
-      if (this.getNextQuestion() !== undefined) {
-        this.sendContent(this.getNextQuestion());
-        this.props.handleUserUpdate();
-        // if the next question returns undefined
-      } else if (this.getNextQuestion() === undefined) {
-        // update the lesson as completed
-        this.sendContent(this.getNextLesson());
-      } else if (this.getNextQuestion() === undefined && this.getNextLesson() === undefined) {
-        console.log('Completed course homie!');
+          } else if (nextQuestion === undefined) {
+            // if there are no more questions that belong to the same lesson, render next lesson
+            nextLesson = lessons.find((l)=> currentLesson.id < l.id)
+            this.sendContent(nextLesson)
+            this.props.resetQuestion();
+          }
+        }
       }
     }
   }

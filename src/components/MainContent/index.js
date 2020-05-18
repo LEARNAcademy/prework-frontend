@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'reactstrap'
 import Question from './Question'
+import './style.css'
 
 
 class MainContent extends React.Component {  
@@ -80,7 +81,7 @@ class MainContent extends React.Component {
                     {content.img_src !== null &&
                     <Row>
                         <Col>
-                            <img src={content.img_src}/>
+                            <img className="lessonImg" src={content.img_src}/>
                         </Col>
                     </Row>
                     }

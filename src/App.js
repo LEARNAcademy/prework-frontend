@@ -115,6 +115,24 @@ class App extends React.Component {
       }  
     }
 }
+  handleUserUpdate = () => {
+    const {current_user} = this.props
+    const last_q = current_user.last_q + 1
+      // if the user gets the right answer, update the users last_q to the current question that's been completed
+      fetch(`http://localhost:3000/users/${current_user.id}`, {
+      method: 'PUT',
+      headers: {'Content-type': 'application/json' },
+      body: JSON.stringify({
+        last_q:last_q
+      })
+    }).then((res)=> {
+      localStorage.setItem('user',JSON.stringify(res.json()))
+    }).then(() => {
+      let user = JSON.parse(localStorage.getItem('user'))
+      this.setState({current_user:user})
+
+    })
+  }
   componentDidMount(){
     this.getTopics();
     this.getModules();
@@ -145,7 +163,6 @@ class App extends React.Component {
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
   const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
-
   
   // this.isAdmin();
   // }5tZ6KXe:r (password)
@@ -160,7 +177,7 @@ class App extends React.Component {
           {/* if the user is logged in and an admin, redirect to admin page */}
           {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
-            <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics}/>}/>
+            <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
             <Route exact path='/admin' render= {props => <Admin current_user = {current_user}/>}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
           </Switch>
