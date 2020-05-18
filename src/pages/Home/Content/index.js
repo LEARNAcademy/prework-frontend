@@ -12,9 +12,31 @@ class Content extends Component{
             userChoice:'',
             questionCorrect:null,
             userMessage:null,
+            percentage:0
         }
     }
-
+  fillBarLogic = () => {
+    let {questions, current_user } = this.props
+    // get percentage of completed amount
+      let completionCount = 0
+      // divides 100 by lesson count
+      let questionCount = 100/questions.length
+      // let lessonCount = 100/lessons.length
+      // percent equivalent of each question
+      
+      let percentPerQuestion = questionCount/100
+      
+      // let percentPerLesson = lessonCount/100
+      // number of questions that have been completed 
+      let cQuestions = questions.filter((q)=> q.id < current_user.last_q).length
+      // let cLessons = lessons.filter((l)=> l.completed === true).length
+      // the completed count as a whole number
+      
+      completionCount = (percentPerQuestion * cQuestions)*100
+      // completionCount = (percentPerLesson * cLessons)*100
+      // updates the state to completionCount
+      this.setState({percentage:completionCount})
+  }
   handleChange = (event) => {
     this.setState({userChoice:event.target.value})
   }
@@ -47,6 +69,7 @@ class Content extends Component{
 
   currentContent = (content) => {
     this.setState({content:content})
+    this.fillBarLogic();
   }
 
   currentLesson = (content) => {
@@ -65,7 +88,7 @@ class Content extends Component{
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod, handleUserUpdate} = this.props
-      let {questionCorrect, userMessage} = this.state
+      let {questionCorrect, userMessage, percentage} = this.state
     return(
       <>
           <Row>
@@ -79,7 +102,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
+                    <Footer percentage = {percentage} fillBarLogic={this.fillBarLogic} checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
                 </Col> 
             </Row>
             }
