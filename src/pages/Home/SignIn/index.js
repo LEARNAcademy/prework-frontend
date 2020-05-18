@@ -30,7 +30,9 @@ class SignIn extends Component{
     }).then((userJson)=> {
       localStorage.setItem('user',JSON.stringify(userJson))
       window.location.reload();
-    })
+    }).catch((error) => {
+        console.log(error)
+      });
 }
 
   
