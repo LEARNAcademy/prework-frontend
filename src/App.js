@@ -32,28 +32,28 @@ class App extends React.Component {
   }
   
   async getTopics(){
-    let response = await fetch('https://learn-prework-backend.herokuapp.com/topics');
+    let response = await fetch('/topics');
     if(response.status === 200){
       let data = await response.json();
       this.setState({topics:data})
     }
   }
   async getModules(){
-    let response = await fetch('https://learn-prework-backend.herokuapp.com/code_modules');
+    let response = await fetch('/code_modules');
     let data = await response.json();
     if (response.status === 200) {
       this.setState({modules:data})
     }
   }
   async getLessons(){
-    let response = await fetch('https://learn-prework-backend.herokuapp.com/lessons')
+    let response = await fetch('/lessons')
     let data = await response.json();
     if(response.status === 200){
       this.setState({lessons:data})
     }
   }
   async getQuestions(){
-    let response = await fetch('https://learn-prework-backend.herokuapp.com/questions')
+    let response = await fetch('/questions')
     let data = await response.json();
     if(response.status === 200) {
       this.setState({questions:data}
@@ -62,7 +62,7 @@ class App extends React.Component {
   }
   async getResources(){
     
-    let response = await fetch('https://learn-prework-backend.herokuapp.com/resources')
+    let response = await fetch('/resources')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({resources:data})
@@ -119,7 +119,7 @@ class App extends React.Component {
     const {current_user} = this.props
     const last_q = current_user.last_q + 1
       // if the user gets the right answer, update the users last_q to the current question that's been completed
-      fetch(`http://localhost:3000/users/${current_user.id}`, {
+      fetch(`/users/${current_user.id}`, {
       method: 'PUT',
       headers: {'Content-type': 'application/json' },
       body: JSON.stringify({
@@ -145,7 +145,7 @@ class App extends React.Component {
 
   logOut = () => {
     const {current_user} = this.state
-    fetch(`https://learn-prework-backend.herokuapp.com/users/sign_out?id=${current_user.id}`,{
+    fetch(`/users/sign_out?id=${current_user.id}`,{
       method: "DELETE"
     })
     .then(() => {
