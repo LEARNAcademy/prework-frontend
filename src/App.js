@@ -69,13 +69,13 @@ class App extends React.Component {
     }
   }
   getAuthToken = () => {
-    if (localStorage.getItem('authToken') !== null) {
+    if (localStorage.getItem('authToken') && localStorage.getItem('authToken') !== null) {
         let token = localStorage.getItem('authToken')
         let splitToken = token.split(' ')
         let realToken = splitToken[1]
         this.setState({authToken:realToken})
     }
-    if (localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
+    if (localStorage.getItem('user') && localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
       let user = JSON.parse(localStorage.getItem('user'))
       this.setState({current_user:user})
     } 
