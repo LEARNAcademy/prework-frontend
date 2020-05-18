@@ -53,7 +53,7 @@ class Content extends Component{
       val = true;
       this.setState({questionCorrect:val})
       // if the user gets the right answer, update the users last_q to the current question that's been completed
-      fetch(`http://localhost:3000/users/${current_user.id}`, {
+      fetch(`https://learn-prework-backend.herokuapp.com/users/${current_user.id}`, {
       method: 'PUT',
       headers: {'Content-type': 'application/json' },
       body: JSON.stringify({

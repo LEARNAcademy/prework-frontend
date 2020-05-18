@@ -210,7 +210,7 @@ class NewUser extends React.Component{
       }
       handleSubmit() {
         let {user} = this.state 
-        fetch('http://localhost:3000/users', {
+        fetch('https://learn-prework-backend.herokuapp.com/users', {
             body: JSON.stringify({
                 user:{
                     email:user.email,

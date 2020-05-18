@@ -32,28 +32,28 @@ class App extends React.Component {
   }
   
   async getTopics(){
-    let response = await fetch('http://localhost:3000/topics');
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/topics');
     if(response.status === 200){
       let data = await response.json();
       this.setState({topics:data})
     }
   }
   async getModules(){
-    let response = await fetch('http://localhost:3000/code_modules');
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/code_modules');
     let data = await response.json();
     if (response.status === 200) {
       this.setState({modules:data})
     }
   }
   async getLessons(){
-    let response = await fetch('http://localhost:3000/lessons')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/lessons')
     let data = await response.json();
     if(response.status === 200){
       this.setState({lessons:data})
     }
   }
   async getQuestions(){
-    let response = await fetch('http://localhost:3000/questions')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/questions')
     let data = await response.json();
     if(response.status === 200) {
       this.setState({questions:data}
@@ -62,7 +62,7 @@ class App extends React.Component {
   }
   async getResources(){
     
-    let response = await fetch('http://localhost:3000/resources')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/resources')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({resources:data})
@@ -127,7 +127,7 @@ class App extends React.Component {
 
   logOut = () => {
     const {current_user} = this.state
-    fetch(`http://localhost:3000/users/sign_out?id=${current_user.id}`,{
+    fetch(`https://learn-prework-backend.herokuapp.com/users/sign_out?id=${current_user.id}`,{
       method: "DELETE"
     })
     .then(() => {
