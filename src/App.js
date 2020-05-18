@@ -80,22 +80,21 @@ class App extends React.Component {
       }  
     }
 }
-  handleUserUpdate = () => {
-    const {current_user} = this.props
-    const last_q = current_user.last_q + 1
+  handleUserUpdate = (question) => {
+      const {current_user} = this.state
       // if the user gets the right answer, update the users last_q to the current question that's been completed
       fetch(`/users/${current_user.id}`, {
       method: 'PUT',
       headers: {'Content-type': 'application/json' },
       body: JSON.stringify({
-        last_q:last_q
+        last_q:question
       })
     }).then((res)=> {
-      localStorage.setItem('user',JSON.stringify(res.json()))
-    }).then(() => {
+      return res.json()
+    }).then((userData) => {
+      localStorage.setItem('user',JSON.stringify(userData))
       let user = JSON.parse(localStorage.getItem('user'))
       this.setState({current_user:user})
-
     })
   }
   componentDidMount(){

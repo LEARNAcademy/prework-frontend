@@ -68,13 +68,21 @@ class Footer extends React.Component {
           // if there is another question that belongs to the same lesson, render it
           if (nextQuestion !== undefined) {
             this.sendContent(nextQuestion)
+            // resets the userChoice, userCorrect, and userMessage in content to null/blank
             this.props.resetQuestion();
-
+            // updates the user info to mark current question as completed
+            this.props.handleUserUpdate(content.id)
+            // updates progress meter
+            this.props.fillBarLogic();
           } else if (nextQuestion === undefined) {
             // if there are no more questions that belong to the same lesson, render next lesson
             nextLesson = lessons.find((l)=> currentLesson.id < l.id)
             this.sendContent(nextLesson)
             this.props.resetQuestion();
+            // updates the user info to mark current question as completed
+            this.props.handleUserUpdate(content.id)
+            // updates progress meter
+            this.props.fillBarLogic();
           }
         }
       }
@@ -115,7 +123,7 @@ class Footer extends React.Component {
     }
   }
   render() {
-    const { lessons, modules, topics, current_user, questions} = this.props;
+    const { lessons, modules, topics, current_user, questions, percentage} = this.props;
     let buttType = this.buttonType();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
@@ -128,7 +136,7 @@ class Footer extends React.Component {
         <Row>
           <Col sm={6}>
             {/* progress meter on the left */}
-            <Progress questions = {questions} current_user={current_user} modules={modules} lessons={lessons} topics={topics} />
+            <Progress questions = {questions} current_user={current_user} modules={modules} lessons={lessons} topics={topics} percentage = {percentage}/>
           </Col>
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" >
