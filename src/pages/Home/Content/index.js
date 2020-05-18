@@ -44,27 +44,6 @@ class Content extends Component{
       })
     }
   }
-  handleUserUpdate = () => {
-    const {content, userChoice} = this.state;
-    const {current_user} = this.props
-    const last_q = current_user.last_q + 1
-    let val;
-    if (userChoice === content.answer) {
-      val = true;
-      this.setState({questionCorrect:val})
-      // if the user gets the right answer, update the users last_q to the current question that's been completed
-      fetch(`https://learn-prework-backend.herokuapp.com/users/${current_user.id}`, {
-      method: 'PUT',
-      headers: {'Content-type': 'application/json' },
-      body: JSON.stringify({
-        last_q:last_q
-      })
-    }).then((res)=> {
-      localStorage.setItem('user',JSON.stringify(res.json()))
-    })
-    }
-  }
-
 
   currentContent = (content) => {
     this.setState({content:content})
@@ -85,7 +64,7 @@ class Content extends Component{
   }
   render(){
       let checkContent = this.contentExist();
-      let { questions, resources, modules, lessons, topics, current_user, currentMod} = this.props
+      let { questions, resources, modules, lessons, topics, current_user, currentMod, handleUserUpdate} = this.props
       let {questionCorrect, userMessage} = this.state
     return(
       <>
@@ -100,7 +79,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {this.handleUserUpdate}/>   
+                    <Footer checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
                 </Col> 
             </Row>
             }

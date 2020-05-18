@@ -5,7 +5,7 @@ import './style.css'
 
 class Admin extends React.Component {
     render(){
-        let {current_user, adminPage} = this.props;
+        let {current_user} = this.props;
         let hide = true;
         return(
             <>
