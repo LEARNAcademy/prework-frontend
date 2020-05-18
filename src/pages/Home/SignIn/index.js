@@ -24,6 +24,7 @@ class SignIn extends Component{
         method:"POST"
     }).then((response)=> {
         if(response.ok){
+            console.log("This is the response log", response)
             localStorage.setItem('authToken', response.headers.get("Authorization"));
             return response.json();
         }

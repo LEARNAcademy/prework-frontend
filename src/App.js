@@ -75,10 +75,10 @@ class App extends React.Component {
         let realToken = splitToken[1]
         this.setState({authToken:realToken})
     }
-    if (localStorage.getItem('user') !== null){
+    if (localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
       let user = JSON.parse(localStorage.getItem('user'))
       this.setState({current_user:user})
-    }
+    } 
   }
   
   isLogged(){
