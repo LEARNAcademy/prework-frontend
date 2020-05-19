@@ -24,7 +24,6 @@ class SignIn extends Component{
         method:"POST"
     }).then((response)=> {
         if(response.ok){
-            console.log("This is the response log", response)
             localStorage.setItem('authToken', response.headers.get("Authorization"));
             return response.json();
         } else {
@@ -54,18 +53,10 @@ class SignIn extends Component{
     this.setState({user:loginUser})
   }
 
-  keyPress = (e) => {
-      console.log("Before If statement keypress")
-      if (e.key === 'Enter') {
-          this.handleSubmit()
-          console.log("I am the keypress after IF")
-      }
-  }
   render(){
     // check to see if I have an auth token in local storage
     // if i do, get the user 
     // if both of those things exist, set them in the s
-    console.log("I AM THE USER DAWG", this.state.user)
     return(
         <>
             <Row>
@@ -78,7 +69,7 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-                        <Form onSubmit={() => {this.handleSubmit()}}>
+                        <Form>
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -115,8 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-
-                           <Button onKeyPress={this.keyPress}>Login</Button>
+                           <Button onClick={() => {this.handleSubmit()}}> Login </Button>
                                 </Col>
                             </Row>
                         </Form>
