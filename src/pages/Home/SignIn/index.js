@@ -78,8 +78,6 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-
-                        <Form>
                         <Form onSubmit={() => {this.handleSubmit()}}>
                             <Row>
                                 <Col>
