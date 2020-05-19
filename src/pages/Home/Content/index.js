@@ -38,7 +38,8 @@ class Content extends Component{
       this.setState({percentage:completionCount})
   }
   handleChange = (event) => {
-    this.setState({userChoice:event.target.value})
+    this.setState({userChoice:event.target.value}, () => console.log("UserChoice", this.userChoice)
+    )
   }
   resetQuestion = () => {
     let val = null
@@ -85,6 +86,11 @@ class Content extends Component{
       }
     }
   }
+
+  ideUserChoice = (userChoice) => {
+    this.setState({userChoice:userChoice})
+  }
+
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod, handleUserUpdate} = this.props
@@ -96,7 +102,7 @@ class Content extends Component{
               <LessonNav currentMod = {currentMod} current_user = {current_user} modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content} questions={questions}/>
             </Col>
             <Col sm={8}>
-                <MainContent userMessage = {userMessage} current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} />
+                <MainContent userMessage = {userMessage} current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} ideUserChoice={this.ideUserChoice}/>
             </Col>
           </Row>
           {checkContent &&

@@ -25,7 +25,24 @@ class IdeChoice extends React.Component {
         var codeType = e.target.value;
         this.setState({ mode: codeType })
     }
+    checkIdeAnswer(typedText){
+        this.props.ideUserChoice(typedText)
+    }
+
+    getTags(){
+        let userTextInput = document.getElementById("renderedCode")
+        // let userText = userTextInput.innerHTML
+        console.log(userTextInput);
+        // if(userText !== null){
+        //     let finalInput = userText.includes(/ (<([^>]+)>) /gi)
+        //     console.log(finalInput);
+        // }
+        
+        
+        // this.checkIdeAnswer(finalInput)
+    }
     render(){
+        
         let options = {
             mode: this.state.mode,
             lineNumbers: true,
