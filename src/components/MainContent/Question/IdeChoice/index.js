@@ -11,14 +11,14 @@ class IdeChoice extends React.Component {
     constructor() {
         super();
         this.state = {
-          code: '// Start Coding Here',
           mode: 'xml'
         };
       }
 
 
     updateCode(newCode){
-        this.setState({ code: newCode })
+        console.log("newCode",newCode)
+        this.props.updateIde(newCode)
     }
 
     changeMode(e){
@@ -42,13 +42,12 @@ class IdeChoice extends React.Component {
         // this.checkIdeAnswer(finalInput)
     }
     render(){
-        
         let options = {
             mode: this.state.mode,
             lineNumbers: true,
             autoCloseTags: true
           }
-          const pCode = this.state.code
+          const {code} = this.props
         return(
         <div className="Ide">
             <h2>IDE for HTML</h2>
@@ -58,10 +57,10 @@ class IdeChoice extends React.Component {
                 <option value="css">CSS</option>
                 <option value="javascript">JavaScript</option>
                 </select>    
-            <CodeMirror value={this.state.code} onChange={this.updateCode.bind(this)} options={options} />
+            <CodeMirror value={code} onChange={e => this.updateCode(e)} options={options} />
 
             
-            <div id="renderedCode" dangerouslySetInnerHTML={{__html:pCode}}></div>
+            <div id="renderedCode" dangerouslySetInnerHTML={{__html:code}}></div>
         </div>
         )
     }

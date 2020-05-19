@@ -27,15 +27,15 @@ class Footer extends React.Component {
     this.props.currentContent(next);
   }
   checkAnswer() {
-    let { userChoice , checkUserAnswer} = this.props;
-    if (userChoice.length > 0){
+    let { userChoice , checkUserAnswer, ideChoice} = this.props;
+    if (userChoice.length > 0 || ideChoice.length > 0){
       checkUserAnswer();
     } else {
       alert("Make a selection")
     }
   }
   checkContent() {
-    const { content, questions , current_user, lessons, userChoice} = this.props;
+    const { content, questions , current_user, lessons, userChoice, ideChoice} = this.props;
     let nextQuestion;
     let nextLesson;
     if (content.id !== undefined) {
@@ -60,7 +60,7 @@ class Footer extends React.Component {
         // get the lesson the question belongs to 
         const currentLesson = lessons.find((l)=> content.lesson_id === l.id)
         // if the usersChoice is correct, render the next question or lesson
-        if (userChoice === content.answer) {
+        if (userChoice === content.answer || ideChoice === content.answer) {
           // get all the questions that belong to the same lesson as the current question
           const allQuestions = questions.filter((q)=> content.lesson_id === q.lesson_id)
           // finds the next question
@@ -123,9 +123,11 @@ class Footer extends React.Component {
     }
   }
   isQuestionAnswered(){
-    let {userChoice} = this.props
+    let {userChoice,code} = this.props
     if (this.isContentQuestion()) {
       if (userChoice.length > 0) {
+        return true
+      } else if (code.length > 0 ){
         return true
       } else {
         return false
