@@ -175,6 +175,7 @@ class App extends React.Component {
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
   const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
+  console.log("current_user", this.state.current_user)
   
   // this.isAdmin();
   // }5tZ6KXe:r (password)

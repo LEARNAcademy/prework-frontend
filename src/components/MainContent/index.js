@@ -48,7 +48,7 @@ class MainContent extends React.Component {
     }
     
     render(){
-        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions} = this.props
+        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code} = this.props
         let contentExist = this.contentExist();
         // checks if the content is a lesson or question, renders appropriate content
         let isLesson = this.checkType();
@@ -105,7 +105,7 @@ class MainContent extends React.Component {
                 </div>
             }
             {contentExist && !isLesson &&
-                <Question userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange={handleChange} userChoice={userChoice} ideUserChoice = {ideUserChoice} questions = {questions} />
+                <Question code = {code} updateIde = {updateIde} userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange={handleChange} userChoice={userChoice} ideUserChoice = {ideUserChoice} questions = {questions} />
             }
             </>
                 )
