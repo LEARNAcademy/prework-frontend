@@ -78,6 +78,8 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
+
+                        <Form>
                         <Form onSubmit={() => {this.handleSubmit()}}>
                             <Row>
                                 <Col>
@@ -115,7 +117,8 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                                    <Button onKeyPress={this.keyPress}>Login</Button>
+
+                           <Button onKeyPress={this.keyPress}>Login</Button>
                                 </Col>
                             </Row>
                         </Form>

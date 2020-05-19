@@ -25,11 +25,16 @@ class App extends React.Component {
       mode: 'xml'
     }
     this.getAuthToken = this.getAuthToken.bind(this);
-    API.getTopics = API.getTopics.bind(this);
-    API.getModules = API.getModules.bind(this);
-    API.getLessons = API.getLessons.bind(this);
-    API.getQuestions = API.getQuestions.bind(this);
-    API.getResources = API.getResources.bind(this);
+    // API.getTopics = API.getTopics.bind(this);
+    // API.getModules = API.getModules.bind(this);
+    // API.getLessons = API.getLessons.bind(this);
+    // API.getQuestions = API.getQuestions.bind(this);
+    // API.getResources = API.getResources.bind(this);
+    this.getTopics = this.getTopics.bind(this);
+    this.getModules = this.getModules.bind(this);
+    this.getLessons = this.getLessons.bind(this);
+    this.getQuestions = this.getQuestions.bind(this);
+    this.getResources = this.getResources.bind(this)
   }
   
   
@@ -98,16 +103,58 @@ class App extends React.Component {
     })
   }
   componentDidMount(){
-    API.getTopics();
-    API.getModules();
-    API.getLessons();
-    API.getQuestions();
-    API.getResources();
+    this.getTopics();
+    this.getModules();
+    this.getLessons();
+    this.getQuestions();
+    this.getResources();
+    // API.getTopics();
+    // API.getModules();
+    // API.getLessons();
+    // API.getQuestions();
+    // API.getResources();
     this.setState({ mode: 'xml'});
     this.getAuthToken(this.findModule);
   }
+  async getTopics(){
+    let response = await fetch('/topics');
+    let data = await response.json();
+    if (response.status === 200) {
+    this.setState({topics:data})
+    }
+  }
+  async getModules() {
+    let response = await fetch('/code_modules');
+    let data = await response.json();
+    if (response.status === 200) {
+      this.setState({modules:data})
+    }
+  } 
+  async getLessons(){
+    let response = await fetch('/lessons')
+    let data = await response.json();
+    if (response.status === 200) {
+      this.setState({lessons:data})
+    }
+  }
+  async getQuestions(){
+    let response = await fetch('/questions')
+    let data = await response.json();
+    if (response.status === 200) {
+      this.setState({questions:data}
+      )
+    }
+  }
+  async getResources(){
+    let response = await fetch('/resources')
+    let data = await response.json();
+    if (response.status === 200) {
+      this.setState({resources:data})
+    }
+  }
 
   logOut = () => {
+    // logs the user out and destroys the session in the backend
     const {current_user} = this.state
     fetch(`/users/sign_out?id=${current_user.id}`,{
       method: "DELETE"
@@ -118,6 +165,7 @@ class App extends React.Component {
     })
   }
   toggleAdmin=()=> {
+    // this handles the toggle between the user dashboard and the admin panel
     let value = this.state.adminPage
     let final = !value
     this.setState({adminPage:final})
