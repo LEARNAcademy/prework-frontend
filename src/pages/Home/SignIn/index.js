@@ -69,7 +69,7 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-                        <Form onSubmit={() => this.handleSubmit()}>
+                        <Form>
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -106,7 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                                    <Button type="submit">Login</Button>
+                                    <Button onClick={() => this.handleSubmit()}>Login</Button>
                                 </Col>
                             </Row>
                         </Form>
