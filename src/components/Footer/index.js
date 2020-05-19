@@ -122,6 +122,16 @@ class Footer extends React.Component {
       }
     }
   }
+  isQuestionAnswered(){
+    let {userChoice} = this.props
+    if (this.isContentQuestion()) {
+      if (userChoice.length > 0) {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
   setButtonColor(){
     let {questionCorrect} = this.props
     if (questionCorrect === null || !questionCorrect) {
@@ -133,9 +143,9 @@ class Footer extends React.Component {
   render() {
     const { lessons, modules, topics, current_user, questions, percentage} = this.props;
     let buttType = this.buttonType();
+    let isQuestionAnswered = this.isQuestionAnswered();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
-    let buttColor = this.setButtonColor();
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
     // this.props.userChoice < ready to use
@@ -150,7 +160,7 @@ class Footer extends React.Component {
           {/* continue button on the right */}
           <Col sm={6} className="footer-button" >
             {/* if it is a question, check to see if its correct, if it is correct, load next lesson */}
-            <Button outline color={buttColor? 'success':'secondary'} onClick={() => isQuestion?isQuestionCorrect?this.checkContent():this.checkAnswer():this.checkContent()}>{buttType}</Button>
+            <Button outline color={isQuestion?isQuestionCorrect? 'success':'info':'secondary'} disabled = {isQuestion?isQuestionAnswered?false:true:false} onClick={() => isQuestion?isQuestionCorrect?this.checkContent():this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>
         </Row>
       </>
