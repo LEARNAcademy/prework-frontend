@@ -16,7 +16,7 @@ class SignIn extends Component{
   
   handleSubmit() {
       let {user} = this.state
-        fetch('/users/sign_in.json', {
+        fetch('https://learn-prework-backend.herokuapp.com/users/sign_in.json', {
         body: JSON.stringify({user}),
         headers: {
             "Content-type":"application/json"
