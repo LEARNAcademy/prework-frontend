@@ -16,7 +16,7 @@ class SignIn extends Component{
   
   handleSubmit() {
       let {user} = this.state
-        fetch('https://learn-prework-backend.herokuapp.com/users/sign_in.json', {
+        fetch('http://localhost:3000/users/sign_in.json', {
         body: JSON.stringify({user}),
         headers: {
             "Content-type":"application/json"
@@ -53,10 +53,19 @@ class SignIn extends Component{
     loginUser.password = passw 
     this.setState({user:loginUser})
   }
+
+  keyPress = (e) => {
+      console.log("Before If statement keypress")
+      if (e.key === 'Enter') {
+          this.handleSubmit()
+          console.log("I am the keypress after IF")
+      }
+  }
   render(){
     // check to see if I have an auth token in local storage
     // if i do, get the user 
     // if both of those things exist, set them in the s
+    console.log("I AM THE USER DAWG", this.state.user)
     return(
         <>
             <Row>
@@ -69,7 +78,9 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
+
                         <Form>
+                        <Form onSubmit={() => {this.handleSubmit()}}>
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -106,7 +117,8 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                                    <Button onClick={() => this.handleSubmit()}>Login</Button>
+
+                           <Button onKeyPress={this.keyPress}>Login</Button>
                                 </Col>
                             </Row>
                         </Form>
