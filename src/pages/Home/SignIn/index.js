@@ -16,7 +16,7 @@ class SignIn extends Component{
   
   handleSubmit() {
       let {user} = this.state
-        fetch('http://localhost:3000/users/sign_in.json', {
+        fetch('/users/sign_in.json', {
         body: JSON.stringify({user}),
         headers: {
             "Content-type":"application/json"
