@@ -24,7 +24,6 @@ class SignIn extends Component{
         method:"POST"
     }).then((response)=> {
         if(response.ok){
-            console.log("This is the response log", response)
             localStorage.setItem('authToken', response.headers.get("Authorization"));
             return response.json();
         } else {
@@ -53,6 +52,7 @@ class SignIn extends Component{
     loginUser.password = passw 
     this.setState({user:loginUser})
   }
+
   render(){
     // check to see if I have an auth token in local storage
     // if i do, get the user 
@@ -106,7 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                                    <Button onClick={() => this.handleSubmit()}>Login</Button>
+                           <Button onClick={() => {this.handleSubmit()}}> Login </Button>
                                 </Col>
                             </Row>
                         </Form>
