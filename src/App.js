@@ -117,28 +117,28 @@ class App extends React.Component {
     this.getAuthToken(this.findModule);
   }
   async getTopics(){
-    let response = await fetch('/topics');
+    let response = await fetch('http://localhost:3000/topics');
     let data = await response.json();
     if (response.status === 200) {
     this.setState({topics:data})
     }
   }
   async getModules() {
-    let response = await fetch('/code_modules');
+    let response = await fetch('http://localhost:3000/code_modules');
     let data = await response.json();
     if (response.status === 200) {
       this.setState({modules:data})
     }
   } 
   async getLessons(){
-    let response = await fetch('/lessons')
+    let response = await fetch('http://localhost:3000/lessons')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({lessons:data})
     }
   }
   async getQuestions(){
-    let response = await fetch('/questions')
+    let response = await fetch('http://localhost:3000/questions')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({questions:data}
@@ -146,7 +146,7 @@ class App extends React.Component {
     }
   }
   async getResources(){
-    let response = await fetch('/resources')
+    let response = await fetch('http://localhost:3000/resources')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({resources:data})
