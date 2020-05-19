@@ -75,11 +75,11 @@ localhost:8081
 ```
 
 # Technologies used
-[Code-Mirror (react-codemirror)](https://github.com/JedWatson/react-codemirror)
-[Material UI (Core/Icons)](https://material-ui.com/)
-[Reactstrap](https://reactstrap.github.io/)
-[Router-Dom](https://www.npmjs.com/package/react-router-dom)
-[Eslint (AirBNB) ](https//eslint.org)
+- [Code-Mirror (react-codemirror)](https://github.com/JedWatson/react-codemirror)
+- [Material UI (Core/Icons)](https://material-ui.com/)
+- [Reactstrap](https://reactstrap.github.io/)
+- [Router-Dom](https://www.npmjs.com/package/react-router-dom)
+- [Eslint (AirBNB) ](https//eslint.org)
 
 
 # Credits
