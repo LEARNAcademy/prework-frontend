@@ -2,7 +2,7 @@
   "name": "prework-frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3000/",
+  "proxy": "https://learn-prework-backend.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
