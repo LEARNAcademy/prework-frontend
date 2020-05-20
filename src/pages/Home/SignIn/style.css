@@ -2,3 +2,8 @@ main {
     max-width:600px;
     margin: auto;
 }
+
+.login-form {
+    width: 100%;
+    max-width: 600px;
+}

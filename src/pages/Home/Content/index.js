@@ -42,7 +42,6 @@ class Content extends Component{
   updateIde = (newCode) => {
       let withoutBracket = newCode.replace(/(<([^>]+)>)/gi,'')
       let updatedCode = newCode.replace(withoutBracket,'')
-      console.log("updated code",updatedCode)
       this.setState({ code: newCode,
                       ideChoice:updatedCode
        })
