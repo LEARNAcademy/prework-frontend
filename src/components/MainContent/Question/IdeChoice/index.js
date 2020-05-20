@@ -1,5 +1,5 @@
 import React from 'react'
-import './index.css'
+import './style.css'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/xml/xml'
@@ -17,7 +17,6 @@ class IdeChoice extends React.Component {
 
 
     updateCode(newCode){
-        console.log("newCode",newCode)
         this.props.updateIde(newCode)
     }
 
@@ -28,30 +27,19 @@ class IdeChoice extends React.Component {
     checkIdeAnswer(typedText){
         this.props.ideUserChoice(typedText)
     }
-
-    getTags(){
-        let userTextInput = document.getElementById("renderedCode")
-        // let userText = userTextInput.innerHTML
-        console.log(userTextInput);
-        // if(userText !== null){
-        //     let finalInput = userText.includes(/ (<([^>]+)>) /gi)
-        //     console.log(finalInput);
-        // }
-        
-        
-        // this.checkIdeAnswer(finalInput)
-    }
     render(){
         let options = {
             mode: this.state.mode,
             lineNumbers: true,
             autoCloseTags: true
           }
-          const {code} = this.props
+          const {code, content} = this.props
         return(
         <div className="Ide">
-            <h2>IDE for HTML</h2>
-            
+            <h2>{content.title}</h2>
+            <br/>
+                <span className="ideContent">{content.content}</span>
+                <br/>
                 <select onChange={this.changeMode.bind(this)} value={this.state.mode}>
                 <option value="xml">HTML5</option>
                 <option value="css">CSS</option>
