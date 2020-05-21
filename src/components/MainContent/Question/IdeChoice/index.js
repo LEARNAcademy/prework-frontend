@@ -1,11 +1,12 @@
 import React from 'react'
-import './index.css'
+import './style.css'
 import CodeMirror from 'react-codemirror'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/css/css'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/addon/edit/closetag'
+import {Row, Col } from 'reactstrap'
 
 class IdeChoice extends React.Component {
     constructor() {
@@ -17,7 +18,6 @@ class IdeChoice extends React.Component {
 
 
     updateCode(newCode){
-        console.log("newCode",newCode)
         this.props.updateIde(newCode)
     }
 
@@ -28,18 +28,16 @@ class IdeChoice extends React.Component {
     checkIdeAnswer(typedText){
         this.props.ideUserChoice(typedText)
     }
-
-    getTags(){
-        let userTextInput = document.getElementById("renderedCode")
-        // let userText = userTextInput.innerHTML
-        console.log(userTextInput);
-        // if(userText !== null){
-        //     let finalInput = userText.includes(/ (<([^>]+)>) /gi)
-        //     console.log(finalInput);
-        // }
+    defineClass(){
+        let {questionCorrect} = this.props;
         
-        
-        // this.checkIdeAnswer(finalInput)
+        if (questionCorrect !== null) {
+            if (questionCorrect) {
+                return true
+            } else if(!questionCorrect) {
+                return false
+            }
+        }
     }
     render(){
         let options = {
@@ -47,11 +45,14 @@ class IdeChoice extends React.Component {
             lineNumbers: true,
             autoCloseTags: true
           }
-          const {code} = this.props
+        const {code, content, userMessage} = this.props
+        let defineClass = this.defineClass();
         return(
         <div className="Ide">
-            <h2>IDE for HTML</h2>
-            
+            <h2>{content.title}</h2>
+            <br/>
+                <span className="ideContent">{content.content}</span>
+                <br/>
                 <select onChange={this.changeMode.bind(this)} value={this.state.mode}>
                 <option value="xml">HTML5</option>
                 <option value="css">CSS</option>
@@ -59,8 +60,14 @@ class IdeChoice extends React.Component {
                 </select>    
             <CodeMirror value={code} onChange={e => this.updateCode(e)} options={options} />
 
-            
             <div id="renderedCode" dangerouslySetInnerHTML={{__html:code}}></div>
+        {userMessage !== null &&
+        <Row>
+            <Col sm={12}>
+                <p className={defineClass?'correctVal':'incorrectVal'}>{userMessage}</p>
+            </Col>
+        </Row>
+        }
         </div>
         )
     }

@@ -52,6 +52,13 @@ class MultChoice extends React.Component {
                      <h4>{content.title}</h4>
                  </Col>
              </Row>
+             {content.img_src !== undefined&&
+             <Row>
+                 <Col sm={12}>
+                     <img style={{maxWidth:"inherit",marginTop:"20px", marginBottom:"20px"}} src={content.img_src}/>
+                 </Col>
+             </Row>
+             }
              <Row>
                  <Col sm={12}>
                      <Form>

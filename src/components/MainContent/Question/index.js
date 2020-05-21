@@ -23,7 +23,7 @@ class Question extends React.Component{
                 <MultChoice userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice} />
             }
             {!isMult && 
-                <IdeChoice code = {code} updateIde = {updateIde} userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}  ideUserChoice = {ideUserChoice} questions = {questions} />
+                <IdeChoice userMessage = {userMessage} code = {code} updateIde = {updateIde} userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}  ideUserChoice = {ideUserChoice} questions = {questions} />
             }
             </>
         )

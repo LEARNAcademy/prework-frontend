@@ -21,3 +21,35 @@
 .lesson-nav {
     border: "solid black 3px"
 }
+#accordionExample .btn-link {
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    font-style: italic;
+    font-size: 0.5em;
+}
+.card-body li.nav-list {
+    border-bottom: 1px solid lightgray;
+    list-style-type: disc;
+    font-size: 12px;
+    margin: 5px 0 5px -30px;
+    padding-bottom: 5px;
+}
+.card-body .nav-list.active {
+    background-color: #7ac1445c;
+    padding: 5px;
+}
+span.navIsActive {
+    color: white;
+    margin-top:10px;
+}
+.card-header span.navIsActive.active {
+    transform: rotate(90deg);
+    margin-top: 10px;
+}
+#accordionExample .card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgb(122, 193, 68);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}

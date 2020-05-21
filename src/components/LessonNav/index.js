@@ -45,7 +45,14 @@ class LessonNav extends Component {
             })
         }
     }
-
+    showNavArrow = (btnNum) => {
+        if(document.querySelector(".navIsActive").classList.contains("active")) {
+            document.querySelector(".navIsActive").classList.remove("active")
+        }
+        else {
+            document.querySelector(".navIsActive").classList.add("active")
+        }
+    }
     render() {
         this.checkContent();
         let {modules, topics, currentMod} = this.props;
@@ -59,10 +66,11 @@ class LessonNav extends Component {
                                 <div key={i} className="card">
                                     <div className="card-header" id={`heading${i}`}>
                                     <h2 className="mb-0">
-                                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${i}`} aria-expanded="true" aria-controls={`collapse${i}`} >
+                                        <button className="btn btn-link" type="button" data-toggle="collapse" data-target={`#collapse${i}`} aria-expanded="true" aria-controls={`collapse${i}`} onClick={() => this.showNavArrow(i)}>
                                         {/*display module title */}
                                         {topic.title}
                                         </button>
+                                        <span className="material-icons float-right navIsActive">keyboard_arrow_right</span>
                                     </h2>
                                     </div>
 
