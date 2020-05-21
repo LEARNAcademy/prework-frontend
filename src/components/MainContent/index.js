@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Card, CardTitle, CardText, Button } from 'reactstrap'
 import Question from './Question'
 import './style.css'
 
@@ -46,7 +46,21 @@ class MainContent extends React.Component {
         }
         return []
     }
+    showContent = (name) => {
+    //     if(name === "html") {
+            
+    //         document.querySelector(`.navBtn0 .navIsActive`).classList.add("active") 
+    //     } 
+    //     if(name === "js") {
+
+    //         document.querySelector(`.navBtn1 .navIsActive`).classList.add("active") 
+    //     }
+    //     if(name === "css") {
     
+    //         document.querySelector(`.navBtn2 .navIsActive`).classList.add("active") 
+    //     } 
+    console.log(name)
+    }
     render(){
         //,6wYa^laDh
         const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code,current_user} = this.props
@@ -63,6 +77,21 @@ class MainContent extends React.Component {
                     <Row>
                         <Col sm={12}>
                             <h4>Hello <span style={{color:"green",fontStyle:"italic"}}>{current_user.email}</span>, click on a module to start</h4>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>HTML</strong></CardTitle>
+                                <CardText>Start learning about the foundation of web development with HTML. In this module, you'll be taught all of the rules you'll need to know about the structure of a website and the foundation of web development.</CardText>
+                                <Button type="button" className="dashBtn0 btn btn-success" data-toggle="collapse" data-target="#collapse0" onClick={() => this.showContent("html")}>Go to HTML</Button>
+                            </Card>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>JavaScript</strong></CardTitle>
+                                <CardText>Find out how to make your website interactive, dynamic and awesome with JavaScript.</CardText>
+                                <Button type="button" className="dashBtn1 btn btn-success" data-toggle="collapse" data-target="#collapse1" onClick={() => this.showContent("js")}>Go to JavaScript</Button>
+                            </Card>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>CSS</strong></CardTitle>
+                                <CardText>Turn your website into a stunning work of art by learning how to style every aspect of it using CSS.</CardText>
+                                <Button type="button" className="dashBtn2 btn btn-success" data-toggle="collapse" data-target="#collapse2" onClick={() => this.showContent("css")}>Go to CSS</Button>
+                            </Card>
                         </Col>
                     </Row>
                 </div>
