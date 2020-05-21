@@ -6,6 +6,7 @@ class NewUser extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            passwordSaved:false,
             mod:true,
             user: {
                 email: null,
@@ -206,7 +207,18 @@ class NewUser extends React.Component{
             let updatePass = this.state.user 
             updatePass.password = passw
             this.setState({user:updatePass})
+            this.setState({passwordSaved:false})
         }
+      }
+      resetState(){
+        this.setState({
+          passwordSaved:false,
+            mod:true,
+            user: {
+                email: null,
+                password:null,
+            }
+        })
       }
       handleSubmit() {
         let {user} = this.state 
@@ -225,6 +237,7 @@ class NewUser extends React.Component{
         }).then((response)=> {
             if(response.ok){
               alert('User Created')
+              this.resetState();
             }
         })
       }
@@ -237,6 +250,13 @@ class NewUser extends React.Component{
         let updatedUser = this.state.user
         updatedUser.password = password 
         this.setState({user:updatedUser})
+      }
+      copyClipboard(){
+        console.log("hello")
+        let userPass = document.getElementById('userPassword')
+        userPass.select();
+        document.execCommand('copy')
+        this.setState({passwordSaved:true})
       }
 
     render(){
@@ -271,12 +291,12 @@ class NewUser extends React.Component{
                         <>
                             <Row>
                               <Col sm={12}>
-                                <p style={{textAlign:"center",marginTop:"30px"}}>Please save the users password:</p>
+                        <p style={{textAlign:"center",marginTop:"30px"}}>Please save the users password:{this.state.passwordSaved && <span className="passSave"> saved</span>}</p>
                               </Col>
                             </Row>
                             <Row>
                               <Col sm={12} style={{textAlign:"center",marginTop:"20px",margin:"0 auto"}}>
-                                <Input readOnly type="textarea" name="text" style={{width:"460px",height:"50px",margin:"0 auto"}} value={this.state.user.password}/>
+                                <Input id="userPassword" readOnly type="textarea" name="text" style={{width:"460px",height:"50px",margin:"0 auto"}} value={this.state.user.password} onClick={()=> this.copyClipboard()}/>
                               </Col>
                             </Row>
                             <Row>

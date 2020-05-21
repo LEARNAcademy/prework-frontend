@@ -36,3 +36,11 @@
     border: 2px solid white; /* should match background, can't be transparent */
     background-color: rgba(0, 0, 0, .5);
 }
+.correctVal{
+    margin-top:10px;
+    color:green;
+}
+.incorrectVal {
+    margin-top:10px;
+    color:red;
+}

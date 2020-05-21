@@ -6,6 +6,7 @@ import 'codemirror/mode/xml/xml'
 import 'codemirror/mode/css/css'
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/addon/edit/closetag'
+import {Row, Col } from 'reactstrap'
 
 class IdeChoice extends React.Component {
     constructor() {
@@ -27,13 +28,25 @@ class IdeChoice extends React.Component {
     checkIdeAnswer(typedText){
         this.props.ideUserChoice(typedText)
     }
+    defineClass(){
+        let {questionCorrect} = this.props;
+        
+        if (questionCorrect !== null) {
+            if (questionCorrect) {
+                return true
+            } else if(!questionCorrect) {
+                return false
+            }
+        }
+    }
     render(){
         let options = {
             mode: this.state.mode,
             lineNumbers: true,
             autoCloseTags: true
           }
-          const {code, content} = this.props
+        const {code, content, userMessage} = this.props
+        let defineClass = this.defineClass();
         return(
         <div className="Ide">
             <h2>{content.title}</h2>
@@ -47,8 +60,14 @@ class IdeChoice extends React.Component {
                 </select>    
             <CodeMirror value={code} onChange={e => this.updateCode(e)} options={options} />
 
-            
             <div id="renderedCode" dangerouslySetInnerHTML={{__html:code}}></div>
+        {userMessage !== null &&
+        <Row>
+            <Col sm={12}>
+                <p className={defineClass?'correctVal':'incorrectVal'}>{userMessage}</p>
+            </Col>
+        </Row>
+        }
         </div>
         )
     }

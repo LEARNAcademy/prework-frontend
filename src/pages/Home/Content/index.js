@@ -55,6 +55,8 @@ class Content extends Component{
     this.setState({
       questionCorrect:val,
       userChoice:'',
+      code:'',
+      ideChoice:'',
       userMessage:null})
   }
   checkUserAnswer = () => {

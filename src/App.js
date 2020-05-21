@@ -24,6 +24,7 @@ class App extends React.Component {
       code: '// Code here',
       mode: 'xml'
     }
+
     this.getAuthToken = this.getAuthToken.bind(this);
     // API.getTopics = API.getTopics.bind(this);
     // API.getModules = API.getModules.bind(this);
@@ -34,7 +35,7 @@ class App extends React.Component {
     this.getModules = this.getModules.bind(this);
     this.getLessons = this.getLessons.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
-    this.getResources = this.getResources.bind(this)
+    this.getResources = this.getResources.bind(this);
   }
   
   
@@ -175,10 +176,7 @@ class App extends React.Component {
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
   const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
-  console.log("current_user", this.state.current_user)
   
-  // this.isAdmin();
-  // }5tZ6KXe:r (password)
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>

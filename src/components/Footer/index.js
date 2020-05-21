@@ -30,8 +30,49 @@ class Footer extends React.Component {
     let { userChoice , checkUserAnswer, ideChoice} = this.props;
     if (userChoice.length > 0 || ideChoice.length > 0){
       checkUserAnswer();
-    } else {
-      alert("Make a selection")
+    }
+  }
+  previousLesson(){
+    const {content, lessons} = this.props
+    // does the content exist
+    if (content.id) {
+      // check to see if the content is a lesson
+      if ( content.lesson_id === undefined) {
+        // assigns the previous lesson, if it exists
+        const prevLesson = lessons.find((l)=>  l.id === content.id-1)
+        if (prevLesson !== undefined){
+          // changes content to previous lesson
+          this.sendContent(prevLesson)
+        }
+        // checks to see if the content is a question
+      } else if (content.lesson_id !== undefined) { 
+        // gets the current lesson the user is on
+        const currentLesson = lessons.find((l)=> l.id === content.lesson_id)
+        this.sendContent(currentLesson)
+      }
+    }
+
+  }
+
+  previousLessonExist(){
+    // checks to see if a previous lesson exists, if it does, shows the Previous Lesson button next to the continue button
+    const {content, lessons } = this.props
+    // does content exist
+    if (content.id) {
+      // check to see if the content is a lesson
+      if (content.lesson_id === undefined) {
+        // if it's a lesson, finds the previous lesson
+        const previousLesson = lessons.find((l)=> content.id > l.id)
+        // if a previous lesson exists, return true
+        if (previousLesson !== undefined) {
+          return true
+        } else {
+          return false
+        }
+        // it's a question, we know there's a lesson that belongs to it to go back to
+      } else {
+        return true
+      }
     }
   }
   checkContent() {
@@ -148,6 +189,7 @@ class Footer extends React.Component {
     let isQuestionAnswered = this.isQuestionAnswered();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
+    let previousLesson = this.previousLessonExist();
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
     // this.props.userChoice < ready to use
@@ -160,7 +202,12 @@ class Footer extends React.Component {
             <Progress questions = {questions} current_user={current_user} modules={modules} lessons={lessons} topics={topics} percentage = {percentage}/>
           </Col>
           {/* continue button on the right */}
-          <Col sm={6} className="footer-button" >
+          <Col sm={4} style={{textAlign:"right"}}>
+            {previousLesson && 
+            <Button style ={{textAlign:"right"}} outline color='secondary' onClick={()=> this.previousLesson()}>Back</Button>
+            }
+          </Col>
+          <Col className="footer-button" style={{textAlign:"right"}}>
             {/* if it is a question, check to see if its correct, if it is correct, load next lesson */}
             <Button outline color={isQuestion?isQuestionCorrect? 'success':'info':'secondary'} disabled = {isQuestion?isQuestionAnswered?false:true:false} onClick={() => isQuestion?isQuestionCorrect?this.checkContent():this.checkAnswer():this.checkContent()}>{buttType}</Button>
           </Col>
