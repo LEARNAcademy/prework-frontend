@@ -14,9 +14,10 @@ class SignIn extends Component{
       }
   }
   
-  handleSubmit() {
+  handleSubmit = (event) => {
+      event.preventDefault();
       let {user} = this.state
-        fetch('/users/sign_in.json', {
+        fetch('https://learn-prework-backend.herokuapp.com/users/sign_in.json', {
         body: JSON.stringify({user}),
         headers: {
             "Content-type":"application/json"
@@ -63,18 +64,16 @@ class SignIn extends Component{
                 <Col sm={12} className="text-center">
                     <main>
                         <Row>
-                            <Col><h1>Learn App</h1></Col>
-                        </Row>
-                        <Row>
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-                        <Form>
+                        <Form onSubmit={this.handleSubmit}>
                             <Row>
                                 <Col>
                                     <FormGroup>
                                         <Label for="email">Email</Label>
-                                        <Input
+                                        <Input 
+                                            style={{width:"70%"}}
                                             type="text" 
                                             id="email" 
                                             className="login-form" 
@@ -91,7 +90,8 @@ class SignIn extends Component{
                                 <Col>
                                     <FormGroup>
                                         <Label for="passw" className="text-left">Password</Label>
-                                        <Input
+                                        <Input 
+                                            style={{width:"70%",margin:"0 auto"}}
                                             type="password" 
                                             id="passw" 
                                             className="login-form" 
@@ -106,7 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                           <Button onClick={() => {this.handleSubmit()}}> Login </Button>
+                           <Button outline color='success' type="submit"> Login </Button>
                                 </Col>
                             </Row>
                         </Form>
