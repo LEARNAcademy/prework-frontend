@@ -48,7 +48,8 @@ class MainContent extends React.Component {
     }
     
     render(){
-        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code} = this.props
+        //,6wYa^laDh
+        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code,current_user} = this.props
         let contentExist = this.contentExist();
         // checks if the content is a lesson or question, renders appropriate content
         let isLesson = this.checkType();
@@ -61,7 +62,7 @@ class MainContent extends React.Component {
                 <div>
                     <Row>
                         <Col sm={12}>
-                            <h4>Hello user, click on a module to start</h4>
+                            <h4>Hello <span style={{color:"green",fontStyle:"italic"}}>{current_user.email}</span>, click on a module to start</h4>
                         </Col>
                     </Row>
                 </div>
