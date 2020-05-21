@@ -14,7 +14,8 @@ class SignIn extends Component{
       }
   }
   
-  handleSubmit() {
+  handleSubmit = (event) => {
+      event.preventDefault();
       let {user} = this.state
         fetch('https://learn-prework-backend.herokuapp.com/users/sign_in.json', {
         body: JSON.stringify({user}),
@@ -66,7 +67,7 @@ class SignIn extends Component{
                             <Col><h3>Log In</h3></Col>
       
                         </Row>
-                        <Form>
+                        <Form onSubmit={this.handleSubmit}>
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -105,7 +106,7 @@ class SignIn extends Component{
                             </Row>
                             <Row>
                                 <Col sm={12}>
-                           <Button outline color='success' onClick={() => {this.handleSubmit()}}> Login </Button>
+                           <Button outline color='success' type="submit"> Login </Button>
                                 </Col>
                             </Row>
                         </Form>
