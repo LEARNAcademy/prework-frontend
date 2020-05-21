@@ -34,7 +34,6 @@ class SignIn extends Component{
       localStorage.setItem('user',JSON.stringify(userJson))
       window.location.reload();
     }).catch((error) => {
-        console.log(error)
         alert("Email and Password are incorrect.")
         window.location.reload()
             localStorage.clear()

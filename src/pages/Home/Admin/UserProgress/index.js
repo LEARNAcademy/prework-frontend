@@ -1,18 +1,16 @@
 import React from 'react' 
-import {Table} from 'reactstrap'
+import {Table, Row, Col, Button} from 'reactstrap'
 
 class UserProgress extends React.Component {
     getUserModule(user){
         const {questions, lessons, modules } = this.props 
         // the question the user is currently on
-        console.log("questions",questions)
         const currentQuestion = questions.find((q)=> q.id > user.last_q)
-        console.log('users',user)
-        console.log("currentQuestion",currentQuestion)
         // the lesson the user is currently on 
         const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
         // the module the user is currently on 
         const currentModule = modules.find((m)=> currentLesson.code_module_id === m.id)
+        // returns title of the current module the user is on
         return currentModule.lesson
     }
     getUserLesson(user){
@@ -21,6 +19,7 @@ class UserProgress extends React.Component {
         const currentQuestion = questions.find((q)=> q.id > user.last_q)
         // the lesson the user is currently on 
         const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
+        // the lesson title
         return currentLesson.title
     }
     getUserProgress(user){
@@ -40,7 +39,7 @@ class UserProgress extends React.Component {
       completionCount = (percentPerQuestion * cQuestions)*100
       // completionCount = (percentPerLesson * cLessons)*100
       // updates the state to completionCount
-      return completionCount
+      return Math.floor(completionCount)
     }
 
     render(){
@@ -54,7 +53,7 @@ class UserProgress extends React.Component {
                             <th>Email</th>
                             <th>Module</th>
                             <th>Lesson</th>
-                            <th>Progress %</th>
+                            <th>Progress</th>
                         </tr>
                     </thead>
                     <tbody>

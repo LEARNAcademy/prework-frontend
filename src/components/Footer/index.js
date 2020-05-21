@@ -98,10 +98,14 @@ class Footer extends React.Component {
         }
         // checks to see if the current content is a question
       } else if (content.lesson_id !== undefined) {
+        let finalIDE;
+        if (ideChoice.length > 1) {
+          finalIDE = ideChoice.join('')
+        }
         // get the lesson the question belongs to 
         const currentLesson = lessons.find((l)=> content.lesson_id === l.id)
         // if the usersChoice is correct, render the next question or lesson
-        if (userChoice === content.answer || ideChoice === content.answer) {
+        if (userChoice === content.answer || finalIDE === content.answer) {
           // get all the questions that belong to the same lesson as the current question
           const allQuestions = questions.filter((q)=> content.lesson_id === q.lesson_id)
           // finds the next question

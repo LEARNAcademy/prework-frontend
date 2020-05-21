@@ -28,7 +28,6 @@ class Admin extends React.Component {
         this.getUsers();
     }
     render(){
-        console.log("this.state.users",this.state.users)
         let {current_user, lessons, modules, questions} = this.props;
         const {users} = this.state
         let hide = true;
@@ -52,10 +51,10 @@ class Admin extends React.Component {
                             </Col>
                         </Row>
                     </Col>
-                    <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} />
                     <NewUser current_user = {current_user}/>
                 </Row>
             }  
+            <NewUser current_user = {current_user}/>
             <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} />
 
             </>
