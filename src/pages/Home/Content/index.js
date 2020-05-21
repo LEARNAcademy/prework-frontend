@@ -40,9 +40,9 @@ class Content extends Component{
       this.setState({percentage:completionCount})
   }
   updateIde = (newCode) => {
-      let withoutBracket = newCode.replace(/(<([^>]+)>)/gi,'')
-      let updatedCode = newCode.replace(withoutBracket,'')
-      console.log("withoutBracket",updatedCode)
+      // locates tags and anything inside of them
+      let regex = /(<([^>]+)>)/gi
+      let updatedCode = newCode.match(regex)
       this.setState({ code: newCode,
                       ideChoice:updatedCode
        })
@@ -63,8 +63,13 @@ class Content extends Component{
   checkUserAnswer = () => {
     const {content, userChoice, ideChoice} = this.state
     let value = false
+    let finalIDE;
     let message;
-    if (content.answer === userChoice || content.answer === ideChoice ) {
+    if (ideChoice.length > 1) {
+      finalIDE = ideChoice.join('')
+    }
+    // checks to see if the user got the IDE or multchoice answer correct
+    if (content.answer === userChoice || content.answer === finalIDE ) {
       value = true
       message = 'Correct 👍'
       this.setState({
