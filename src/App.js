@@ -3,6 +3,8 @@ import './App.css';
 import { Container } from 'reactstrap';
 import Header from './components/Header';
 import Admin from './pages/Home/Admin'
+import NewUser from './pages/Home/Admin/NewUser'
+import UserProgress from './pages/Home/Admin/UserProgress'
 import SignIn from './pages/Home/SignIn'
 import Content from './pages/Home/Content'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
@@ -21,6 +23,7 @@ class App extends React.Component {
       resources:[],
       authToken:"",
       current_user:[],
+      allUsers:[],
       code: '// Code here',
       mode: 'xml'
     }
@@ -49,6 +52,10 @@ class App extends React.Component {
     if (localStorage.getItem('user') && localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
       let user = JSON.parse(localStorage.getItem('user'))
       this.setState({current_user:user})
+    }
+    if (localStorage.getItem('allUsers') && localStorage.getItem('allUsers') != null && localStorage.getItem('allUsers') !== undefined) {
+      let allUsers = JSON.parse(localStorage.getItem('allUsers'))
+      this.setState({allUsers:allUsers})
     } 
   }
   
@@ -117,6 +124,20 @@ class App extends React.Component {
     this.setState({ mode: 'xml'});
     this.getAuthToken(this.findModule);
   }
+  getAllUsers(){
+    let bearer = localStorage.getItem('authToken')
+        fetch('https://learn-prework-backend.herokuapp.com/admin/users',{
+            headers : {
+                'Content-Type':'application/json',
+                'Accept':'application/json',
+                'Authorization': bearer
+            }
+        }).then((response)=> response.json()).then((usersData)=> {
+          localStorage.setItem('allUsers',JSON.stringify(usersData))
+          let allUsers = JSON.parse(localStorage.getItem('allUsers'))
+          this.setState({allUsers:allUsers})
+        })
+  }
   async getTopics(){
     let response = await fetch('https://learn-prework-backend.herokuapp.com/topics');
     let data = await response.json();
@@ -171,11 +192,17 @@ class App extends React.Component {
     let final = !value
     this.setState({adminPage:final})
   }
+  fetchUsersAdmin() {
+    if(this.isAdmin()){
+      this.getAllUsers();
+    }
+  }
 
   render(){
+  console.log("allUsers",this.state.allUsers)
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
-  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
+  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage, allUsers} = this.state;
   
   return (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -189,7 +216,9 @@ class App extends React.Component {
           {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
-            <Route exact path='/admin' render= {props => <Admin current_user = {current_user}/>}/>
+            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
           </Switch>
         </Router>

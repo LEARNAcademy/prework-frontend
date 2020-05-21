@@ -252,7 +252,6 @@ class NewUser extends React.Component{
         this.setState({user:updatedUser})
       }
       copyClipboard(){
-        console.log("hello")
         let userPass = document.getElementById('userPassword')
         userPass.select();
         document.execCommand('copy')
