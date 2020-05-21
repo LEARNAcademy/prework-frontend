@@ -66,13 +66,13 @@ class Content extends Component{
     let message;
     if (content.answer === userChoice || content.answer === ideChoice ) {
       value = true
-      message = 'Correct'
+      message = 'Correct 👍'
       this.setState({
         questionCorrect:value,
         userMessage:message
       })
     } else {
-      message = 'Incorrect'
+      message = 'Incorrect 🚫, try again'
       this.setState({
         questionCorrect:value,
         userMessage:message
