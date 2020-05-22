@@ -1,7 +1,9 @@
 .lessonImg{
-    max-width: inherit;
+    max-width: 700px;
     margin-bottom:30px;
 }
+
 .dashCard {
     margin-bottom:20px;
 } 
+
