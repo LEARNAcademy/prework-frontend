@@ -55,7 +55,7 @@ class LessonNav extends Component {
     }
     render() {
         this.checkContent();
-        let {modules, topics, currentMod} = this.props;
+        let {modules, topics, current_user, questions} = this.props;
         return(
             <>
                 <aside className="lesson-nav">
@@ -98,16 +98,17 @@ class LessonNav extends Component {
 
                                                     if(m.topic_id === topic.id){
                                                     {/* the current mod id is equal to or less than the  */}
+
                                                         if(i === 0 ){
                                                             flag = ''
                                                         }
                                                         // eslint-disable-next-line no-lone-blocks
                                                         {/* if a previous lesson exists and its completed, override the disabled flag and enable current lesson*/}
 
-                                                        if(m.id <= currentMod.id){
+                                                        if(m.id ){
                                                             flag=''
                                                         }
-                                                        if(m.id < currentMod.id){
+                                                        if(m.id ){
                                                             completed = true;
                                                         }
                                                     

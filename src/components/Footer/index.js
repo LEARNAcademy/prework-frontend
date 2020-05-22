@@ -28,8 +28,12 @@ class Footer extends React.Component {
   }
   checkAnswer() {
     let { userChoice , checkUserAnswer, ideChoice} = this.props;
-    if (userChoice.length > 0 || ideChoice.length > 0){
-      checkUserAnswer();
+    if (ideChoice !== null) {
+      if (userChoice.length > 0 || ideChoice.length > 0){
+        checkUserAnswer();
+      }
+    } else if (ideChoice === null){
+      console.log("display user message: add a tag")
     }
   }
   previousLesson(){
@@ -82,12 +86,16 @@ class Footer extends React.Component {
     if (content.id !== undefined) {
       // question the user is currently on
       const currentQuestion = questions.find((q)=> current_user.last_q < q.id)
+      console.log('current_user',current_user)
       // checks to see if the current content is a lesson
       if (content.lesson_id === undefined) {
         // get all the questions that belong to this lesson
         const allQuestions = questions.filter((q)=> q.lesson_id === content.id)
-        // get the next question to render 
-        nextQuestion = allQuestions.find((q)=> currentQuestion.id === q.id)
+        // 
+        if (currentQuestion !== undefined) {
+          // get the next question to render 
+          nextQuestion = allQuestions.find((q)=> currentQuestion.id === q.id)
+        }
         // assign the next lesson 
         nextLesson = lessons.find((l)=> content.id < l.id)
         // if there is another question to display, render that question
