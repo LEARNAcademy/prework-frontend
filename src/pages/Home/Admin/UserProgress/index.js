@@ -52,8 +52,6 @@ class UserProgress extends React.Component {
     }
     render(){
         const {users, createUser} = this.props
-        console.log('userCreate',createUser)
-        console.log('tiggkeCreate',this.props.toggleCreate)
         return(
             <>
                 <Table>

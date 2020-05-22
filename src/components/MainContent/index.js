@@ -65,17 +65,20 @@ class MainContent extends React.Component {
                             <Card className="dashCard" body>
                                 <CardTitle><strong>HTML</strong></CardTitle>
                                 <CardText>Start learning about the foundation of web development with HTML. In this module, you'll be taught all of the rules you'll need to know about the structure of a website and the foundation of web development.</CardText>
-                                <Button type="button" className="dashBtn0 btn btn-success" data-toggle="collapse" data-target="#collapse0" onClick={() => this.showContent("html")}>Go to HTML</Button>
+                                {/*onClick={() => this.showContent("html")}*/}
+                                <Button type="button" className="dashBtn0 btn btn-success" data-toggle="collapse" data-target="#collapse0" >Go to HTML</Button>
                             </Card>
                             <Card className="dashCard" body>
                                 <CardTitle><strong>JavaScript</strong></CardTitle>
                                 <CardText>Find out how to make your website interactive, dynamic and awesome with JavaScript.</CardText>
-                                <Button type="button" className="dashBtn1 btn btn-success" data-toggle="collapse" data-target="#collapse1" onClick={() => this.showContent("js")}>Go to JavaScript</Button>
+                                {/*onClick={() => this.showContent("js")}*/} 
+                                <Button type="button" className="dashBtn1 btn btn-success" data-toggle="collapse" data-target="#collapse1" >Go to JavaScript</Button>
                             </Card>
                             <Card className="dashCard" body>
                                 <CardTitle><strong>CSS</strong></CardTitle>
                                 <CardText>Turn your website into a stunning work of art by learning how to style every aspect of it using CSS.</CardText>
-                                <Button type="button" className="dashBtn2 btn btn-success" data-toggle="collapse" data-target="#collapse2" onClick={() => this.showContent("css")}>Go to CSS</Button>
+                                {/*onClick={() => this.showContent("css")} */}
+                                <Button type="button" className="dashBtn2 btn btn-success" data-toggle="collapse" data-target="#collapse2" >Go to CSS</Button>
                             </Card>
                         </Col>
                     </Row>
