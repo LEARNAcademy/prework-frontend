@@ -67,7 +67,9 @@ class Content extends Component{
     let message;
     if (ideChoice.length > 1) {
       finalIDE = ideChoice.join('')
+      console.log('finalIDE',finalIDE)
     }
+    console.log('contentAnswer',content.answer)
     // checks to see if the user got the IDE or multchoice answer correct
     if (content.answer === userChoice || content.answer === finalIDE ) {
       value = true

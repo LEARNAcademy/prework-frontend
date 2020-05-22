@@ -77,22 +77,21 @@ class App extends React.Component {
       }
     }
   }
-  findModule() {
-    let {modules, lessons, questions, current_user} = this.state 
-    // id of the question the user is currently on
-    if (current_user.length === undefined) {
-      let userQ = current_user.last_q
-      // find the question the user is currently on 
-      let currentQ = questions.find((q)=> q.id > userQ)
-      if (currentQ !== undefined) {
-          // find the lesson the user is currently on
-          let currentL = lessons.find((q)=> currentQ.lesson_id === q.id)
-          // find the module the user is currently on
-          let currentM = modules.find((m)=> currentL.code_module_id === m.id)
-          this.setState({currentMod:currentM})
-      }  
-    }
-}
+  userModule(){
+    const { modules, questions, lessons} = this.state
+      // assigns current user
+      const current_user = JSON.parse(localStorage.getItem('user'))
+      if (current_user !== undefined) {
+        // question the user is currently on
+        const currentQuestion = questions.find((q)=> q.id>current_user.last_q)
+        // lesson the user is currently on
+        const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
+        // module the uer is currently on 
+        const currentModule = modules.find((m)=> currentLesson.code_module_id === m.id)
+        
+        this.setState({currentMod:currentModule})
+      }
+  }
   handleUserUpdate = (question) => {
       const {current_user} = this.state
       // if the user gets the right answer, update the users last_q to the current question that's been completed
@@ -122,7 +121,7 @@ class App extends React.Component {
     // API.getQuestions();
     // API.getResources();
     this.setState({ mode: 'xml'});
-    this.getAuthToken(this.findModule);
+    this.getAuthToken();
   }
   getAllUsers(){
     let bearer = localStorage.getItem('authToken')

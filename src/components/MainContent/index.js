@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Card, CardTitle, CardText, Button } from 'reactstrap'
+import { Row, Col, Card, CardTitle, CardText, Button, CardHeader, CardFooter, CardBody } from 'reactstrap'
 import Question from './Question'
 import './style.css'
 
@@ -46,21 +46,6 @@ class MainContent extends React.Component {
         }
         return []
     }
-    showContent = (name) => {
-    //     if(name === "html") {
-            
-    //         document.querySelector(`.navBtn0 .navIsActive`).classList.add("active") 
-    //     } 
-    //     if(name === "js") {
-
-    //         document.querySelector(`.navBtn1 .navIsActive`).classList.add("active") 
-    //     }
-    //     if(name === "css") {
-    
-    //         document.querySelector(`.navBtn2 .navIsActive`).classList.add("active") 
-    //     } 
-    console.log(name)
-    }
     render(){
         //,6wYa^laDh
         const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code,current_user} = this.props
@@ -100,38 +85,32 @@ class MainContent extends React.Component {
                 <div>
                     <Row>
                         <Col>
-                            <h1 className="lessonHeader">{content.title}</h1>
+                            <Card>
+                                <CardHeader tag="h1" >{content.title}</CardHeader>
+                                <CardBody>
+                                    <CardText>{content.content}</CardText>
+                                {content.img_src !== null &&
+                                    <CardText>
+                                        <img className="lessonImg" src={content.img_src}/>
+                                    </CardText>
+                                }
+                                {resourcesL.length > 0 &&
+                                <div>
+                                    <h5>Resources</h5>
+                                    <ul>
+                                        {resourcesL.map((resource,i)=>{
+                                            return(
+                                                // eslint-disable-next-line react/jsx-no-target-blank
+                                                <li key={i}><a href={resource.link} target="_blank">{resource.name}</a></li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                                }
+                                </CardBody>
+                            </Card>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <p>{content.content}</p>
-                        </Col>
-                    </Row>
-                    {content.img_src !== null &&
-                    <Row>
-                        <Col>
-                            <img className="lessonImg" src={content.img_src}/>
-                        </Col>
-                    </Row>
-                    }
-                    <Row>
-                        {resourcesL.length > 0 &&
-                        <Col sm={6}>
-                            <h5>Resources</h5>
-                            <ul>
-                                {resourcesL.map((resource,i)=>{
-                                    return(
-                                        // eslint-disable-next-line react/jsx-no-target-blank
-                                        <li key={i}><a href={resource.link} target="_blank">{resource.name}</a></li>
-                                    )
-                                })}
-                            </ul>
-                        
-                        </Col>
-                        }
-                    </Row>
-
                 </div>
             }
             {contentExist && !isLesson &&
