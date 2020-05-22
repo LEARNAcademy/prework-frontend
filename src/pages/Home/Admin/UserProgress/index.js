@@ -1,11 +1,17 @@
 import React from 'react' 
-import {Table, Row, Col, Button} from 'reactstrap'
+import {Table, Row, Col, ButtonToggle, Button} from 'reactstrap'
+import {Redirect} from 'react-router-dom'
 
 class UserProgress extends React.Component {
     getUserModule(user){
         const {questions, lessons, modules } = this.props 
+
         // the question the user is currently on
-        const currentQuestion = questions.find((q)=> q.id > user.last_q)
+        let currentQuestion = questions.find((q)=> q.id > user.last_q)
+        // if currentQuestion is undefined, user is on the last question
+        if (currentQuestion === undefined) {
+            currentQuestion = questions[questions.length - 1]
+        }
         // the lesson the user is currently on 
         const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
         // the module the user is currently on 
@@ -16,23 +22,26 @@ class UserProgress extends React.Component {
     getUserLesson(user){
         const {questions, lessons } = this.props 
         // the question the user is currently on
-        const currentQuestion = questions.find((q)=> q.id > user.last_q)
+        let currentQuestion = questions.find((q)=> q.id > user.last_q)
+        // if currentQuestion is undefined, user is on last question 
+        if (currentQuestion === undefined) {
+            currentQuestion = questions[questions.length - 1]
+        }
         // the lesson the user is currently on 
         const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
         // the lesson title
         return currentLesson.title
     }
     getUserProgress(user){
-     const {questions } = this.props
+     const {questions} = this.props
     // get percentage of completed amount
       let completionCount = 0
       let questionCount = 100/questions.length
       // percent equivalent of each question
-      
       let percentPerQuestion = questionCount/100
       
       // number of questions that have been completed 
-      let cQuestions = questions.filter((q)=> q.id < user.last_q).length
+      let cQuestions = questions.filter((q)=> q.id <= user.last_q).length
       // let cLessons = lessons.filter((l)=> l.completed === true).length
       // the completed count as a whole number
       
@@ -41,9 +50,10 @@ class UserProgress extends React.Component {
       // updates the state to completionCount
       return Math.floor(completionCount)
     }
-
     render(){
-        const {users} = this.props
+        const {users, createUser} = this.props
+        console.log('userCreate',createUser)
+        console.log('tiggkeCreate',this.props.toggleCreate)
         return(
             <>
                 <Table>
@@ -70,7 +80,15 @@ class UserProgress extends React.Component {
                             })}
                     </tbody>
                 </Table>
-
+                <Row>
+                    <Col sm={12}>
+                        <ButtonToggle color="success" onClick={()=> this.props.toggleCreate()}>Create User</ButtonToggle>
+                    </Col>
+                </Row>
+                {createUser &&
+                    <Redirect to='/admin/create'/>
+                }
+                            
             </>
         )
     }

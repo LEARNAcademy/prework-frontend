@@ -1,5 +1,6 @@
 import React from 'react';
-import {Row, Col , Button, Form, Input, FormGroup} from 'reactstrap'
+import {Row, Col , ButtonToggle, Form, Input, FormGroup, Button} from 'reactstrap'
+import {Redirect} from 'react-router-dom'
 import './style.css'
 
 class NewUser extends React.Component{
@@ -259,6 +260,7 @@ class NewUser extends React.Component{
       }
 
     render(){
+        let {createUser} = this.props
         return(
             <>
                 <Row>
@@ -307,6 +309,14 @@ class NewUser extends React.Component{
                         }
                     </Col>
                 </Row>
+                <Row>
+                  <Col sm={12}>
+                    <ButtonToggle color="success" onClick={()=> this.props.toggleCreate()}>Back</ButtonToggle>
+                  </Col>
+                </Row>
+                {!createUser && 
+                <Redirect to = '/admin'/>
+                }
             </>
         )
     }

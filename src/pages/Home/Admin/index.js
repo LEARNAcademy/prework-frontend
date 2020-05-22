@@ -28,35 +28,12 @@ class Admin extends React.Component {
         this.getUsers();
     }
     render(){
-        let {current_user, lessons, modules, questions} = this.props;
+        let {lessons, modules, questions, toggleCreate, createUser} = this.props;
         const {users} = this.state
-        let hide = true;
         return(
             <>
-            {!hide &&
-                <Row>
-                    <Col sm={12} className="adminPanel">
-                        <Row>
-                            <Col>
-                                <h3 style={{textAlign:"center"}}>Admin Panel</h3>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <ul className="adminList">
-                                    {/* <li onClick={<Redirect to="/admin/create"/>}>Create User</li>
-                                    <li onClick={<Redirect to=""/>}>Users Progress</li> */}
-                                    <li>Delete User</li>
-                                </ul>
-                            </Col>
-                        </Row>
-                    </Col>
-                    <NewUser current_user = {current_user}/>
-                </Row>
-            }  
-            <NewUser current_user = {current_user}/>
-            <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} />
-
+            {/*<NewUser current_user = {current_user}/> */}
+            <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} toggleCreate={toggleCreate} createUser={createUser}/>
             </>
         )
     }

@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state={
       adminPage:false,
       currentMod:[],
+      createUser:false,
       loginSuccess:false,
       topics:[],
       modules:[],
@@ -77,21 +78,21 @@ class App extends React.Component {
       }
     }
   }
-  userModule(){
-    const { modules, questions, lessons} = this.state
-      // assigns current user
-      const current_user = JSON.parse(localStorage.getItem('user'))
-      if (current_user !== undefined) {
-        // question the user is currently on
-        const currentQuestion = questions.find((q)=> q.id>current_user.last_q)
-        // lesson the user is currently on
-        const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
-        // module the uer is currently on 
-        const currentModule = modules.find((m)=> currentLesson.code_module_id === m.id)
+  // userModule(){
+  //   const { modules, questions, lessons} = this.state
+  //     // assigns current user
+  //     const current_user = JSON.parse(localStorage.getItem('user'))
+  //     if (current_user !== undefined) {
+  //       // question the user is currently on
+  //       const currentQuestion = questions.find((q)=> q.id>current_user.last_q)
+  //       // lesson the user is currently on
+  //       const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
+  //       // module the uer is currently on 
+  //       const currentModule = modules.find((m)=> currentLesson.code_module_id === m.id)
         
-        this.setState({currentMod:currentModule})
-      }
-  }
+  //       this.setState({currentMod:currentModule})
+  //     }
+  // }
   handleUserUpdate = (question) => {
       const {current_user} = this.state
       // if the user gets the right answer, update the users last_q to the current question that's been completed
@@ -196,12 +197,16 @@ class App extends React.Component {
       this.getAllUsers();
     }
   }
+  toggleCreate=()=> {
+    let value = this.state.createUser 
+    value = !value
+    this.setState({createUser:value})
+  }
 
   render(){
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
-  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage, allUsers} = this.state;
-  
+  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage, allUsers, createUser} = this.state;
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -214,9 +219,9 @@ class App extends React.Component {
           {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
-            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
-            <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} />}/>
-            <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions} createUser={createUser} toggleCreate={this.toggleCreate}/>}/>
+            <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} toggleCreate={this.toggleCreate} createUser={createUser}/>}/>
+            <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} createUser={createUser} toggleCreate={this.toggleCreate}/>}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
           </Switch>
         </Router>
