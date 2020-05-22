@@ -7,8 +7,10 @@ import NewUser from './pages/Home/Admin/NewUser'
 import UserProgress from './pages/Home/Admin/UserProgress'
 import SignIn from './pages/Home/SignIn'
 import Content from './pages/Home/Content'
+import ForgotPass from './pages/Home/SignIn/ForgotPass'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
-import API from './util/api'
+
+
 class App extends React.Component {
   constructor(){
     super()
@@ -223,6 +225,7 @@ class App extends React.Component {
             <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} toggleCreate={this.toggleCreate} createUser={createUser}/>}/>
             <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} createUser={createUser} toggleCreate={this.toggleCreate}/>}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
+            <Route exeact path='/forgotpass' render={props => <ForgotPass />} />
           </Switch>
         </Router>
       </Container>
