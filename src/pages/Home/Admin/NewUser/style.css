@@ -12,3 +12,10 @@
     height: 50px;
     margin: 0 auto;
 }
+#userPassword {
+    cursor: default;
+}
+.passSave {
+    font-style:italic;
+    transition: 4s;
+}

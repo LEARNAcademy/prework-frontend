@@ -15,14 +15,15 @@ class Question extends React.Component{
     render(){
         // function will be set to equal to isMult to find if the current lessons question type is multiple choice
         let isMult = this.checkIfMult();
-        let { content , lessons , handleChange, userChoice, questionCorrect, userMessage, ideUserChoice, questions} = this.props
+        
+        let { content , lessons , handleChange, userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code} = this.props
         return(
             <>
             {isMult &&
                 <MultChoice userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice} />
             }
             {!isMult && 
-                <IdeChoice userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}  ideUserChoice = {ideUserChoice} questions = {questions} />
+                <IdeChoice userMessage = {userMessage} code = {code} updateIde = {updateIde} userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange = {handleChange} userChoice = {userChoice}  ideUserChoice = {ideUserChoice} questions = {questions} />
             }
             </>
         )

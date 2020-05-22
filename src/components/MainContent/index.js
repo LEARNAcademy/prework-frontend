@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col } from 'reactstrap'
+import { Row, Col, Card, CardTitle, CardText, Button, CardHeader, CardFooter, CardBody } from 'reactstrap'
 import Question from './Question'
 import './style.css'
 
@@ -46,9 +46,9 @@ class MainContent extends React.Component {
         }
         return []
     }
-    
     render(){
-        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions} = this.props
+        //,6wYa^laDh
+        const {content, lessons, handleChange , userChoice, questionCorrect, userMessage, ideUserChoice, questions, updateIde, code,current_user} = this.props
         let contentExist = this.contentExist();
         // checks if the content is a lesson or question, renders appropriate content
         let isLesson = this.checkType();
@@ -61,7 +61,22 @@ class MainContent extends React.Component {
                 <div>
                     <Row>
                         <Col sm={12}>
-                            <h4>Hello user, click on a module to start</h4>
+                            <h4>Hello <span style={{color:"green",fontStyle:"italic"}}>{current_user.email}</span>, click on a module to start</h4>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>HTML</strong></CardTitle>
+                                <CardText>Start learning about the foundation of web development with HTML. In this module, you'll be taught all of the rules you'll need to know about the structure of a website and the foundation of web development.</CardText>
+                                <Button type="button" className="dashBtn0 btn btn-success" data-toggle="collapse" data-target="#collapse0" onClick={() => this.showContent("html")}>Go to HTML</Button>
+                            </Card>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>JavaScript</strong></CardTitle>
+                                <CardText>Find out how to make your website interactive, dynamic and awesome with JavaScript.</CardText>
+                                <Button type="button" className="dashBtn1 btn btn-success" data-toggle="collapse" data-target="#collapse1" onClick={() => this.showContent("js")}>Go to JavaScript</Button>
+                            </Card>
+                            <Card className="dashCard" body>
+                                <CardTitle><strong>CSS</strong></CardTitle>
+                                <CardText>Turn your website into a stunning work of art by learning how to style every aspect of it using CSS.</CardText>
+                                <Button type="button" className="dashBtn2 btn btn-success" data-toggle="collapse" data-target="#collapse2" onClick={() => this.showContent("css")}>Go to CSS</Button>
+                            </Card>
                         </Col>
                     </Row>
                 </div>
@@ -70,42 +85,36 @@ class MainContent extends React.Component {
                 <div>
                     <Row>
                         <Col>
-                            <h1 className="lessonHeader">{content.title}</h1>
+                            <Card>
+                                <CardHeader tag="h1" >{content.title}</CardHeader>
+                                <CardBody>
+                                    <CardText>{content.content}</CardText>
+                                {content.img_src !== null &&
+                                    <CardText>
+                                        <img className="lessonImg" src={content.img_src}/>
+                                    </CardText>
+                                }
+                                {resourcesL.length > 0 &&
+                                <div>
+                                    <h5>Resources</h5>
+                                    <ul>
+                                        {resourcesL.map((resource,i)=>{
+                                            return(
+                                                // eslint-disable-next-line react/jsx-no-target-blank
+                                                <li key={i}><a href={resource.link} target="_blank">{resource.name}</a></li>
+                                            )
+                                        })}
+                                    </ul>
+                                </div>
+                                }
+                                </CardBody>
+                            </Card>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <p>{content.content}</p>
-                        </Col>
-                    </Row>
-                    {content.img_src !== null &&
-                    <Row>
-                        <Col>
-                            <img className="lessonImg" src={content.img_src}/>
-                        </Col>
-                    </Row>
-                    }
-                    <Row>
-                        {resourcesL.length > 0 &&
-                        <Col sm={6}>
-                            <h5>Resources</h5>
-                            <ul>
-                                {resourcesL.map((resource,i)=>{
-                                    return(
-                                        // eslint-disable-next-line react/jsx-no-target-blank
-                                        <li key={i}><a href={resource.link} target="_blank">{resource.name}</a></li>
-                                    )
-                                })}
-                            </ul>
-                        
-                        </Col>
-                        }
-                    </Row>
-
                 </div>
             }
             {contentExist && !isLesson &&
-                <Question userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange={handleChange} userChoice={userChoice} ideUserChoice = {ideUserChoice} questions = {questions} />
+                <Question code = {code} updateIde = {updateIde} userMessage = {userMessage} questionCorrect = {questionCorrect} content = {content} lessons = {lessons} handleChange={handleChange} userChoice={userChoice} ideUserChoice = {ideUserChoice} questions = {questions} />
             }
             </>
                 )

@@ -3,6 +3,8 @@ import './App.css';
 import { Container } from 'reactstrap';
 import Header from './components/Header';
 import Admin from './pages/Home/Admin'
+import NewUser from './pages/Home/Admin/NewUser'
+import UserProgress from './pages/Home/Admin/UserProgress'
 import SignIn from './pages/Home/SignIn'
 import Content from './pages/Home/Content'
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom'
@@ -21,9 +23,11 @@ class App extends React.Component {
       resources:[],
       authToken:"",
       current_user:[],
+      allUsers:[],
       code: '// Code here',
       mode: 'xml'
     }
+
     this.getAuthToken = this.getAuthToken.bind(this);
     // API.getTopics = API.getTopics.bind(this);
     // API.getModules = API.getModules.bind(this);
@@ -34,7 +38,7 @@ class App extends React.Component {
     this.getModules = this.getModules.bind(this);
     this.getLessons = this.getLessons.bind(this);
     this.getQuestions = this.getQuestions.bind(this);
-    this.getResources = this.getResources.bind(this)
+    this.getResources = this.getResources.bind(this);
   }
   
   
@@ -48,6 +52,10 @@ class App extends React.Component {
     if (localStorage.getItem('user') && localStorage.getItem('user') !== null && localStorage.getItem('user') !== undefined){
       let user = JSON.parse(localStorage.getItem('user'))
       this.setState({current_user:user})
+    }
+    if (localStorage.getItem('allUsers') && localStorage.getItem('allUsers') != null && localStorage.getItem('allUsers') !== undefined) {
+      let allUsers = JSON.parse(localStorage.getItem('allUsers'))
+      this.setState({allUsers:allUsers})
     } 
   }
   
@@ -69,26 +77,25 @@ class App extends React.Component {
       }
     }
   }
-  findModule() {
-    let {modules, lessons, questions, current_user} = this.state 
-    // id of the question the user is currently on
-    if (current_user.length === undefined) {
-      let userQ = current_user.last_q
-      // find the question the user is currently on 
-      let currentQ = questions.find((q)=> q.id > userQ)
-      if (currentQ !== undefined) {
-          // find the lesson the user is currently on
-          let currentL = lessons.find((q)=> currentQ.lesson_id === q.id)
-          // find the module the user is currently on
-          let currentM = modules.find((m)=> currentL.code_module_id === m.id)
-          this.setState({currentMod:currentM})
-      }  
-    }
-}
+  userModule(){
+    const { modules, questions, lessons} = this.state
+      // assigns current user
+      const current_user = JSON.parse(localStorage.getItem('user'))
+      if (current_user !== undefined) {
+        // question the user is currently on
+        const currentQuestion = questions.find((q)=> q.id>current_user.last_q)
+        // lesson the user is currently on
+        const currentLesson = lessons.find((l)=> currentQuestion.lesson_id === l.id)
+        // module the uer is currently on 
+        const currentModule = modules.find((m)=> currentLesson.code_module_id === m.id)
+        
+        this.setState({currentMod:currentModule})
+      }
+  }
   handleUserUpdate = (question) => {
       const {current_user} = this.state
       // if the user gets the right answer, update the users last_q to the current question that's been completed
-      fetch(`/users/${current_user.id}`, {
+      fetch(`https://learn-prework-backend.herokuapp.com/users/${current_user.id}`, {
       method: 'PUT',
       headers: {'Content-type': 'application/json' },
       body: JSON.stringify({
@@ -114,31 +121,45 @@ class App extends React.Component {
     // API.getQuestions();
     // API.getResources();
     this.setState({ mode: 'xml'});
-    this.getAuthToken(this.findModule);
+    this.getAuthToken();
+  }
+  getAllUsers(){
+    let bearer = localStorage.getItem('authToken')
+        fetch('https://learn-prework-backend.herokuapp.com/admin/users',{
+            headers : {
+                'Content-Type':'application/json',
+                'Accept':'application/json',
+                'Authorization': bearer
+            }
+        }).then((response)=> response.json()).then((usersData)=> {
+          localStorage.setItem('allUsers',JSON.stringify(usersData))
+          let allUsers = JSON.parse(localStorage.getItem('allUsers'))
+          this.setState({allUsers:allUsers})
+        })
   }
   async getTopics(){
-    let response = await fetch('http://localhost:3000/topics');
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/topics');
     let data = await response.json();
     if (response.status === 200) {
     this.setState({topics:data})
     }
   }
   async getModules() {
-    let response = await fetch('http://localhost:3000/code_modules');
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/code_modules');
     let data = await response.json();
     if (response.status === 200) {
       this.setState({modules:data})
     }
   } 
   async getLessons(){
-    let response = await fetch('http://localhost:3000/lessons')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/lessons')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({lessons:data})
     }
   }
   async getQuestions(){
-    let response = await fetch('http://localhost:3000/questions')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/questions')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({questions:data}
@@ -146,7 +167,7 @@ class App extends React.Component {
     }
   }
   async getResources(){
-    let response = await fetch('http://localhost:3000/resources')
+    let response = await fetch('https://learn-prework-backend.herokuapp.com/resources')
     let data = await response.json();
     if (response.status === 200) {
       this.setState({resources:data})
@@ -156,7 +177,7 @@ class App extends React.Component {
   logOut = () => {
     // logs the user out and destroys the session in the backend
     const {current_user} = this.state
-    fetch(`/users/sign_out?id=${current_user.id}`,{
+    fetch(`https://learn-prework-backend.herokuapp.com/users/sign_out?id=${current_user.id}`,{
       method: "DELETE"
     })
     .then(() => {
@@ -170,14 +191,17 @@ class App extends React.Component {
     let final = !value
     this.setState({adminPage:final})
   }
+  fetchUsersAdmin() {
+    if(this.isAdmin()){
+      this.getAllUsers();
+    }
+  }
 
   render(){
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
-  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage} = this.state;
+  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage, allUsers} = this.state;
   
-  // this.isAdmin();
-  // }5tZ6KXe:r (password)
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -190,7 +214,9 @@ class App extends React.Component {
           {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
-            <Route exact path='/admin' render= {props => <Admin current_user = {current_user}/>}/>
+            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
           </Switch>
         </Router>

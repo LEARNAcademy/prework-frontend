@@ -12,7 +12,9 @@ class Content extends Component{
             userChoice:'',
             questionCorrect:null,
             userMessage:null,
-            percentage:0
+            percentage:0,
+            code: '',
+            ideChoice:'',
         }
     }
   fillBarLogic = () => {
@@ -37,30 +39,47 @@ class Content extends Component{
       // updates the state to completionCount
       this.setState({percentage:completionCount})
   }
+  updateIde = (newCode) => {
+      // locates tags and anything inside of them
+      let regex = /(<([^>]+)>)/gi
+      let updatedCode = newCode.match(regex)
+      this.setState({ code: newCode,
+                      ideChoice:updatedCode
+       })
+      
+  }
   handleChange = (event) => {
-    this.setState({userChoice:event.target.value}, () => console.log("UserChoice", this.userChoice)
-    )
+    this.setState({userChoice:event.target.value})
   }
   resetQuestion = () => {
     let val = null
     this.setState({
       questionCorrect:val,
       userChoice:'',
+      code:'',
+      ideChoice:'',
       userMessage:null})
   }
   checkUserAnswer = () => {
-    const {content, userChoice} = this.state
+    const {content, userChoice, ideChoice} = this.state
     let value = false
+    let finalIDE;
     let message;
-    if (content.answer === userChoice) {
+    if (ideChoice.length > 1) {
+      finalIDE = ideChoice.join('')
+      console.log('finalIDE',finalIDE)
+    }
+    console.log('contentAnswer',content.answer)
+    // checks to see if the user got the IDE or multchoice answer correct
+    if (content.answer === userChoice || content.answer === finalIDE ) {
       value = true
-      message = 'Correct'
+      message = 'Correct 👍'
       this.setState({
         questionCorrect:value,
         userMessage:message
       })
     } else {
-      message = 'Incorrect'
+      message = 'Incorrect 🚫, try again'
       this.setState({
         questionCorrect:value,
         userMessage:message
@@ -94,7 +113,7 @@ class Content extends Component{
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod, handleUserUpdate} = this.props
-      let {questionCorrect, userMessage, percentage} = this.state
+      let {questionCorrect, userMessage, percentage, code, ideChoice} = this.state
     return(
       <>
           <Row>
@@ -102,13 +121,13 @@ class Content extends Component{
               <LessonNav currentMod = {currentMod} current_user = {current_user} modules={modules} lessons={lessons} currentContent = {this.currentContent} topics={topics} content = {this.state.content} questions={questions}/>
             </Col>
             <Col sm={8}>
-                <MainContent userMessage = {userMessage} current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} ideUserChoice={this.ideUserChoice}/>
+                <MainContent userMessage = {userMessage} current_user = {current_user} questionCorrect = {questionCorrect} content={this.state.content} questions={questions} resources={resources} lessons = {lessons} handleChange={this.handleChange} userChoice={this.state.userChoice} ideUserChoice={this.ideUserChoice} updateIde = {this.updateIde} code = {code}/>
             </Col>
           </Row>
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer percentage = {percentage} fillBarLogic={this.fillBarLogic} checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
+                    <Footer ideChoice = {ideChoice} code = {code} percentage = {percentage} fillBarLogic={this.fillBarLogic} checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
                 </Col> 
             </Row>
             }
