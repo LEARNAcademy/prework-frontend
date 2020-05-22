@@ -311,7 +311,7 @@ class NewUser extends React.Component{
                 </Row>
                 <Row>
                   <Col sm={12}>
-                    <ButtonToggle color="success" onClick={()=> this.props.toggleCreate()}>Back</ButtonToggle>
+                    <ButtonToggle color="success" onClick={()=> this.props.toggleCreate()}>Panel</ButtonToggle>
                   </Col>
                 </Row>
                 {!createUser && 
