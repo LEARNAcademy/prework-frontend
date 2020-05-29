@@ -1,0 +1,19 @@
+h1, h3{
+  text-align: center;
+}
+#square{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  height: 100px;
+  width: 100px;
+  border: 2px solid black;
+}
+
+#gameboard{
+  display: flex;
+  width: 320px;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
