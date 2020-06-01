@@ -1,19 +1,25 @@
 .green-box{
 background-color: rgb(122, 193, 68);
 width: 100%;
-height: 15%;
+min-height: 10%;
 text-align: center;
 margin-top: auto;
-bottom: 2%;
-display: flex;
 flex-shrink: 0;
-justify-content: center;
+bottom: 0%;
+display: flex;
 position: fixed;
+/* height: 9%;
+justify-content: center;
+align-items: baseline; */
+/* flex-direction: column; */
+
 
 }
 .learn-logo{
-    width: 175px;
-    margin-top: 35px;
+    width: 10%;
+    min-height: inherit;
+    margin: auto;
+    padding-bottom: 1em;
 }
 .gray-box{
 display: flex;
