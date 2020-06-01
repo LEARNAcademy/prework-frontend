@@ -1,20 +1,12 @@
 import React from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col, Button, Tooltip,Modal, ModalHeader,ModalBody} from 'reactstrap';
 import Progress from './Progress';
 import './style.css'
 /* eslint react/prop-types: 0 */
 class Footer extends React.Component {
-  contentExist() {
-      let { content } = this.props
-      if (content.id !== undefined) {
-          return true
-      } else {
-          return false
-      }
-  }
   isContentQuestion(){
     let {content} = this.props
-    if (this.contentExist()) {
+    if (content.id !== undefined) {
       if (content.lesson_id !== undefined) {
         return true
       } else {
@@ -86,7 +78,6 @@ class Footer extends React.Component {
     if (content.id !== undefined) {
       // question the user is currently on
       const currentQuestion = questions.find((q)=> current_user.last_q < q.id)
-      console.log('current_user',current_user)
       // checks to see if the current content is a lesson
       if (content.lesson_id === undefined) {
         // get all the questions that belong to this lesson
@@ -156,10 +147,11 @@ class Footer extends React.Component {
       return false
     }
   }
+
   buttonType() {
-    let { questionCorrect } = this.props 
+    let { questionCorrect, content } = this.props 
     
-    if (this.contentExist()) {
+    if (content.id !== undefined) {
       if (this.isContentQuestion()) {
         // content is a question, check the answer
         if (questionCorrect !== null) {
@@ -195,24 +187,62 @@ class Footer extends React.Component {
       return true
     }
   }
+
+  getModalContent(){
+    let {content, hints} = this.props
+    // checks if the content is a question
+    // uncomment lines 195 - 198 when hints is seeded and routes are set up in backend
+    // if (this.isContentQuestion()) {
+    //   let suggestion = hints.find((h)=> h.question_id === content.id)
+    //   return suggestion
+    // }
+  }
   render() {
-    const { lessons, modules, topics, current_user, questions, percentage} = this.props;
+    const { lessons, modules, topics, current_user, questions, percentage, tooltipOpen, toggleTooltip, toggleModal, modalOpen} = this.props;
     let buttType = this.buttonType();
     let isQuestionAnswered = this.isQuestionAnswered();
     let isQuestionCorrect = this.isQuestionCorrect();
     let isQuestion = this.isContentQuestion();
     let previousLesson = this.previousLessonExist();
+    // uncomment line 207 once hints is seeded and routes are set up in backend
+    // let suggestion = this.getModalContent();
      // updates userChoice state to radio selection
     // this.props.handleChange() < ready to use
     // this.props.userChoice < ready to use
+    const closeBtn = <button className="close" onClick={toggleModal}>&times;</button>
     return (
       // eslint-disable-next-line react/jsx-filename-extension
       <>
         <Row>
-          <Col sm={6}>
+          <Col sm={5}>
             {/* progress meter on the left */}
             <Progress questions = {questions} current_user={current_user} modules={modules} lessons={lessons} topics={topics} percentage = {percentage}/>
           </Col>
+          {isQuestion &&
+          <Col sm={1}>
+            <button className="btn-circle" id="tooltip" onClick={toggleModal}>?</button>   
+            <Modal isOpen={modalOpen} toggle={toggleModal}>
+              <ModalHeader toggle={toggleModal} close={closeBtn}>{/*suggestion.title*/}Modal Header</ModalHeader>
+              <ModalBody>
+                {/*suggestion.content*/}
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+                mollit anim id est laborum.
+                {/*suggestion.resource &&
+                  
+                  <ul>
+                    <li><a href={suggestion.resource}>Resource Link</a></li>
+                  </ul>
+                */}
+              </ModalBody>
+            </Modal>
+            <Tooltip placement="bottom" isOpen={tooltipOpen} autohide={false} target="tooltip" toggle={toggleTooltip}>
+            Hint/Suggestions
+          </Tooltip>
+          </Col>
+          }
           {/* continue button on the right */}
           <Col sm={4} style={{textAlign:"right"}}>
             {previousLesson && 

@@ -96,19 +96,19 @@ class LessonNav extends Component {
                                                     //let mod = modules.find((m) => lesson.code_module_id === m.id)
                                                     
 
-                                                    if(m.topic_id === topic.id){
+                                                    if (m.topic_id === topic.id) {
                                                     {/* the current mod id is equal to or less than the  */}
 
-                                                        if(i === 0 ){
+                                                        if (i === 0) {
                                                             flag = ''
                                                         }
                                                         // eslint-disable-next-line no-lone-blocks
                                                         {/* if a previous lesson exists and its completed, override the disabled flag and enable current lesson*/}
 
-                                                        if(m.id ){
+                                                        if (m.id ) {
                                                             flag=''
                                                         }
-                                                        if(m.id ){
+                                                        if (m.id) {
                                                             completed = true;
                                                         }
                                                     
