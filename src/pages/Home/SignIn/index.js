@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import {Row, Col,  Button, Input, Form, FormGroup, Label} from 'reactstrap'
+import {BrowserRouter as Router, Link} from 'react-router-dom'
 import './style.css'
 
 
@@ -103,12 +104,18 @@ class SignIn extends Component{
                                     </FormGroup>
                                 </Col>
                             </Row>
+ 
                             <Row>
                                 <Col sm={12}>
                            <Button outline color='success' type="submit"> Login </Button>
                                 </Col>
                             </Row>
                         </Form>
+                        <Row> 
+                                <Col>
+                                    <Link to="/forgotpass"><Button color='link'> Forgot Password? </Button></Link>
+                                </Col>
+                            </Row>
                     </main>
                 </Col> 
             </Row>
