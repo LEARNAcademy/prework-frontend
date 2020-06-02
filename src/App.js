@@ -19,6 +19,7 @@ class App extends React.Component {
       adminPage:false,
       currentMod:[],
       loginSuccess:false,
+      hints:[],
       topics:[],
       modules:[],
       lessons:[],
@@ -43,7 +44,6 @@ class App extends React.Component {
     this.getQuestions = this.getQuestions.bind(this);
     this.getResources = this.getResources.bind(this);
   }
-  
   
   getAuthToken = () => {
     if (localStorage.getItem('authToken') && localStorage.getItem('authToken') !== null) {
@@ -203,7 +203,7 @@ class App extends React.Component {
   render(){
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
-  const {topics, modules, lessons, questions, resources, current_user, currentMod, adminPage, allUsers} = this.state;
+  const {topics, modules, lessons, questions, resources, hints, current_user, currentMod, adminPage, allUsers} = this.state;
   
   return (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -217,10 +217,10 @@ class App extends React.Component {
           {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
-            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
+            <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions}/>}/>
             <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
-            <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData}/>}/>
+            <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData} />}/>
             <Route exeact path='/forgotpass' render={props => <ForgotPass />} />
           </Switch>
         </Router>

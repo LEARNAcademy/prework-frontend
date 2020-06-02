@@ -15,8 +15,20 @@ class Content extends Component{
             percentage:0,
             code: '',
             ideChoice:'',
+            tooltipOpen:false,
+            modalOpen:false
         }
     }
+  toggleTooltip = () => {
+    let tooltip = this.state.tooltipOpen
+    let val = !tooltip 
+    this.setState({tooltipOpen:val})
+  }
+  toggleModal = () => {
+    let modal = this.state.modalOpen
+    let val = !modal 
+    this.setState({modalOpen:val})
+  }
   fillBarLogic = () => {
     let {questions, current_user } = this.props
     // get percentage of completed amount
@@ -113,7 +125,7 @@ class Content extends Component{
   render(){
       let checkContent = this.contentExist();
       let { questions, resources, modules, lessons, topics, current_user, currentMod, handleUserUpdate} = this.props
-      let {questionCorrect, userMessage, percentage, code, ideChoice} = this.state
+      let {questionCorrect, userMessage, percentage, code, ideChoice, tooltipOpen,modalOpen} = this.state
     return(
       <>
           <Row>
@@ -127,7 +139,7 @@ class Content extends Component{
           {checkContent &&
             <Row>
                 <Col sm={12}>
-                    <Footer ideChoice = {ideChoice} code = {code} percentage = {percentage} fillBarLogic={this.fillBarLogic} checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate}/>   
+                    <Footer ideChoice = {ideChoice} code = {code} percentage = {percentage} fillBarLogic={this.fillBarLogic} checkUserAnswer = {this.checkUserAnswer}current_user = {current_user} resetQuestion = {this.resetQuestion} questionCorrect={questionCorrect} topics={topics} modules = {modules} lessons={lessons} currentContent={this.currentContent} questions={questions} content={this.state.content}  userChoice = {this.state.userChoice} handleUserUpdate = {handleUserUpdate} tooltipOpen = {tooltipOpen} toggleTooltip={this.toggleTooltip} modalOpen={modalOpen} toggleModal={this.toggleModal}/>   
                 </Col> 
             </Row>
             }

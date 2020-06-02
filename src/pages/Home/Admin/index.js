@@ -1,15 +1,13 @@
 import React from 'react';
-import {Row, Col} from 'reactstrap'
-import NewUser from './NewUser'
 import UserProgress from './UserProgress'
-import {BrowserRouter as Router, Redirect} from 'react-router-dom'
 import './style.css'
 
 class Admin extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users:[]
+            users:[],
+            createUser:false,
         }
         this.getUsers = this.getUsers.bind(this)
     }
@@ -27,13 +25,19 @@ class Admin extends React.Component {
     componentDidMount(){
         this.getUsers();
     }
+    toggleCreate=()=>{
+        let value = this.state.createUser
+        let final = !value
+        this.setState({createUser:final})
+      }
     render(){
-        let {lessons, modules, questions, toggleCreate, createUser} = this.props;
+        let {lessons, modules, questions} = this.props;
+        let {createUser} = this.state
         const {users} = this.state
         return(
             <>
             {/*<NewUser current_user = {current_user}/> */}
-            <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} toggleCreate={toggleCreate} createUser={createUser}/>
+            <UserProgress users = {users} lessons={lessons} modules ={modules} questions={questions} createUser={createUser} toggleCreate={this.toggleCreate}/>
             </>
         )
     }

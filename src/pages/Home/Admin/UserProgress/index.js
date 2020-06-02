@@ -1,5 +1,5 @@
 import React from 'react' 
-import {Table, Row, Col, ButtonToggle, Button} from 'reactstrap'
+import {Table, Row, Col, ButtonToggle} from 'reactstrap'
 import {Redirect} from 'react-router-dom'
 
 class UserProgress extends React.Component {
@@ -50,6 +50,9 @@ class UserProgress extends React.Component {
       // updates the state to completionCount
       return Math.floor(completionCount)
     }
+    toggleCreate = ()=>{
+        this.props.toggleCreate()
+    }
     render(){
         const {users, createUser} = this.props
         return(
@@ -80,7 +83,7 @@ class UserProgress extends React.Component {
                 </Table>
                 <Row>
                     <Col sm={12}>
-                        <ButtonToggle color="success" onClick={()=> this.props.toggleCreate()}>Create User</ButtonToggle>
+                        <ButtonToggle color="success" onClick={this.toggleCreate}>Create User</ButtonToggle>
                     </Col>
                 </Row>
                 {createUser &&
