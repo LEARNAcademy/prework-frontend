@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Container } from 'reactstrap';
+import ChangePass from './pages/Home/SignIn/ChangePass'
 import Header from './components/Header';
 import Admin from './pages/Home/Admin'
 import NewUser from './pages/Home/Admin/NewUser'
@@ -199,12 +200,20 @@ class App extends React.Component {
       this.getAllUsers();
     }
   }
-
+  checkWindow(){
+    const win = window.location.href 
+    const exampleWin = 'http://localhost:8081/new_password?reset_token'
+    if (win.split('=')[0] === exampleWin) {
+      return true
+    } else {
+      return false
+    }
+  }
   render(){
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
   const {topics, modules, lessons, questions, resources, hints, current_user, currentMod, adminPage, allUsers} = this.state;
-  
+  let win = this.checkWindow();
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
@@ -214,14 +223,22 @@ class App extends React.Component {
       <Container>
         <Router>
           {/* if the user is logged in and an admin, redirect to admin page */}
-          {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
+          {/* {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>} */}
+          {loggedIn && 
+            <Content/>
+          }
+          {!loggedIn && !win &&
+            <SignIn/>
+          }
+          
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
             <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions}/>}/>
             <Route exact path='/admin/progress' render= {props => <UserProgress users={allUsers} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData} />}/>
-            <Route exeact path='/forgotpass' render={props => <ForgotPass />} />
+            <Route exact path='/forgotpass' render={props => <ForgotPass />} />
+            <Route exact path='/new_password' render={props=> <ChangePass />}/>
           </Switch>
         </Router>
       </Container>

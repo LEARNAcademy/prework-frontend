@@ -57,7 +57,7 @@ class SignIn extends Component{
   render(){
     // check to see if I have an auth token in local storage
     // if i do, get the user 
-    // if both of those things exist, set them in the s
+    // if both of those things exist, set them in the 
     return(
         <>
             <Row>
