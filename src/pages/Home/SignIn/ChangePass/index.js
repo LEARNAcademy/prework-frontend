@@ -21,7 +21,7 @@ class ChangePass extends React.Component {
         let user = this.state.user
         console.log('reset_token',reset_token)
         if (user.password === user.confirm_password) {
-            fetch('http://learn-prework-backend.herokuapp.com/users/password.json', {
+            fetch('https://learn-prework-backend.herokuapp.com/users/password.json', {
                 body:JSON.stringify({
                     user:{
                         reset_password_token:reset_token,
