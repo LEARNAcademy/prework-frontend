@@ -1,5 +1,6 @@
 import React from 'react';
 import UserProgress from './UserProgress'
+import NewUser from './NewUser'
 import './style.css'
 
 class Admin extends React.Component {
