@@ -5,8 +5,16 @@ class LearnFooter extends React.Component {
     render(){
         return(
             <>
-                <div className="green-box"><img src={logo} alt="learn academy logo" className="learn-logo" /></div>
-                <div className="gray-box">Copyright ©2020<a href="https://www.learnacademy.org">LEARN academy</a> | <a href="https://www.learnacademy.org/privacy-policy/"> Privacy</a> | <a href="https://www.learnacademy.org/terms-conditions/">Terms</a></div>
+                <div class="footer-box">
+                    <div class="green-box"><img src={logo} alt="learn academy logo" class="learn-logo" />
+                    </div>
+                    <div class="gray-box">
+                        <sm> Copyright ©2020 </sm>
+                        <a href="https://www.learnacademy.org"><sm class="link"> LEARN academy </sm></a> | 
+                        <a href="https://www.learnacademy.org/privacy-policy/"> <sm class="link">Privacy</sm></a> | 
+                        <a href="https://www.learnacademy.org/terms-conditions/"><sm class="link">Terms</sm></a>
+                    </div>
+                </div>
             </>
         )
     }
