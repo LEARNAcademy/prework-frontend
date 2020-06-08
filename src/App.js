@@ -135,7 +135,8 @@ class App extends React.Component {
                 'Accept':'application/json',
                 'Authorization': bearer
             }
-        }).then((response)=> response.json()).then((usersData)=> {
+        }).then((response)=> response.json())
+        .then((usersData)=> {
           localStorage.setItem('allUsers',JSON.stringify(usersData))
           let allUsers = JSON.parse(localStorage.getItem('allUsers'))
           this.setState({allUsers:allUsers})
@@ -210,6 +211,7 @@ class App extends React.Component {
     }
   }
   render(){
+  console.log('topics',this.state.topics)
   const loggedIn = this.isLogged();
   const isAdmin = this.isAdmin();
   const {topics, modules, lessons, questions, resources, hints, current_user, currentMod, adminPage, allUsers} = this.state;
@@ -223,14 +225,7 @@ class App extends React.Component {
       <Container>
         <Router>
           {/* if the user is logged in and an admin, redirect to admin page */}
-          {/* {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>} */}
-          {loggedIn && 
-            <Content/>
-          }
-          {!loggedIn && !win &&
-            <SignIn/>
-          }
-          
+          {loggedIn?this.state.adminPage?<Redirect to='/admin'/>:<Redirect to='/dashboard'/>:<Redirect to='/login'/>}
           <Switch>
             <Route exact path="/dashboard" render={props => <Content currentMod = {currentMod} current_user={current_user} lessons={lessons} modules={modules} questions={questions} resources={resources} topics={topics} handleUserUpdate = {this.handleUserUpdate} />}/>
             <Route exact path='/admin' render= {props => <Admin current_user = {current_user} lessons={lessons} modules={modules} questions={questions}/>}/>
@@ -238,7 +233,7 @@ class App extends React.Component {
             <Route exact path='/admin/create' render= {props => <NewUser current_user = {current_user} lessons={lessons} modules={modules} questions={questions} />}/>
             <Route exact path='/login' render={props => <SignIn loadUserData={this.loadUserData} />}/>
             <Route exact path='/forgotpass' render={props => <ForgotPass />} />
-            <Route exact path='/new_password' render={props=> <ChangePass />}/>
+            <Route exact path='/new_password' render={props=> <ChangePass />}/> 
           </Switch>
         </Router>
       </Container>
