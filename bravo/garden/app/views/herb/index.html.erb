@@ -1,0 +1,11 @@
+<h1>Herbs!</h1>
+
+<ul>
+  <% @herbs.each do |herb| %>
+    <li>
+      <%= link_to herb.name, one_herb_path(herb) %>
+    </li>
+  <% end %>
+</ul>
+
+<p><%= link_to "Create a new herb", new_herb_path %></p>

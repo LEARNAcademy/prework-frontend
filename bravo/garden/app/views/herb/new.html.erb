@@ -1,0 +1,17 @@
+<h2>Add an Herb</h2>
+
+<%= form_with url: '/herbs', local: true do %>
+
+  <label for="name">Herb Name</label>
+  <input type="text" name="name">
+
+  <br>
+
+  <label for="is_watered">Is it watered?</label>
+  <input type="text" name="is_watered">
+
+  <br>
+
+  <input type="submit" value="Add Herb">
+
+<% end %>
