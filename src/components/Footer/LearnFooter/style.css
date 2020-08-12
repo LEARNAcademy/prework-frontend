@@ -1,0 +1,51 @@
+.footer-box{
+    display: flex;
+    position: fixed;
+    margin-top: auto;
+    bottom: 0%;
+    flex-shrink: 0;
+    width: 100%;
+}
+.green-box{
+    display: flex;
+    background-color: rgb(122, 193, 68);
+    text-align: center;
+    width: 100%;
+    padding-left: 18%;
+}
+.learn-logo{
+    width: 120px;
+    padding-bottom: 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.gray-box{
+    display: flex;
+    flex-shrink: 0;
+    background-color: #222;
+    color: #999;
+    width: 100%;
+    margin-top: auto;
+    bottom: 0%;
+    text-align: center;
+    position: fixed;
+    font-size: .923em;
+    justify-content: center;
+    padding-right: 40%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.link{
+    text-decoration: none;
+    color: #bbb;
+    background-color: none;
+    padding: 2px;
+    font-size: .923em;
+}
+.link:hover{
+    text-decoration: none;
+    color: #fff;
+    background-color: none;
+    padding: 2px;
+    font-size: .923em;
+}

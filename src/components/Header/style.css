@@ -1,0 +1,12 @@
+.user-email {
+    width: 30%;
+    float: right;
+    margin-top: 10px;
+    font-size:12px;
+}
+.strong {
+    font-weight:bold;
+}
+Button.login {
+    font-size:12px;
+}

@@ -1,0 +1,18 @@
+.footer-button {
+    text-align:right;
+}
+.btn-circle{
+    background-color: rgba(0, 0, 0, 0.74);
+    width: 35px;
+    height: 35px;
+    padding: 6px 0px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 1.02857;
+    font-size:20px;
+    color:rgb(255, 255, 255);
+    cursor:default;
+}
+.btn{
+    border-radius:50%;
+}
